@@ -60,5 +60,5 @@ roles:
     max_value: 1.0
 
 similarity:
-  threshold: 0.35
+  threshold: 0.59
   top_k: 3

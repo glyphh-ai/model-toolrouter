@@ -34,7 +34,7 @@ BENCHMARK_DIR = Path(__file__).parent
 QUERIES_PATH = BENCHMARK_DIR / "queries.json"
 CATALOG_PATH = BENCHMARK_DIR / "tool_catalog.json"
 
-GLYPHH_THRESHOLD = 0.35
+GLYPHH_THRESHOLD = 0.59
 GLYPHH_LOW_CONFIDENCE = 0.55
 LLM_RUNS_PER_QUERY = 3
 
@@ -74,8 +74,16 @@ class GlyphhRouter:
 
     def route(self, query: str) -> dict[str, Any]:
         start = time.perf_counter()
-        q_attrs = encode_query(query)["attributes"]
-        return self._route_attrs(q_attrs, start)
+        encoded = encode_query(query)
+        q_attrs = encoded["attributes"]
+        oos_qualifiers = encoded.get("out_of_scope_qualifiers", set())
+        result = self._route_attrs(q_attrs, start)
+        # If the query contains out-of-scope qualifiers, force rejection
+        if oos_qualifiers and result["tool_id"] is not None:
+            result["tool_id"] = None
+            result["rejected_by"] = "oos_qualifier"
+            result["oos_qualifiers"] = list(oos_qualifiers)
+        return result
 
     def route_from_intent(self, intent: dict[str, str]) -> dict[str, Any]:
         start = time.perf_counter()
@@ -90,17 +98,41 @@ class GlyphhRouter:
     def _route_attrs(self, attrs: dict, start: float) -> dict[str, Any]:
         q_concept = Concept(name="q", attributes=attrs)
         q_glyph = self.encoder.encode(q_concept)
-        q_intent = (
-            q_glyph.layers.get("intent")
-            and q_glyph.layers["intent"].segments.get("action")
-        )
+
+        # Use role-level similarity with configured weights.
+        # This respects the encoder config: verb=1.0, object=0.8, domain=1.0
+        # and differentiates tools that share verb+object but differ on domain.
+        role_weights = {
+            "verb": 1.0,
+            "object": 0.8,
+            "domain": 1.0,
+            "keywords": 0.6,
+        }
+
+        # Collect query role vectors from all segments
+        q_roles: dict[str, Any] = {}
+        for layer in q_glyph.layers.values():
+            for seg in layer.segments.values():
+                for rname, rvec in seg.roles.items():
+                    q_roles[rname] = rvec
+
         scores: list[tuple[float, int]] = []
         for i, eg in enumerate(self.exemplar_glyphs):
-            e_intent = eg.layers.get("intent") and eg.layers["intent"].segments.get("action")
-            if q_intent and e_intent:
-                score = float(cosine_similarity(q_intent.cortex.data, e_intent.cortex.data))
-            else:
-                score = float(cosine_similarity(q_glyph.global_cortex.data, eg.global_cortex.data))
+            e_roles: dict[str, Any] = {}
+            for layer in eg.layers.values():
+                for seg in layer.segments.values():
+                    for rname, rvec in seg.roles.items():
+                        e_roles[rname] = rvec
+
+            weighted_sum = 0.0
+            weight_total = 0.0
+            for rname, w in role_weights.items():
+                if rname in q_roles and rname in e_roles:
+                    sim = float(cosine_similarity(q_roles[rname].data, e_roles[rname].data))
+                    weighted_sum += sim * w
+                    weight_total += w
+
+            score = weighted_sum / weight_total if weight_total > 0 else 0.0
             scores.append((score, i))
         scores.sort(key=lambda x: x[0], reverse=True)
         elapsed_ms = (time.perf_counter() - start) * 1000

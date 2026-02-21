@@ -1,0 +1,14 @@
+name: DevOps Tool Router
+description: Routes natural language DevOps requests to release step functions using HDC similarity matching on intent vectors.
+version: 0.1.0
+author: Glyphh AI
+license: MIT
+icon: 🔀
+category: routing
+public: true
+tags:
+  - tool-routing
+  - devops
+  - release-management
+  - ci-cd
+  - intent-matching

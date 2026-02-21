@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "description": "Tool catalog shared by both Glyphh and LLM for fair comparison",
+    "version": "1.0.0"
+  },
+  "tools": [
+    {"id": "create_branch", "name": "Create Release Branch", "description": "Create a release branch from main for a new version", "parameters": []},
+    {"id": "run_tests", "name": "Run Tests", "description": "Run the full test suite (unit, property, regression)", "parameters": []},
+    {"id": "merge_to_main", "name": "Merge to Main", "description": "Merge the release branch into main", "parameters": []},
+    {"id": "create_tag", "name": "Create Tag", "description": "Create and push an annotated version tag on main", "parameters": [{"name": "version", "type": "string", "required": false, "description": "Version string (e.g. v1.2.0)"}]},
+    {"id": "check_workflow_status", "name": "Check Workflow Status", "description": "Check the CI/CD build and workflow status", "parameters": []},
+    {"id": "cleanup_branch", "name": "Cleanup Branch", "description": "Delete the release branch after merge", "parameters": []},
+    {"id": "release_sdk", "name": "Release SDK", "description": "Run the full SDK release flow (branch, test, merge, tag, build)", "parameters": [{"name": "version", "type": "string", "required": false, "description": "Version to release"}]},
+    {"id": "release_runtime", "name": "Release Runtime", "description": "Run the full runtime release flow (build docker image, deploy)", "parameters": [{"name": "version", "type": "string", "required": false, "description": "Version to release"}]},
+    {"id": "release_platform", "name": "Release Platform", "description": "Run the full platform release flow (build, deploy backend services)", "parameters": [{"name": "version", "type": "string", "required": false, "description": "Version to release"}]},
+    {"id": "release_studio", "name": "Release Studio", "description": "Run the full studio release flow (build frontend, deploy)", "parameters": [{"name": "version", "type": "string", "required": false, "description": "Version to release"}]},
+    {"id": "rebuild_runtime", "name": "Rebuild Runtime", "description": "Rebuild the runtime docker container from scratch", "parameters": []},
+    {"id": "rebuild_studio", "name": "Rebuild Studio", "description": "Rebuild the studio docker container from scratch", "parameters": []},
+    {"id": "rebuild_all", "name": "Rebuild All", "description": "Rebuild all docker containers (full docker-compose recreate)", "parameters": []},
+    {"id": "restart_runtime", "name": "Restart Runtime", "description": "Restart the runtime container without rebuilding", "parameters": []},
+    {"id": "restart_all", "name": "Restart All", "description": "Restart all docker containers", "parameters": []},
+    {"id": "docker_logs", "name": "Docker Logs", "description": "Show docker container logs", "parameters": [{"name": "service", "type": "string", "required": false, "description": "Service name to show logs for"}]},
+    {"id": "docker_status", "name": "Docker Status", "description": "Show status of all docker containers", "parameters": []}
+  ]
+}

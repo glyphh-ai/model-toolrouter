@@ -1,6 +1,6 @@
-name: DevOps Tool Router
-description: Routes natural language DevOps requests to release step functions using HDC similarity matching on intent vectors.
-version: 0.1.0
+name: SaaS Tool Router
+description: Routes natural language SaaS requests to tool functions across 8 domains using HDC similarity matching on intent vectors. 38 tools, sub-10ms, zero tokens.
+version: 2.2.0
 author: Glyphh AI
 license: MIT
 icon: 🔀
@@ -8,7 +8,13 @@ category: routing
 public: true
 tags:
   - tool-routing
-  - devops
-  - release-management
-  - ci-cd
+  - saas
   - intent-matching
+  - slack
+  - email
+  - crm
+  - stripe
+  - jira
+  - analytics
+  - calendar
+  - gdrive

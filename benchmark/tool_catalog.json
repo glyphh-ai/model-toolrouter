@@ -1,8 +1,9 @@
 {
   "metadata": {
-    "version": "2.0.0",
-    "description": "Real-world SaaS tool catalog for hallucination benchmarking. 40 tools across 8 domains with deliberate overlaps in verbs and nouns.",
-    "domains": ["messaging", "email", "crm", "payments", "calendar", "files", "tickets", "analytics"]
+    "version": "2.2.0",
+    "description": "Real-world SaaS tool catalog for hallucination benchmarking. 38 tools across 8 domains with deliberate overlaps in verbs and nouns. Schemas tightened: null values rejected, required fields enforced, anyOf constraints added.",
+    "domains": ["messaging", "email", "crm", "payments", "calendar", "files", "tickets", "analytics"],
+    "routing_policy": "highest_impact — for multi-action queries, select the tool for the highest-impact or most irreversible action. Secondary actions (notifications, logging) are deferred."
   },
   "tools": [
     {
@@ -151,7 +152,7 @@
     },
     {
       "name": "crm_get_contact",
-      "description": "Fetch a CRM contact record by email address or contact ID.",
+      "description": "Fetch a CRM contact record by email address or contact ID. At least one identifier is required.",
       "domain": "crm",
       "schema": {
         "type": "object",
@@ -159,6 +160,7 @@
           "email": {"type": "string"},
           "contact_id": {"type": "string"}
         },
+        "anyOf": [{"required": ["email"]}, {"required": ["contact_id"]}],
         "additionalProperties": false
       }
     },
@@ -257,7 +259,7 @@
     },
     {
       "name": "stripe_get_customer",
-      "description": "Retrieve a Stripe customer record by customer ID or email.",
+      "description": "Retrieve a Stripe customer record by customer ID or email. At least one identifier is required.",
       "domain": "payments",
       "schema": {
         "type": "object",
@@ -265,6 +267,7 @@
           "customer_id": {"type": "string"},
           "email": {"type": "string"}
         },
+        "anyOf": [{"required": ["customer_id"]}, {"required": ["email"]}],
         "additionalProperties": false
       }
     },

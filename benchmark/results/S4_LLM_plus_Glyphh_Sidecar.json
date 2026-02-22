@@ -1,37 +1,37 @@
 {
-  "name": "S1: LLM Only",
+  "name": "S4: LLM + Glyphh Sidecar",
   "total": 95,
-  "tool_accuracy": 0.9157894736842105,
-  "tool_correct": 87,
+  "tool_accuracy": 0.9894736842105263,
+  "tool_correct": 94,
   "invalid_tool_rate": 0.0,
   "invalid_tools": 0,
   "schema_validity": 1.0,
-  "schema_valid": 69,
-  "schema_total": 69,
+  "schema_valid": 72,
+  "schema_total": 72,
   "skip_schema": false,
-  "e2e_accuracy": 0.8873239436619719,
-  "e2e_correct": 63,
+  "e2e_accuracy": 1.0,
+  "e2e_correct": 71,
   "e2e_total": 71,
-  "abstain_accuracy": 1.0,
-  "abstain_correct": 24,
+  "abstain_accuracy": 0.9583333333333334,
+  "abstain_correct": 23,
   "abstain_total": 24,
-  "in_scope_accuracy": 0.8873239436619719,
-  "in_scope_correct": 63,
+  "in_scope_accuracy": 1.0,
+  "in_scope_correct": 71,
   "in_scope_total": 71,
-  "latency_mean_ms": 1819.8537957257174,
-  "latency_p50_ms": 1818.9661310025258,
-  "latency_p95_ms": 3072.728441999061,
-  "tokens_total": 229574,
-  "tokens_mean": 2416.5684210526315,
+  "latency_mean_ms": 1655.3318881993428,
+  "latency_p50_ms": 1537.9513009975199,
+  "latency_p95_ms": 2551.7157659924123,
+  "tokens_total": 232244,
+  "tokens_mean": 2444.6736842105265,
   "categories": {
     "adversarial": {
       "total": 15,
-      "correct": 14,
-      "accuracy": 0.9333333333333333,
+      "correct": 15,
+      "accuracy": 1.0,
       "invalid_tools": 0,
-      "schema_valid": 5,
-      "schema_total": 5,
-      "e2e_correct": 5,
+      "schema_valid": 6,
+      "schema_total": 6,
+      "e2e_correct": 6,
       "e2e_total": 6
     },
     "clear": {
@@ -46,21 +46,21 @@
     },
     "near_collision": {
       "total": 35,
-      "correct": 28,
-      "accuracy": 0.8,
+      "correct": 35,
+      "accuracy": 1.0,
       "invalid_tools": 0,
-      "schema_valid": 34,
-      "schema_total": 34,
-      "e2e_correct": 28,
+      "schema_valid": 35,
+      "schema_total": 35,
+      "e2e_correct": 35,
       "e2e_total": 35
     },
     "open_set": {
       "total": 15,
-      "correct": 15,
-      "accuracy": 1.0,
+      "correct": 14,
+      "accuracy": 0.9333333333333333,
       "invalid_tools": 0,
-      "schema_valid": 0,
-      "schema_total": 0,
+      "schema_valid": 1,
+      "schema_total": 1,
       "e2e_correct": 0,
       "e2e_total": 0
     },
@@ -87,7 +87,7 @@
         "text": "The deploy is done"
       },
       "confidence": 1.0,
-      "latency_ms": 3945.498854998732,
+      "latency_ms": 1745.4156890016748,
       "tokens": 2416,
       "tool_correct": true,
       "tool_label": "correct",
@@ -96,7 +96,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user requested to send a message to a specific Slack channel, which matches the functionality of the slack_send_message tool.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "slack_send_message",
+      "glyphh_tool": "slack_send_message",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "clear_02",
@@ -112,7 +116,7 @@
         "body": "Please find attached the quarterly report."
       },
       "confidence": 1.0,
-      "latency_ms": 2586.780582991196,
+      "latency_ms": 1535.8646399836289,
       "tokens": 2427,
       "tool_correct": true,
       "tool_label": "correct",
@@ -121,7 +125,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user requested to send an email with a specific recipient, subject, and body content.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "email_send",
+      "glyphh_tool": "email_send",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "clear_03",
@@ -133,7 +141,7 @@
         "email": "sarah@bigcorp.com"
       },
       "confidence": 0.9,
-      "latency_ms": 2142.883703010739,
+      "latency_ms": 1227.6826680026716,
       "tokens": 2407,
       "tool_correct": true,
       "tool_label": "correct",
@@ -142,7 +150,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user requested to look up a contact record by email, which matches the parameters of the crm_get_contact tool.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "crm_get_contact",
+      "glyphh_tool": "crm_get_contact",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "clear_04",
@@ -154,7 +166,7 @@
         "charge_id": "ch_3abc123"
       },
       "confidence": 1.0,
-      "latency_ms": 2048.9584570023,
+      "latency_ms": 1480.6306509999558,
       "tokens": 2409,
       "tool_correct": true,
       "tool_label": "correct",
@@ -163,7 +175,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user requested a full refund for a specific charge ID, which directly maps to the stripe_refund tool.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "stripe_refund",
+      "glyphh_tool": "stripe_refund",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "clear_05",
@@ -177,8 +193,8 @@
         "end": "2023-10-30T11:00:00"
       },
       "confidence": 0.9,
-      "latency_ms": 2866.421245998936,
-      "tokens": 2442,
+      "latency_ms": 1899.2083159973845,
+      "tokens": 2431,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
@@ -186,7 +202,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user requested to create a calendar event for a meeting, which matches the calendar_create_event tool.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "calendar_create_event",
+      "glyphh_tool": "calendar_create_event",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "clear_06",
@@ -200,7 +220,7 @@
         "name": "design_mockup.png"
       },
       "confidence": 0.8,
-      "latency_ms": 1841.3964330102317,
+      "latency_ms": 1739.2704179947032,
       "tokens": 2423,
       "tool_correct": true,
       "tool_label": "correct",
@@ -209,7 +229,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user wants to upload a file to Google Drive, which matches the gdrive_upload tool.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "gdrive_upload",
+      "glyphh_tool": "gdrive_upload",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "clear_07",
@@ -224,7 +248,7 @@
         "issue_type": "bug"
       },
       "confidence": 0.9,
-      "latency_ms": 1842.772165997303,
+      "latency_ms": 1537.9513009975199,
       "tokens": 2433,
       "tool_correct": true,
       "tool_label": "correct",
@@ -233,7 +257,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user is requesting to create a bug ticket in a specific Jira project, which matches the parameters of the jira_create_ticket tool.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "jira_create_ticket",
+      "glyphh_tool": "jira_create_ticket",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "clear_08",
@@ -246,17 +274,21 @@
         "user_id": "u_12345",
         "properties": {}
       },
-      "confidence": 1.0,
-      "latency_ms": 1843.0356570024742,
-      "tokens": 2412,
+      "confidence": 0.9,
+      "latency_ms": 1432.2520879941294,
+      "tokens": 2411,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The request is to track a specific event related to user signup, which directly corresponds to the analytics_track_event tool.",
-      "error": null
+      "reasoning": "The request is to track a specific event related to user signups, which aligns with the analytics tracking functionality.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "analytics_track_event",
+      "glyphh_tool": "analytics_track_event",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "clear_09",
@@ -270,7 +302,7 @@
         "count": 100
       },
       "confidence": 0.9,
-      "latency_ms": 3072.728441999061,
+      "latency_ms": 1638.2967259996803,
       "tokens": 2423,
       "tool_correct": true,
       "tool_label": "correct",
@@ -279,7 +311,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user wants to search for messages related to a specific topic in Slack, which aligns with the functionality of the slack_search_messages tool.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "slack_search_messages",
+      "glyphh_tool": "slack_search_messages",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "clear_10",
@@ -292,7 +328,7 @@
         "at_period_end": true
       },
       "confidence": 1.0,
-      "latency_ms": 2558.889473002637,
+      "latency_ms": 1433.290204993682,
       "tokens": 2419,
       "tool_correct": true,
       "tool_label": "correct",
@@ -301,7 +337,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user requested to cancel a subscription at the end of the billing period, which matches the parameters for the stripe_cancel_subscription tool.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "stripe_cancel_subscription",
+      "glyphh_tool": "stripe_cancel_subscription",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "clear_11",
@@ -314,7 +354,7 @@
         "status_emoji": ":calendar:"
       },
       "confidence": 1.0,
-      "latency_ms": 1536.9139169924892,
+      "latency_ms": 1739.4393439753912,
       "tokens": 2417,
       "tool_correct": true,
       "tool_label": "correct",
@@ -323,7 +363,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user requested to set their Slack status, which matches the slack_set_status tool.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "slack_set_status",
+      "glyphh_tool": "slack_set_status",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "clear_12",
@@ -336,16 +380,20 @@
         "max_results": 100
       },
       "confidence": 0.9,
-      "latency_ms": 2352.6303969993023,
-      "tokens": 2427,
+      "latency_ms": 2046.7567650193814,
+      "tokens": 2428,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The user is looking for open bugs assigned to them, which can be retrieved using a JQL query in Jira.",
-      "error": null
+      "reasoning": "The user wants to find open bugs assigned to them in Jira, which can be accomplished using a JQL query to search for issues based on assignee and status.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "jira_search",
+      "glyphh_tool": "jira_search",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "clear_13",
@@ -363,7 +411,7 @@
         "end_date": "2023-10-31"
       },
       "confidence": 0.9,
-      "latency_ms": 2049.4008859968744,
+      "latency_ms": 1945.8877249999205,
       "tokens": 2430,
       "tool_correct": true,
       "tool_label": "correct",
@@ -372,7 +420,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The request is for conversion funnel data, which matches the analytics_get_funnel tool that retrieves data for a sequence of events.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "analytics_get_funnel",
+      "glyphh_tool": "analytics_get_funnel",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "clear_14",
@@ -386,7 +438,7 @@
         "max_results": 100
       },
       "confidence": 0.9,
-      "latency_ms": 3274.6936790063046,
+      "latency_ms": 1843.6552280036267,
       "tokens": 2439,
       "tool_correct": true,
       "tool_label": "correct",
@@ -395,7 +447,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user requested to list upcoming calendar events, which aligns with the 'calendar_list_events' tool.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "calendar_list_events",
+      "glyphh_tool": "calendar_list_events",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "clear_15",
@@ -409,7 +465,7 @@
         "role": "writer"
       },
       "confidence": 0.9,
-      "latency_ms": 2353.7323259952245,
+      "latency_ms": 1433.5492710088147,
       "tokens": 2424,
       "tool_correct": true,
       "tool_label": "correct",
@@ -417,8 +473,12 @@
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The request is to share a Google Drive file with a specific user as an editor, which matches the gdrive_share tool.",
-      "error": null
+      "reasoning": "The user wants to share a Google Drive file with a specific user as an editor, which matches the gdrive_share tool.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "gdrive_share",
+      "glyphh_tool": "gdrive_share",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "clear_16",
@@ -432,16 +492,20 @@
         "reply_all": false
       },
       "confidence": 0.9,
-      "latency_ms": 1844.3596949946368,
-      "tokens": 2431,
+      "latency_ms": 1637.763537990395,
+      "tokens": 2433,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The user wants to reply to an email from Jake regarding the contract, indicating acceptance of the terms. The message ID is assumed as a placeholder since it wasn't provided.",
-      "error": null
+      "reasoning": "The user wants to reply to an existing email thread, which requires the message ID of Jake's email. I used a placeholder for the message ID as it was not provided.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "email_reply",
+      "glyphh_tool": "email_reply",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "clear_17",
@@ -454,7 +518,7 @@
         "body": "The fix is deployed to production."
       },
       "confidence": 1.0,
-      "latency_ms": 1741.0440580133582,
+      "latency_ms": 1865.9681909921346,
       "tokens": 2423,
       "tool_correct": true,
       "tool_label": "correct",
@@ -463,7 +527,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The request is to add a comment to a specific Jira ticket, which matches the jira_add_comment tool.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "jira_add_comment",
+      "glyphh_tool": "jira_add_comment",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "clear_18",
@@ -475,7 +543,7 @@
         "customer_id": "cus_abc123"
       },
       "confidence": 1.0,
-      "latency_ms": 1330.0700630061328,
+      "latency_ms": 1515.221951995045,
       "tokens": 2403,
       "tool_correct": true,
       "tool_label": "correct",
@@ -484,7 +552,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user requested to retrieve a Stripe customer record using the customer ID, which matches the parameters of the stripe_get_customer tool.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "stripe_get_customer",
+      "glyphh_tool": "stripe_get_customer",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "clear_19",
@@ -500,7 +572,7 @@
         "close_date": ""
       },
       "confidence": 1.0,
-      "latency_ms": 2865.256025994313,
+      "latency_ms": 2047.5377759867115,
       "tokens": 2444,
       "tool_correct": true,
       "tool_label": "correct",
@@ -509,7 +581,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The request is to create a new deal in the CRM, which matches the 'crm_create_deal' tool.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "crm_create_deal",
+      "glyphh_tool": "crm_create_deal",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "clear_20",
@@ -521,17 +597,21 @@
         "user": "alice@acme.com",
         "text": "Hi Alice, are you free for a sync?"
       },
-      "confidence": 0.9,
-      "latency_ms": 2253.076377994148,
-      "tokens": 2433,
+      "confidence": 1.0,
+      "latency_ms": 1426.7737079935614,
+      "tokens": 2422,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The request is to send a direct message to a specific user on Slack, which matches the 'slack_send_dm' tool.",
-      "error": null
+      "reasoning": "The user wants to send a direct message to a specific Slack user, which matches the 'slack_send_dm' tool.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "slack_send_dm",
+      "glyphh_tool": "slack_send_dm",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_01",
@@ -544,7 +624,7 @@
         "text": "Hi Alice, I wanted to update you on the project. Please let me know when you're available to discuss."
       },
       "confidence": 0.9,
-      "latency_ms": 2140.531637996901,
+      "latency_ms": 1947.1225759916706,
       "tokens": 2439,
       "tool_correct": true,
       "tool_label": "correct",
@@ -552,8 +632,12 @@
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The user requested to send a message to a specific email address, which corresponds to the direct messaging functionality in Slack.",
-      "error": null
+      "reasoning": "The user requested to send a message to a specific email address, which corresponds to the direct message tool for Slack.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "slack_send_dm",
+      "glyphh_tool": "slack_send_dm",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_02",
@@ -566,7 +650,7 @@
         "max_results": 10
       },
       "confidence": 0.9,
-      "latency_ms": 2261.5968429890927,
+      "latency_ms": 1536.4391040056944,
       "tokens": 2409,
       "tool_correct": true,
       "tool_label": "correct",
@@ -575,27 +659,48 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user is looking for an email related to invoices from Stripe, which can be accomplished by searching the email inbox.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "email_search",
+      "glyphh_tool": "email_search",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_03",
       "category": "near_collision",
       "query": "Find the customer record for bob@startup.io",
       "expected_tool": "crm_get_contact",
-      "result_tool": "stripe_get_customer",
+      "result_tool": "crm_get_contact",
       "result_args": {
         "email": "bob@startup.io"
       },
-      "confidence": 0.9,
-      "latency_ms": 1331.4728270052,
-      "tokens": 2410,
-      "tool_correct": false,
-      "tool_label": "wrong_tool",
+      "confidence": 0.8258,
+      "latency_ms": 2756.9205750187393,
+      "tokens": 2703,
+      "tool_correct": true,
+      "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The user is looking for a customer record, which can be retrieved using the 'stripe_get_customer' tool by providing the email address.",
+      "top_3": [
+        {
+          "tool": "crm_get_contact",
+          "score": 0.8258
+        },
+        {
+          "tool": "crm_get_contact",
+          "score": 0.5904
+        },
+        {
+          "tool": "crm_get_contact",
+          "score": 0.5902
+        }
+      ],
+      "routing_source": "glyphh_override",
+      "llm_tool": "stripe_get_customer",
+      "glyphh_tool": "crm_get_contact",
+      "sidecar_action": "override",
       "error": null
     },
     {
@@ -609,16 +714,20 @@
         "at_period_end": false
       },
       "confidence": 0.9,
-      "latency_ms": 2149.536145996535,
-      "tokens": 2440,
+      "latency_ms": 1439.6012690122006,
+      "tokens": 2423,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The request to cancel the subscription is clear, and I selected the 'stripe_cancel_subscription' tool to perform this action. However, the email notification part cannot be executed with the available tools, so I focused on the cancellation.",
-      "error": null
+      "reasoning": "The request to cancel the subscription is prioritized as it is an irreversible action. The email notification is secondary and not handled by the tools available.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "stripe_cancel_subscription",
+      "glyphh_tool": "stripe_cancel_subscription",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_05",
@@ -631,7 +740,7 @@
         "assignee": "dave@acme.com"
       },
       "confidence": 1.0,
-      "latency_ms": 1945.4944099998102,
+      "latency_ms": 1945.98323199898,
       "tokens": 2424,
       "tool_correct": true,
       "tool_label": "correct",
@@ -640,7 +749,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user wants to assign a specific Jira ticket to a user, which directly matches the jira_assign_ticket tool.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "jira_assign_ticket",
+      "glyphh_tool": "jira_assign_ticket",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_06",
@@ -653,7 +766,7 @@
         "text": "The new feature is live!"
       },
       "confidence": 1.0,
-      "latency_ms": 1844.3517539999448,
+      "latency_ms": 1637.752549999277,
       "tokens": 2416,
       "tool_correct": true,
       "tool_label": "correct",
@@ -662,7 +775,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user wants to send a message to a Slack channel, which matches the 'slack_send_message' tool.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "slack_send_message",
+      "glyphh_tool": "slack_send_message",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_07",
@@ -674,8 +791,8 @@
         "query": "Q3 roadmap"
       },
       "confidence": 0.9,
-      "latency_ms": 1432.3106259980705,
-      "tokens": 2405,
+      "latency_ms": 1330.5593130062334,
+      "tokens": 2398,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
@@ -683,7 +800,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user is looking for files related to the Q3 roadmap, which can be accomplished using the gdrive_search tool.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "gdrive_search",
+      "glyphh_tool": "gdrive_search",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_08",
@@ -695,16 +816,20 @@
         "customer_id": "cus_xyz"
       },
       "confidence": 0.9,
-      "latency_ms": 1227.4722239963012,
-      "tokens": 2402,
+      "latency_ms": 1025.6791790015996,
+      "tokens": 2403,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The user is requesting payment history, which can be retrieved by listing invoices for the specified customer ID.",
-      "error": null
+      "reasoning": "The user is looking for payment history, which can be retrieved by listing invoices for the specified customer ID.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "stripe_list_invoices",
+      "glyphh_tool": "stripe_list_invoices",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_09",
@@ -719,7 +844,7 @@
         "company": "Globex Corp"
       },
       "confidence": 1.0,
-      "latency_ms": 3379.806272001588,
+      "latency_ms": 1535.6322869920405,
       "tokens": 2433,
       "tool_correct": true,
       "tool_label": "correct",
@@ -728,7 +853,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The request is to create a new contact in the CRM with the provided details.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "crm_create_contact",
+      "glyphh_tool": "crm_create_contact",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_10",
@@ -744,16 +873,20 @@
         "body": "Dear Team,\n\nI hope this message finds you well. I wanted to inform you about the upcoming release scheduled for next week. Please make sure to review the release notes and prepare any necessary updates on your end.\n\nBest regards,\n[Your Name]"
       },
       "confidence": 0.9,
-      "latency_ms": 3276.853247996769,
-      "tokens": 2479,
+      "latency_ms": 2454.988635989139,
+      "tokens": 2477,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The user requested to draft an email without sending it, which aligns with the 'email_create_draft' tool.",
-      "error": null
+      "reasoning": "The user requested to draft an email without sending it, which aligns with the email_create_draft tool.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "email_create_draft",
+      "glyphh_tool": "email_create_draft",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_11",
@@ -768,16 +901,20 @@
         "duration_minutes": 30
       },
       "confidence": 0.9,
-      "latency_ms": 1841.9737840013113,
-      "tokens": 2431,
+      "latency_ms": 2147.87708298536,
+      "tokens": 2436,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The request is to find available time slots for a call, which matches the functionality of the calendar_find_free_time tool.",
-      "error": null
+      "reasoning": "The user is looking to find available time slots for a call with a specific attendee, which matches the functionality of the calendar_find_free_time tool.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "calendar_find_free_time",
+      "glyphh_tool": "calendar_find_free_time",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_12",
@@ -792,7 +929,7 @@
         "description": "Charge for overage"
       },
       "confidence": 1.0,
-      "latency_ms": 2354.465666998294,
+      "latency_ms": 1541.407172990148,
       "tokens": 2430,
       "tool_correct": true,
       "tool_label": "correct",
@@ -801,7 +938,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The request is to charge a customer for an overage, which directly maps to the stripe_charge tool.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "stripe_charge",
+      "glyphh_tool": "stripe_charge",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_13",
@@ -813,40 +954,60 @@
         "limit": 100
       },
       "confidence": 1.0,
-      "latency_ms": 1845.9039820008911,
-      "tokens": 2406,
+      "latency_ms": 1025.2018809842411,
+      "tokens": 2400,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The user is requesting to list all public Slack channels in the workspace, which directly corresponds to the slack_list_channels tool.",
-      "error": null
+      "reasoning": "The user wants to list all public Slack channels in their workspace, which directly corresponds to the 'slack_list_channels' tool.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "slack_list_channels",
+      "glyphh_tool": "slack_list_channels",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_14",
       "category": "near_collision",
       "query": "Log that user u_555 just upgraded to the pro plan",
       "expected_tool": "analytics_identify_user",
-      "result_tool": "analytics_track_event",
+      "result_tool": "analytics_identify_user",
       "result_args": {
-        "event_name": "User Upgrade",
         "user_id": "u_555",
-        "properties": {
+        "traits": {
           "plan": "pro"
         }
       },
-      "confidence": 0.9,
-      "latency_ms": 1738.0356270004995,
-      "tokens": 2430,
-      "tool_correct": false,
-      "tool_label": "wrong_tool",
+      "confidence": 0.8252,
+      "latency_ms": 2345.2640119940042,
+      "tokens": 2726,
+      "tool_correct": true,
+      "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The request to log a user upgrade aligns with tracking an event in analytics, which is best handled by the analytics_track_event tool.",
+      "top_3": [
+        {
+          "tool": "analytics_identify_user",
+          "score": 0.8252
+        },
+        {
+          "tool": "analytics_identify_user",
+          "score": 0.8237
+        },
+        {
+          "tool": "analytics_identify_user",
+          "score": 0.8228
+        }
+      ],
+      "routing_source": "glyphh_override",
+      "llm_tool": "analytics_track_event",
+      "glyphh_tool": "analytics_identify_user",
+      "sidecar_action": "override",
       "error": null
     },
     {
@@ -854,22 +1015,37 @@
       "category": "near_collision",
       "query": "Remove the standup meeting from my calendar for tomorrow",
       "expected_tool": "calendar_delete_event",
-      "result_tool": "calendar_list_events",
+      "result_tool": "calendar_delete_event",
       "result_args": {
-        "start_date": "2023-10-04T00:00:00Z",
-        "end_date": "2023-10-04T23:59:59Z",
-        "max_results": 100
+        "event_id": "standup_meeting_tomorrow"
       },
-      "confidence": 0.9,
-      "latency_ms": 2047.658525989391,
-      "tokens": 2443,
-      "tool_correct": false,
-      "tool_label": "wrong_tool",
+      "confidence": 0.8237,
+      "latency_ms": 2559.2849839886185,
+      "tokens": 2703,
+      "tool_correct": true,
+      "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "To remove the standup meeting, I first need to list the events for tomorrow to find the specific event ID.",
+      "top_3": [
+        {
+          "tool": "calendar_delete_event",
+          "score": 0.8237
+        },
+        {
+          "tool": "calendar_create_event",
+          "score": 0.5283
+        },
+        {
+          "tool": "calendar_create_event",
+          "score": 0.5269
+        }
+      ],
+      "routing_source": "glyphh_override",
+      "llm_tool": "calendar_list_events",
+      "glyphh_tool": "calendar_delete_event",
+      "sidecar_action": "override",
       "error": null
     },
     {
@@ -881,16 +1057,33 @@
       "result_args": {
         "email": "lisa@bigcorp.com"
       },
-      "confidence": 1.0,
-      "latency_ms": 1739.6888549992582,
-      "tokens": 2410,
+      "confidence": 0.8226,
+      "latency_ms": 2353.4568560135085,
+      "tokens": 2707,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The user requested to pull up a customer record by email, which matches the parameters of the crm_get_contact tool.",
+      "top_3": [
+        {
+          "tool": "crm_get_contact",
+          "score": 0.8226
+        },
+        {
+          "tool": "crm_get_contact",
+          "score": 0.5924
+        },
+        {
+          "tool": "crm_get_contact",
+          "score": 0.5891
+        }
+      ],
+      "routing_source": "glyphh_override",
+      "llm_tool": "stripe_get_customer",
+      "glyphh_tool": "crm_get_contact",
+      "sidecar_action": "override",
       "error": null
     },
     {
@@ -903,7 +1096,7 @@
         "customer_id": "cus_abc"
       },
       "confidence": 1.0,
-      "latency_ms": 1228.5499930003425,
+      "latency_ms": 1235.75332701148,
       "tokens": 2403,
       "tool_correct": true,
       "tool_label": "correct",
@@ -911,29 +1104,49 @@
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The user is requesting to retrieve a Stripe customer record by customer ID, which matches the parameters of the stripe_get_customer tool.",
-      "error": null
+      "reasoning": "The user requested a customer record from Stripe using a specific customer ID, which matches the parameters for the stripe_get_customer tool.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "stripe_get_customer",
+      "glyphh_tool": "stripe_get_customer",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_18",
       "category": "near_collision",
       "query": "Show me the customer details for someone at Acme Corp",
       "expected_tool": "crm_get_contact",
-      "result_tool": "crm_search_contacts",
+      "result_tool": "crm_get_contact",
       "result_args": {
-        "query": "Acme Corp",
-        "field": "company"
+        "email": "placeholder@acmecorp.com"
       },
-      "confidence": 0.9,
-      "latency_ms": 1434.2105239920784,
-      "tokens": 2414,
-      "tool_correct": false,
-      "tool_label": "wrong_tool",
+      "confidence": 0.8214,
+      "latency_ms": 2655.2497329976177,
+      "tokens": 2712,
+      "tool_correct": true,
+      "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The user is looking for customer details related to a specific company, which can be retrieved using the crm_search_contacts tool.",
+      "top_3": [
+        {
+          "tool": "crm_get_contact",
+          "score": 0.8214
+        },
+        {
+          "tool": "crm_get_contact",
+          "score": 0.5935
+        },
+        {
+          "tool": "crm_get_contact",
+          "score": 0.5904
+        }
+      ],
+      "routing_source": "glyphh_override",
+      "llm_tool": "crm_search_contacts",
+      "glyphh_tool": "crm_get_contact",
+      "sidecar_action": "override",
       "error": null
     },
     {
@@ -946,16 +1159,20 @@
         "customer_id": "cus_xyz999"
       },
       "confidence": 0.9,
-      "latency_ms": 2047.4297350010602,
-      "tokens": 2407,
+      "latency_ms": 1441.8414089886937,
+      "tokens": 2405,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The user is requesting billing information for a specific customer, which can be retrieved using the 'stripe_get_customer' tool.",
-      "error": null
+      "reasoning": "The user is requesting billing information for a specific customer, which can be retrieved using the stripe_get_customer tool.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "stripe_get_customer",
+      "glyphh_tool": "stripe_get_customer",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_20",
@@ -969,7 +1186,7 @@
         "limit": 100
       },
       "confidence": 0.8,
-      "latency_ms": 2047.637013005442,
+      "latency_ms": 1737.5639310048427,
       "tokens": 2416,
       "tool_correct": true,
       "tool_label": "correct",
@@ -978,27 +1195,48 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user is looking for payment history, which can be retrieved through the Stripe invoices for the client.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "stripe_list_invoices",
+      "glyphh_tool": "stripe_list_invoices",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_21",
       "category": "near_collision",
       "query": "Find the contact info for the Globex account",
       "expected_tool": "crm_get_contact",
-      "result_tool": "crm_search_contacts",
+      "result_tool": "crm_get_contact",
       "result_args": {
-        "query": "Globex"
+        "email": "globex@example.com"
       },
-      "confidence": 0.9,
-      "latency_ms": 1841.9235860055778,
-      "tokens": 2404,
-      "tool_correct": false,
-      "tool_label": "wrong_tool",
+      "confidence": 0.8247,
+      "latency_ms": 2143.0318959755823,
+      "tokens": 2697,
+      "tool_correct": true,
+      "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The user is looking for contact information related to the Globex account, which can be found by searching CRM contacts.",
+      "top_3": [
+        {
+          "tool": "crm_get_contact",
+          "score": 0.8247
+        },
+        {
+          "tool": "crm_get_contact",
+          "score": 0.8243
+        },
+        {
+          "tool": "crm_get_contact",
+          "score": 0.8201
+        }
+      ],
+      "routing_source": "glyphh_override",
+      "llm_tool": "crm_search_contacts",
+      "glyphh_tool": "crm_get_contact",
+      "sidecar_action": "override",
       "error": null
     },
     {
@@ -1006,25 +1244,40 @@
       "category": "near_collision",
       "query": "Log that user u_900 switched from free to premium",
       "expected_tool": "analytics_identify_user",
-      "result_tool": "analytics_track_event",
+      "result_tool": "analytics_identify_user",
       "result_args": {
-        "event_name": "subscription_change",
         "user_id": "u_900",
-        "properties": {
-          "previous_plan": "free",
-          "new_plan": "premium"
+        "traits": {
+          "plan": "premium"
         }
       },
-      "confidence": 0.9,
-      "latency_ms": 3071.399073000066,
-      "tokens": 2432,
-      "tool_correct": false,
-      "tool_label": "wrong_tool",
+      "confidence": 0.8264,
+      "latency_ms": 2354.3260779988486,
+      "tokens": 2728,
+      "tool_correct": true,
+      "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The request involves tracking a user event related to a subscription change, which aligns with the analytics tracking tool.",
+      "top_3": [
+        {
+          "tool": "analytics_identify_user",
+          "score": 0.8264
+        },
+        {
+          "tool": "analytics_identify_user",
+          "score": 0.8239
+        },
+        {
+          "tool": "analytics_identify_user",
+          "score": 0.8203
+        }
+      ],
+      "routing_source": "glyphh_override",
+      "llm_tool": "analytics_track_event",
+      "glyphh_tool": "analytics_identify_user",
+      "sidecar_action": "override",
       "error": null
     },
     {
@@ -1039,7 +1292,7 @@
         "properties": {}
       },
       "confidence": 0.9,
-      "latency_ms": 1945.2061839983799,
+      "latency_ms": 1748.598634992959,
       "tokens": 2417,
       "tool_correct": true,
       "tool_label": "correct",
@@ -1048,25 +1301,51 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The request is to track a custom analytics event, which matches the 'analytics_track_event' tool.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "analytics_track_event",
+      "glyphh_tool": "analytics_track_event",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_24",
       "category": "near_collision",
       "query": "Log that user u_321 changed their email to new@acme.com",
       "expected_tool": "analytics_identify_user",
-      "result_tool": null,
-      "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 1637.093882993213,
-      "tokens": 2401,
-      "tool_correct": false,
-      "tool_label": "false_abstain",
+      "result_tool": "analytics_identify_user",
+      "result_args": {
+        "user_id": "u_321",
+        "traits": {
+          "email": "new@acme.com"
+        }
+      },
+      "confidence": 0.8258,
+      "latency_ms": 2551.7157659924123,
+      "tokens": 2738,
+      "tool_correct": true,
+      "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The request does not map to any tool in the catalog as it involves logging an event, which is not supported.",
+      "top_3": [
+        {
+          "tool": "analytics_identify_user",
+          "score": 0.8258
+        },
+        {
+          "tool": "analytics_identify_user",
+          "score": 0.822
+        },
+        {
+          "tool": "analytics_identify_user",
+          "score": 0.8195
+        }
+      ],
+      "routing_source": "glyphh_override",
+      "llm_tool": "analytics_track_event",
+      "glyphh_tool": "analytics_identify_user",
+      "sidecar_action": "override",
       "error": null
     },
     {
@@ -1081,8 +1360,8 @@
           "page": "pricing"
         }
       },
-      "confidence": 0.9,
-      "latency_ms": 1844.7098470060155,
+      "confidence": 1.0,
+      "latency_ms": 1647.327280996251,
       "tokens": 2410,
       "tool_correct": true,
       "tool_label": "correct",
@@ -1091,7 +1370,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The request is to track a specific event, which aligns with the analytics_track_event tool.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "analytics_track_event",
+      "glyphh_tool": "analytics_track_event",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_26",
@@ -1104,7 +1387,7 @@
         "text": "Hi Alice, just a reminder about the upcoming deadline."
       },
       "confidence": 0.9,
-      "latency_ms": 1329.8537279915763,
+      "latency_ms": 1431.8493700120598,
       "tokens": 2411,
       "tool_correct": true,
       "tool_label": "correct",
@@ -1113,7 +1396,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user wants to send a direct message to Alice on Slack regarding a deadline.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "slack_send_dm",
+      "glyphh_tool": "slack_send_dm",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_27",
@@ -1128,8 +1415,8 @@
         "subject": "Deadline Reminder",
         "body": "This is a reminder about the upcoming deadline."
       },
-      "confidence": 0.8,
-      "latency_ms": 1841.888121998636,
+      "confidence": 0.9,
+      "latency_ms": 2454.8281190072885,
       "tokens": 2421,
       "tool_correct": true,
       "tool_label": "correct",
@@ -1138,7 +1425,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user wants to send an email to Alice regarding a deadline, so the email_send tool is appropriate.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "email_send",
+      "glyphh_tool": "email_send",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_28",
@@ -1148,19 +1439,23 @@
       "result_tool": "slack_send_dm",
       "result_args": {
         "user": "bob@acme.com",
-        "text": "Just a quick reminder about the standup."
+        "text": "Hey Bob, just a quick reminder about the standup."
       },
-      "confidence": 0.9,
-      "latency_ms": 1741.110614995705,
-      "tokens": 2423,
+      "confidence": 1.0,
+      "latency_ms": 1743.6207650025608,
+      "tokens": 2430,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The user wants to send a direct message to Bob on Slack regarding the standup.",
-      "error": null
+      "reasoning": "The user wants to send a direct message to Bob on Slack, which matches the slack_send_dm tool.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "slack_send_dm",
+      "glyphh_tool": "slack_send_dm",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_29",
@@ -1170,10 +1465,10 @@
       "result_tool": "slack_send_message",
       "result_args": {
         "channel": "#releases",
-        "text": "v2.0 shipped"
+        "text": "v2.0 has shipped!"
       },
       "confidence": 1.0,
-      "latency_ms": 2764.8677969991695,
+      "latency_ms": 1839.3436189799104,
       "tokens": 2418,
       "tool_correct": true,
       "tool_label": "correct",
@@ -1181,8 +1476,12 @@
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The request is to send a notification message to a specific Slack channel about the release of v2.0.",
-      "error": null
+      "reasoning": "The user wants to send a notification to a Slack channel about the release of v2.0.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "slack_send_message",
+      "glyphh_tool": "slack_send_message",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_30",
@@ -1191,19 +1490,25 @@
       "expected_tool": "stripe_list_invoices",
       "result_tool": "stripe_list_invoices",
       "result_args": {
-        "customer_id": "cus_abc"
+        "customer_id": "cus_abc",
+        "status": "paid",
+        "limit": 100
       },
       "confidence": 0.9,
-      "latency_ms": 1329.4017389998771,
-      "tokens": 2410,
+      "latency_ms": 2359.833432987216,
+      "tokens": 2419,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The user wants to check the invoices for a specific customer, which requires listing the invoices associated with that customer.",
-      "error": null
+      "reasoning": "The user wants to check the invoices for a specific customer to see if they have been paid, which aligns with the functionality of listing invoices for a customer.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "stripe_list_invoices",
+      "glyphh_tool": "stripe_list_invoices",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_31",
@@ -1218,7 +1523,7 @@
         }
       },
       "confidence": 0.9,
-      "latency_ms": 1434.8047679959564,
+      "latency_ms": 2453.2132370077306,
       "tokens": 2425,
       "tool_correct": true,
       "tool_label": "correct",
@@ -1227,7 +1532,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The request is to update a specific contact's phone number in the CRM, which matches the functionality of the crm_update_contact tool.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "crm_update_contact",
+      "glyphh_tool": "crm_update_contact",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_32",
@@ -1239,7 +1548,7 @@
         "query": "sharedWithMe"
       },
       "confidence": 0.9,
-      "latency_ms": 1433.0248829937773,
+      "latency_ms": 2048.392569005955,
       "tokens": 2413,
       "tool_correct": true,
       "tool_label": "correct",
@@ -1248,7 +1557,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user is looking for files that have been shared with them in Google Drive, which can be accomplished by searching with the query 'sharedWithMe'.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "gdrive_search",
+      "glyphh_tool": "gdrive_search",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_33",
@@ -1261,7 +1574,7 @@
         "max_results": 100
       },
       "confidence": 0.9,
-      "latency_ms": 1333.4155759948771,
+      "latency_ms": 1331.3957630161894,
       "tokens": 2411,
       "tool_correct": true,
       "tool_label": "correct",
@@ -1270,7 +1583,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user wants to search for stories in the MOBILE project, which can be accomplished using the jira_search tool with a JQL query.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "jira_search",
+      "glyphh_tool": "jira_search",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_34",
@@ -1280,21 +1597,27 @@
       "result_tool": "jira_create_ticket",
       "result_args": {
         "project_key": "API",
-        "summary": "API migration",
+        "summary": "API migration task",
+        "description": "Create a task for the API migration process.",
         "issue_type": "task",
-        "assignee": "dave@acme.com"
+        "assignee": "dave@acme.com",
+        "priority": "medium"
       },
       "confidence": 0.9,
-      "latency_ms": 1965.5143909913022,
-      "tokens": 2437,
+      "latency_ms": 2558.5713390028104,
+      "tokens": 2463,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The user requested to create a task in Jira for API migration and assign it to a specific user.",
-      "error": null
+      "reasoning": "The user requested to create a task in Jira and assign it to a specific user, which aligns with the jira_create_ticket tool.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "jira_create_ticket",
+      "glyphh_tool": "jira_create_ticket",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "coll_35",
@@ -1310,7 +1633,7 @@
         "body": "Please find the attached invoice."
       },
       "confidence": 0.9,
-      "latency_ms": 1818.9661310025258,
+      "latency_ms": 1945.1325709960656,
       "tokens": 2422,
       "tool_correct": true,
       "tool_label": "correct",
@@ -1319,7 +1642,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user requested to send an email to a specific address, which fits the email_send tool.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "email_send",
+      "glyphh_tool": "email_send",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "oos_01",
@@ -1328,8 +1655,8 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 1022.8964800044196,
+      "confidence": 0.0126,
+      "latency_ms": 1331.083906989079,
       "tokens": 2390,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1337,7 +1664,24 @@
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": true,
-      "reasoning": "The query is about the weather, which does not map to any tool in the catalog.",
+      "top_3": [
+        {
+          "tool": "slack_set_status",
+          "score": 0.0126
+        },
+        {
+          "tool": "slack_set_status",
+          "score": 0.0124
+        },
+        {
+          "tool": "jira_add_comment",
+          "score": 0.008
+        }
+      ],
+      "routing_source": "both_abstain",
+      "llm_tool": null,
+      "glyphh_tool": null,
+      "sidecar_action": "both_abstain",
       "error": null
     },
     {
@@ -1347,16 +1691,33 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 1229.6598270040704,
-      "tokens": 2391,
+      "confidence": 0.0109,
+      "latency_ms": 920.1466289960081,
+      "tokens": 2380,
       "tool_correct": true,
       "tool_label": "correct_abstain",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": true,
-      "reasoning": "The request does not match any tool in the catalog, as it is asking for translation services which are not provided.",
+      "top_3": [
+        {
+          "tool": "slack_set_status",
+          "score": 0.0109
+        },
+        {
+          "tool": "slack_set_status",
+          "score": 0.0076
+        },
+        {
+          "tool": "jira_create_ticket",
+          "score": 0.007
+        }
+      ],
+      "routing_source": "both_abstain",
+      "llm_tool": null,
+      "glyphh_tool": null,
+      "sidecar_action": "both_abstain",
       "error": null
     },
     {
@@ -1366,16 +1727,33 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 1534.1666809981689,
-      "tokens": 2385,
+      "confidence": 0.0092,
+      "latency_ms": 1331.0023300145986,
+      "tokens": 2389,
       "tool_correct": true,
       "tool_label": "correct_abstain",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": true,
-      "reasoning": "The request does not match any tool in the catalog related to deployment or application management.",
+      "top_3": [
+        {
+          "tool": "slack_set_status",
+          "score": 0.0092
+        },
+        {
+          "tool": "slack_set_status",
+          "score": 0.0087
+        },
+        {
+          "tool": "jira_add_comment",
+          "score": 0.0074
+        }
+      ],
+      "routing_source": "both_abstain",
+      "llm_tool": null,
+      "glyphh_tool": null,
+      "sidecar_action": "both_abstain",
       "error": null
     },
     {
@@ -1385,8 +1763,8 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 1126.3638590025948,
+      "confidence": 0.0113,
+      "latency_ms": 1026.2664290057728,
       "tokens": 2387,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1394,7 +1772,24 @@
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": true,
-      "reasoning": "The request to run a CI pipeline does not match any tool in the catalog.",
+      "top_3": [
+        {
+          "tool": "slack_set_status",
+          "score": 0.0113
+        },
+        {
+          "tool": "slack_set_status",
+          "score": 0.0107
+        },
+        {
+          "tool": "stripe_refund",
+          "score": 0.0067
+        }
+      ],
+      "routing_source": "both_abstain",
+      "llm_tool": null,
+      "glyphh_tool": null,
+      "sidecar_action": "both_abstain",
       "error": null
     },
     {
@@ -1404,8 +1799,8 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 921.4250509976409,
+      "confidence": 0.0098,
+      "latency_ms": 920.0581200129818,
       "tokens": 2383,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1413,7 +1808,24 @@
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": true,
-      "reasoning": "There is no tool in the catalog for generating PDF reports.",
+      "top_3": [
+        {
+          "tool": "slack_set_status",
+          "score": 0.0098
+        },
+        {
+          "tool": "stripe_refund",
+          "score": 0.0098
+        },
+        {
+          "tool": "slack_set_status",
+          "score": 0.0096
+        }
+      ],
+      "routing_source": "both_abstain",
+      "llm_tool": null,
+      "glyphh_tool": null,
+      "sidecar_action": "both_abstain",
       "error": null
     },
     {
@@ -1423,8 +1835,8 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 922.329933004221,
+      "confidence": 0.012,
+      "latency_ms": 1536.1548779910663,
       "tokens": 2384,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1432,7 +1844,24 @@
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": true,
-      "reasoning": "The request to merge branches is not supported by any tool in the catalog.",
+      "top_3": [
+        {
+          "tool": "slack_set_status",
+          "score": 0.012
+        },
+        {
+          "tool": "stripe_refund",
+          "score": 0.0094
+        },
+        {
+          "tool": "slack_set_status",
+          "score": 0.008
+        }
+      ],
+      "routing_source": "both_abstain",
+      "llm_tool": null,
+      "glyphh_tool": null,
+      "sidecar_action": "both_abstain",
       "error": null
     },
     {
@@ -1442,16 +1871,33 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 1124.6659040043596,
-      "tokens": 2402,
+      "confidence": 0.2404,
+      "latency_ms": 1126.6432990087196,
+      "tokens": 2400,
       "tool_correct": true,
       "tool_label": "correct_abstain",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": true,
-      "reasoning": "The request is for sending a text message to a phone number, but there is no tool in the catalog that supports sending SMS messages.",
+      "top_3": [
+        {
+          "tool": "slack_search_messages",
+          "score": 0.2404
+        },
+        {
+          "tool": "slack_set_status",
+          "score": 0.0106
+        },
+        {
+          "tool": "jira_update_ticket",
+          "score": 0.0087
+        }
+      ],
+      "routing_source": "both_abstain",
+      "llm_tool": null,
+      "glyphh_tool": null,
+      "sidecar_action": "both_abstain",
       "error": null
     },
     {
@@ -1461,8 +1907,8 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 1025.7764119887725,
+      "confidence": 0.2404,
+      "latency_ms": 1330.7532589969924,
       "tokens": 2393,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1470,7 +1916,24 @@
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": true,
-      "reasoning": "The query does not map to any tool in the catalog and is a general question about refund policy.",
+      "top_3": [
+        {
+          "tool": "stripe_refund",
+          "score": 0.2404
+        },
+        {
+          "tool": "stripe_refund",
+          "score": 0.2392
+        },
+        {
+          "tool": "slack_set_status",
+          "score": 0.011
+        }
+      ],
+      "routing_source": "both_abstain",
+      "llm_tool": null,
+      "glyphh_tool": null,
+      "sidecar_action": "both_abstain",
       "error": null
     },
     {
@@ -1478,19 +1941,26 @@
       "category": "open_set",
       "query": "Summarize the last 5 support tickets",
       "expected_tool": null,
-      "result_tool": null,
-      "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 1022.2397870093118,
-      "tokens": 2387,
-      "tool_correct": true,
-      "tool_label": "correct_abstain",
+      "result_tool": "jira_search",
+      "result_args": {
+        "jql": "project = SUPPORT ORDER BY created DESC",
+        "max_results": 5
+      },
+      "confidence": 0.8,
+      "latency_ms": 1535.661159985466,
+      "tokens": 2412,
+      "tool_correct": false,
+      "tool_label": "false_positive",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
-      "abstain_correct": true,
-      "reasoning": "There is no tool in the catalog that allows for summarizing support tickets.",
-      "error": null
+      "abstain_correct": false,
+      "reasoning": "The user is looking to summarize support tickets, which can be retrieved using a Jira search query.",
+      "error": null,
+      "routing_source": "llm_only",
+      "llm_tool": "jira_search",
+      "glyphh_tool": null,
+      "sidecar_action": "glyphh_abstain_keep_llm"
     },
     {
       "query_id": "oos_10",
@@ -1499,8 +1969,8 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 1023.8649530074326,
+      "confidence": 0.0108,
+      "latency_ms": 1021.0672149987658,
       "tokens": 2385,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1508,7 +1978,24 @@
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": true,
-      "reasoning": "The query is a greeting and does not map to any tool in the catalog.",
+      "top_3": [
+        {
+          "tool": "slack_set_status",
+          "score": 0.0108
+        },
+        {
+          "tool": "slack_set_status",
+          "score": 0.01
+        },
+        {
+          "tool": "stripe_refund",
+          "score": 0.0079
+        }
+      ],
+      "routing_source": "both_abstain",
+      "llm_tool": null,
+      "glyphh_tool": null,
+      "sidecar_action": "both_abstain",
       "error": null
     },
     {
@@ -1518,8 +2005,8 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 1024.2285300046206,
+      "confidence": 0.0118,
+      "latency_ms": 922.4915689992486,
       "tokens": 2382,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1527,7 +2014,24 @@
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": true,
-      "reasoning": "There is no tool in the catalog for approving pull requests.",
+      "top_3": [
+        {
+          "tool": "slack_set_status",
+          "score": 0.0118
+        },
+        {
+          "tool": "slack_set_status",
+          "score": 0.0108
+        },
+        {
+          "tool": "stripe_refund",
+          "score": 0.0076
+        }
+      ],
+      "routing_source": "both_abstain",
+      "llm_tool": null,
+      "glyphh_tool": null,
+      "sidecar_action": "both_abstain",
       "error": null
     },
     {
@@ -1537,8 +2041,8 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 1023.070409995853,
+      "confidence": 0.0119,
+      "latency_ms": 820.6421170034446,
       "tokens": 2383,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1546,7 +2050,24 @@
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": true,
-      "reasoning": "The request to restart a database server does not match any tool in the catalog.",
+      "top_3": [
+        {
+          "tool": "slack_set_status",
+          "score": 0.0119
+        },
+        {
+          "tool": "jira_add_comment",
+          "score": 0.0076
+        },
+        {
+          "tool": "slack_set_status",
+          "score": 0.007
+        }
+      ],
+      "routing_source": "both_abstain",
+      "llm_tool": null,
+      "glyphh_tool": null,
+      "sidecar_action": "both_abstain",
       "error": null
     },
     {
@@ -1556,8 +2077,8 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 1125.6629010022152,
+      "confidence": 0.2369,
+      "latency_ms": 891.1931910115527,
       "tokens": 2388,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1565,7 +2086,24 @@
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": true,
-      "reasoning": "The query does not map to any tool in the catalog and is a general question.",
+      "top_3": [
+        {
+          "tool": "analytics_identify_user",
+          "score": 0.2369
+        },
+        {
+          "tool": "analytics_identify_user",
+          "score": 0.2357
+        },
+        {
+          "tool": "analytics_identify_user",
+          "score": 0.233
+        }
+      ],
+      "routing_source": "both_abstain",
+      "llm_tool": null,
+      "glyphh_tool": null,
+      "sidecar_action": "both_abstain",
       "error": null
     },
     {
@@ -1575,16 +2113,33 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 1025.0573359953705,
-      "tokens": 2383,
+      "confidence": 0.0115,
+      "latency_ms": 949.6118030074285,
+      "tokens": 2387,
       "tool_correct": true,
       "tool_label": "correct_abstain",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": true,
-      "reasoning": "There is no tool in the catalog for booking flights.",
+      "top_3": [
+        {
+          "tool": "slack_set_status",
+          "score": 0.0115
+        },
+        {
+          "tool": "slack_set_status",
+          "score": 0.0097
+        },
+        {
+          "tool": "jira_add_comment",
+          "score": 0.0062
+        }
+      ],
+      "routing_source": "both_abstain",
+      "llm_tool": null,
+      "glyphh_tool": null,
+      "sidecar_action": "both_abstain",
       "error": null
     },
     {
@@ -1594,8 +2149,8 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 1228.4679529984714,
+      "confidence": 0.0093,
+      "latency_ms": 818.8979630067479,
       "tokens": 2383,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1603,7 +2158,24 @@
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": true,
-      "reasoning": "There is no tool in the catalog for updating DNS records.",
+      "top_3": [
+        {
+          "tool": "slack_set_status",
+          "score": 0.0093
+        },
+        {
+          "tool": "slack_set_status",
+          "score": 0.0076
+        },
+        {
+          "tool": "stripe_get_customer",
+          "score": 0.0064
+        }
+      ],
+      "routing_source": "both_abstain",
+      "llm_tool": null,
+      "glyphh_tool": null,
+      "sidecar_action": "both_abstain",
       "error": null
     },
     {
@@ -1616,7 +2188,7 @@
         "charge_id": "inv_123"
       },
       "confidence": 0.9,
-      "latency_ms": 1966.9076999998651,
+      "latency_ms": 1285.8395660005044,
       "tokens": 2419,
       "tool_correct": true,
       "tool_label": "correct",
@@ -1625,7 +2197,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user mentioned a tool that does not exist in the catalog. The closest match is 'stripe_refund', which allows for refunding a payment by charge ID.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "stripe_refund",
+      "glyphh_tool": "stripe_refund",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "adv_02",
@@ -1635,19 +2211,23 @@
       "result_tool": "slack_send_message",
       "result_args": {
         "channel": "#ops",
-        "text": "The deploy is done"
+        "text": "The deploy is done."
       },
-      "confidence": 0.9,
-      "latency_ms": 2128.395231004106,
-      "tokens": 2414,
+      "confidence": 1.0,
+      "latency_ms": 2093.6572900100145,
+      "tokens": 2417,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The user wants to send a notification to a Slack channel about the completion of a deploy, which matches the functionality of the slack_send_message tool.",
-      "error": null
+      "reasoning": "The user wants to send a notification to a Slack channel, which matches the functionality of the slack_send_message tool.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "slack_send_message",
+      "glyphh_tool": "slack_send_message",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "adv_03",
@@ -1660,8 +2240,8 @@
         "summary": "Add dark mode",
         "issue_type": "story"
       },
-      "confidence": 1.0,
-      "latency_ms": 1740.4105860041454,
+      "confidence": 0.9,
+      "latency_ms": 1535.5051509977784,
       "tokens": 2431,
       "tool_correct": true,
       "tool_label": "correct",
@@ -1670,7 +2250,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The request is to create a Jira story, which matches the jira_create_ticket tool for creating a new issue in a specified project.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "jira_create_ticket",
+      "glyphh_tool": "jira_create_ticket",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "adv_04",
@@ -1679,16 +2263,33 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 1330.87539699045,
-      "tokens": 2406,
+      "confidence": 0.0111,
+      "latency_ms": 1126.6879009926924,
+      "tokens": 2400,
       "tool_correct": true,
       "tool_label": "correct_abstain",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": true,
-      "reasoning": "The tool 'gmail_archive' does not exist in the catalog. The closest relevant tool is 'email_search', but it does not perform archiving.",
+      "top_3": [
+        {
+          "tool": "slack_set_status",
+          "score": 0.0111
+        },
+        {
+          "tool": "slack_set_status",
+          "score": 0.0111
+        },
+        {
+          "tool": "stripe_list_invoices",
+          "score": 0.0065
+        }
+      ],
+      "routing_source": "both_abstain",
+      "llm_tool": null,
+      "glyphh_tool": null,
+      "sidecar_action": "both_abstain",
       "error": null
     },
     {
@@ -1698,8 +2299,8 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 1536.508800010779,
+      "confidence": 0.0092,
+      "latency_ms": 1535.4232399986358,
       "tokens": 2412,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1707,7 +2308,24 @@
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": true,
-      "reasoning": "The tool 'stripe_pause_subscription' does not exist in the catalog. The closest relevant tool is 'stripe_cancel_subscription', but it does not match the intent to pause a subscription.",
+      "top_3": [
+        {
+          "tool": "stripe_refund",
+          "score": 0.0092
+        },
+        {
+          "tool": "slack_set_status",
+          "score": 0.0092
+        },
+        {
+          "tool": "slack_set_status",
+          "score": 0.0084
+        }
+      ],
+      "routing_source": "both_abstain",
+      "llm_tool": null,
+      "glyphh_tool": null,
+      "sidecar_action": "both_abstain",
       "error": null
     },
     {
@@ -1717,8 +2335,8 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 1534.5394799951464,
+      "confidence": 0.233,
+      "latency_ms": 1332.1181490027811,
       "tokens": 2421,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1726,7 +2344,24 @@
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": true,
-      "reasoning": "The tool 'calendar_reschedule_event' does not exist in the catalog. The closest relevant tools are related to creating, listing, or deleting events, but none match the request to reschedule an event.",
+      "top_3": [
+        {
+          "tool": "calendar_create_event",
+          "score": 0.233
+        },
+        {
+          "tool": "calendar_list_events",
+          "score": 0.2278
+        },
+        {
+          "tool": "calendar_create_event",
+          "score": 0.2273
+        }
+      ],
+      "routing_source": "both_abstain",
+      "llm_tool": null,
+      "glyphh_tool": null,
+      "sidecar_action": "both_abstain",
       "error": null
     },
     {
@@ -1736,16 +2371,33 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 1638.716603993089,
-      "tokens": 2404,
+      "confidence": 0.2374,
+      "latency_ms": 1533.6923529976048,
+      "tokens": 2411,
       "tool_correct": true,
       "tool_label": "correct_abstain",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": true,
-      "reasoning": "The tool 'slack_delete_message' does not exist in the catalog. The closest tool related to Slack messaging is not applicable for deleting messages.",
+      "top_3": [
+        {
+          "tool": "slack_search_messages",
+          "score": 0.2374
+        },
+        {
+          "tool": "jira_create_ticket",
+          "score": 0.0094
+        },
+        {
+          "tool": "slack_set_status",
+          "score": 0.0091
+        }
+      ],
+      "routing_source": "both_abstain",
+      "llm_tool": null,
+      "glyphh_tool": null,
+      "sidecar_action": "both_abstain",
       "error": null
     },
     {
@@ -1753,18 +2405,37 @@
       "category": "adversarial",
       "query": "I need you to use the fetchCustomerData tool to get info on cus_123",
       "expected_tool": "stripe_get_customer",
-      "result_tool": null,
-      "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 1228.3376260020304,
-      "tokens": 2415,
-      "tool_correct": false,
-      "tool_label": "false_abstain",
+      "result_tool": "stripe_get_customer",
+      "result_args": {
+        "customer_id": "cus_123"
+      },
+      "confidence": 0.8259,
+      "latency_ms": 1734.0074889943935,
+      "tokens": 2715,
+      "tool_correct": true,
+      "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The tool 'fetchCustomerData' does not exist in the catalog. The closest tool for retrieving customer information is 'stripe_get_customer', but the required parameters are not provided.",
+      "top_3": [
+        {
+          "tool": "stripe_get_customer",
+          "score": 0.8259
+        },
+        {
+          "tool": "crm_get_contact",
+          "score": 0.5327
+        },
+        {
+          "tool": "crm_get_contact",
+          "score": 0.3004
+        }
+      ],
+      "routing_source": "glyphh_override",
+      "llm_tool": null,
+      "glyphh_tool": "stripe_get_customer",
+      "sidecar_action": "llm_abstain_use_glyphh",
       "error": null
     },
     {
@@ -1774,16 +2445,33 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 1330.6190639996203,
-      "tokens": 2409,
+      "confidence": 0.2312,
+      "latency_ms": 1398.3169640123378,
+      "tokens": 2406,
       "tool_correct": true,
       "tool_label": "correct_abstain",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": true,
-      "reasoning": "The tool 'gdrive_delete_file' does not exist in the catalog. The closest tools related to Google Drive are for uploading, searching, sharing, and creating folders, but none for deleting files.",
+      "top_3": [
+        {
+          "tool": "gdrive_search",
+          "score": 0.2312
+        },
+        {
+          "tool": "gdrive_upload",
+          "score": 0.2311
+        },
+        {
+          "tool": "gdrive_share",
+          "score": 0.2293
+        }
+      ],
+      "routing_source": "both_abstain",
+      "llm_tool": null,
+      "glyphh_tool": null,
+      "sidecar_action": "both_abstain",
       "error": null
     },
     {
@@ -1793,8 +2481,8 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 1229.2979339981684,
+      "confidence": 0.2356,
+      "latency_ms": 1166.5388499968685,
       "tokens": 2413,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1802,7 +2490,24 @@
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": true,
-      "reasoning": "The tool 'email_forward' does not exist in the catalog. The closest action would be to search for emails or reply to an email, but forwarding specifically is not supported.",
+      "top_3": [
+        {
+          "tool": "email_reply",
+          "score": 0.2356
+        },
+        {
+          "tool": "email_search",
+          "score": 0.2331
+        },
+        {
+          "tool": "email_send",
+          "score": 0.2288
+        }
+      ],
+      "routing_source": "both_abstain",
+      "llm_tool": null,
+      "glyphh_tool": null,
+      "sidecar_action": "both_abstain",
       "error": null
     },
     {
@@ -1812,16 +2517,33 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 2456.646492006257,
-      "tokens": 2406,
+      "confidence": 0.2317,
+      "latency_ms": 1230.7267989963293,
+      "tokens": 2404,
       "tool_correct": true,
       "tool_label": "correct_abstain",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": true,
-      "reasoning": "The tool 'analytics_generate_report' does not exist in the catalog. The closest tools relate to tracking events or retrieving metrics, but none match the request for generating a report.",
+      "top_3": [
+        {
+          "tool": "calendar_create_event",
+          "score": 0.2317
+        },
+        {
+          "tool": "calendar_create_event",
+          "score": 0.2297
+        },
+        {
+          "tool": "calendar_delete_event",
+          "score": 0.2281
+        }
+      ],
+      "routing_source": "both_abstain",
+      "llm_tool": null,
+      "glyphh_tool": null,
+      "sidecar_action": "both_abstain",
       "error": null
     },
     {
@@ -1831,16 +2553,33 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 2457.454922987381,
-      "tokens": 2416,
+      "confidence": 0.234,
+      "latency_ms": 1737.4253070011036,
+      "tokens": 2412,
       "tool_correct": true,
       "tool_label": "correct_abstain",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": true,
-      "reasoning": "The tool 'crm_delete_contact' does not exist in the catalog. The closest relevant tool is 'crm_get_contact' to fetch the contact record, but there is no tool for deleting a contact.",
+      "top_3": [
+        {
+          "tool": "crm_get_contact",
+          "score": 0.234
+        },
+        {
+          "tool": "crm_get_contact",
+          "score": 0.2339
+        },
+        {
+          "tool": "crm_create_contact",
+          "score": 0.233
+        }
+      ],
+      "routing_source": "both_abstain",
+      "llm_tool": null,
+      "glyphh_tool": null,
+      "sidecar_action": "both_abstain",
       "error": null
     },
     {
@@ -1856,7 +2595,7 @@
         "issue_type": "task"
       },
       "confidence": 0.9,
-      "latency_ms": 1637.8780000086408,
+      "latency_ms": 1846.0437490139157,
       "tokens": 2435,
       "tool_correct": true,
       "tool_label": "correct",
@@ -1865,7 +2604,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "Creating a Jira ticket about the outage is a higher-impact action compared to sending a Slack message.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "jira_create_ticket",
+      "glyphh_tool": "jira_create_ticket",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "adv_14",
@@ -1877,7 +2620,7 @@
         "charge_id": "placeholder_charge_id"
       },
       "confidence": 0.8,
-      "latency_ms": 1842.9797009885078,
+      "latency_ms": 1431.642716008355,
       "tokens": 2421,
       "tool_correct": true,
       "tool_label": "correct",
@@ -1886,7 +2629,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The highest-impact action is to process the refund, which is irreversible. The other actions (sending an email and updating the CRM) are secondary and can be deferred.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "stripe_refund",
+      "glyphh_tool": "stripe_refund",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "adv_15",
@@ -1895,8 +2642,8 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.0,
-      "latency_ms": 1126.2796810042346,
+      "confidence": 0.2356,
+      "latency_ms": 1535.955166007625,
       "tokens": 2413,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1904,7 +2651,24 @@
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": true,
-      "reasoning": "The tool 'stripe_void_invoice' does not exist in the catalog. The closest relevant tool is 'stripe_refund', but it is not applicable for voiding an invoice.",
+      "top_3": [
+        {
+          "tool": "stripe_list_invoices",
+          "score": 0.2356
+        },
+        {
+          "tool": "stripe_list_invoices",
+          "score": 0.2337
+        },
+        {
+          "tool": "stripe_list_invoices",
+          "score": 0.2326
+        }
+      ],
+      "routing_source": "both_abstain",
+      "llm_tool": null,
+      "glyphh_tool": null,
+      "sidecar_action": "both_abstain",
       "error": null
     },
     {
@@ -1917,19 +2681,23 @@
         "customer_id": "cus_abc",
         "amount_cents": 4999,
         "currency": "usd",
-        "description": ""
+        "description": "Charge for services"
       },
       "confidence": 1.0,
-      "latency_ms": 1536.6041400120594,
-      "tokens": 2412,
+      "latency_ms": 1535.5163180065574,
+      "tokens": 2426,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The user requested to charge a specific amount to a customer, which matches the parameters of the stripe_charge tool.",
-      "error": null
+      "reasoning": "The request is to create a charge for a customer, which directly maps to the stripe_charge tool.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "stripe_charge",
+      "glyphh_tool": "stripe_charge",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "schema_02",
@@ -1944,19 +2712,23 @@
           "design@acme.com"
         ],
         "subject": "Launch Announcement",
-        "body": "Dear Team,\n\nWe are excited to announce the launch of our new product. Stay tuned for more details!\n\nBest,\nThe Team"
+        "body": "We are excited to announce the launch!"
       },
-      "confidence": 0.9,
-      "latency_ms": 2253.0833150085527,
-      "tokens": 2476,
+      "confidence": 1.0,
+      "latency_ms": 1741.502443997888,
+      "tokens": 2454,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The user requested to send an email to multiple recipients about a launch, which fits the email_send tool.",
-      "error": null
+      "reasoning": "The user requested to send an email to multiple recipients about the launch, which fits the email_send tool.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "email_send",
+      "glyphh_tool": "email_send",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "schema_03",
@@ -1971,16 +2743,20 @@
         "priority": "highest"
       },
       "confidence": 0.9,
-      "latency_ms": 1739.4737269933103,
-      "tokens": 2439,
+      "latency_ms": 1749.437828999362,
+      "tokens": 2443,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The request is to create a new Jira epic in a specific project, which aligns with the jira_create_ticket tool.",
-      "error": null
+      "reasoning": "The request is to create a high-priority epic in a specific Jira project, which matches the parameters of the jira_create_ticket tool.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "jira_create_ticket",
+      "glyphh_tool": "jira_create_ticket",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "schema_04",
@@ -1993,17 +2769,21 @@
         "email": "sarah@acme.com",
         "role": "reader"
       },
-      "confidence": 1.0,
-      "latency_ms": 1740.9360960009508,
-      "tokens": 2428,
+      "confidence": 0.9,
+      "latency_ms": 1451.9631720031612,
+      "tokens": 2427,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The request is to share a Google Drive folder with read-only access, which matches the gdrive_share tool.",
-      "error": null
+      "reasoning": "The request is to share a Google Drive folder with a user, which matches the gdrive_share tool.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "gdrive_share",
+      "glyphh_tool": "gdrive_share",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "schema_05",
@@ -2021,7 +2801,7 @@
         ]
       },
       "confidence": 0.9,
-      "latency_ms": 2249.46744000772,
+      "latency_ms": 2121.5825419931207,
       "tokens": 2470,
       "tool_correct": true,
       "tool_label": "correct",
@@ -2030,7 +2810,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user requested to schedule a meeting, which aligns with the calendar_create_event tool.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "calendar_create_event",
+      "glyphh_tool": "calendar_create_event",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "schema_06",
@@ -2043,16 +2827,20 @@
         "amount_cents": 2500
       },
       "confidence": 1.0,
-      "latency_ms": 1333.4754329989664,
-      "tokens": 2407,
+      "latency_ms": 1843.325947993435,
+      "tokens": 2410,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The user requested a partial refund of $25 from a charge, which is specified in cents as 2500.",
-      "error": null
+      "reasoning": "The user requested a partial refund of $25 from a charge, which is specified using the charge ID and the amount in cents.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "stripe_refund",
+      "glyphh_tool": "stripe_refund",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "schema_07",
@@ -2066,16 +2854,20 @@
         "trial_days": 14
       },
       "confidence": 0.9,
-      "latency_ms": 2353.6698059906485,
-      "tokens": 2436,
+      "latency_ms": 1535.8935929980362,
+      "tokens": 2425,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The request is to create a new subscription for a customer with a specified price plan and trial period, which matches the parameters of the stripe_create_subscription tool.",
-      "error": null
+      "reasoning": "The request is to create a new subscription for a customer with a specified price plan and a trial period, which matches the parameters of the stripe_create_subscription tool.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "stripe_create_subscription",
+      "glyphh_tool": "stripe_create_subscription",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "schema_08",
@@ -2090,7 +2882,7 @@
         "group_by": "week"
       },
       "confidence": 0.9,
-      "latency_ms": 2047.567015993991,
+      "latency_ms": 1940.8991950040217,
       "tokens": 2432,
       "tool_correct": true,
       "tool_label": "correct",
@@ -2099,7 +2891,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The request is for analytics metrics specifically for page views, which matches the tool's purpose.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "analytics_get_metrics",
+      "glyphh_tool": "analytics_get_metrics",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "schema_09",
@@ -2111,16 +2907,20 @@
         "query": "Globex Corporation"
       },
       "confidence": 0.9,
-      "latency_ms": 1227.9915019898908,
-      "tokens": 2405,
+      "latency_ms": 1743.5939590068301,
+      "tokens": 2408,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
       "schema_valid": true,
       "schema_errors": null,
       "abstain_correct": null,
-      "reasoning": "The user is looking to search for contacts associated with a specific company, which aligns with the crm_search_contacts tool.",
-      "error": null
+      "reasoning": "The user is looking to search for contacts associated with a specific company, which aligns with the functionality of the crm_search_contacts tool.",
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "crm_search_contacts",
+      "glyphh_tool": "crm_search_contacts",
+      "sidecar_action": "agree"
     },
     {
       "query_id": "schema_10",
@@ -2130,12 +2930,12 @@
       "result_tool": "slack_send_message",
       "result_args": {
         "channel": "#incidents",
-        "text": "Resolution details about the incident.",
+        "text": "The issue has been resolved successfully.",
         "thread_ts": "1234567890.123456"
       },
       "confidence": 0.9,
-      "latency_ms": 1839.4164259952959,
-      "tokens": 2444,
+      "latency_ms": 2150.3840689983917,
+      "tokens": 2445,
       "tool_correct": true,
       "tool_label": "correct",
       "invalid_tool": false,
@@ -2143,7 +2943,11 @@
       "schema_errors": null,
       "abstain_correct": null,
       "reasoning": "The user requested to send a threaded reply in a specific Slack channel, which matches the parameters of the slack_send_message tool.",
-      "error": null
+      "error": null,
+      "routing_source": "agreement",
+      "llm_tool": "slack_send_message",
+      "glyphh_tool": "slack_send_message",
+      "sidecar_action": "agree"
     }
   ]
 }

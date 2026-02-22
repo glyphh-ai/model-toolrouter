@@ -1,22 +1,26 @@
 {
   "name": "S2: Glyphh Only",
-  "total": 75,
+  "total": 95,
   "tool_accuracy": 1.0,
-  "tool_correct": 75,
+  "tool_correct": 95,
   "invalid_tool_rate": 0.0,
   "invalid_tools": 0,
-  "schema_validity": 1.0,
+  "schema_validity": null,
   "schema_valid": 0,
   "schema_total": 0,
+  "skip_schema": true,
+  "e2e_accuracy": null,
+  "e2e_correct": 0,
+  "e2e_total": 0,
   "abstain_accuracy": 1.0,
   "abstain_correct": 24,
   "abstain_total": 24,
   "in_scope_accuracy": 1.0,
-  "in_scope_correct": 51,
-  "in_scope_total": 51,
-  "latency_mean_ms": 5.512130826585538,
-  "latency_p50_ms": 5.251916998531669,
-  "latency_p95_ms": 6.440722001570975,
+  "in_scope_correct": 71,
+  "in_scope_total": 71,
+  "latency_mean_ms": 5.571414568112232,
+  "latency_p50_ms": 5.467904004035518,
+  "latency_p95_ms": 6.260428999667056,
   "tokens_total": 0,
   "tokens_mean": 0.0,
   "categories": {
@@ -26,7 +30,9 @@
       "accuracy": 1.0,
       "invalid_tools": 0,
       "schema_valid": 0,
-      "schema_total": 0
+      "schema_total": 0,
+      "e2e_correct": 0,
+      "e2e_total": 0
     },
     "clear": {
       "total": 20,
@@ -34,15 +40,19 @@
       "accuracy": 1.0,
       "invalid_tools": 0,
       "schema_valid": 0,
-      "schema_total": 0
+      "schema_total": 0,
+      "e2e_correct": 0,
+      "e2e_total": 0
     },
     "near_collision": {
-      "total": 15,
-      "correct": 15,
+      "total": 35,
+      "correct": 35,
       "accuracy": 1.0,
       "invalid_tools": 0,
       "schema_valid": 0,
-      "schema_total": 0
+      "schema_total": 0,
+      "e2e_correct": 0,
+      "e2e_total": 0
     },
     "open_set": {
       "total": 15,
@@ -50,7 +60,9 @@
       "accuracy": 1.0,
       "invalid_tools": 0,
       "schema_valid": 0,
-      "schema_total": 0
+      "schema_total": 0,
+      "e2e_correct": 0,
+      "e2e_total": 0
     },
     "schema_trap": {
       "total": 10,
@@ -58,7 +70,9 @@
       "accuracy": 1.0,
       "invalid_tools": 0,
       "schema_valid": 0,
-      "schema_total": 0
+      "schema_total": 0,
+      "e2e_correct": 0,
+      "e2e_total": 0
     }
   },
   "raw_results": [
@@ -70,7 +84,7 @@
       "result_tool": "slack_send_message",
       "result_args": {},
       "confidence": 0.5327,
-      "latency_ms": 5.616938000457594,
+      "latency_ms": 10.560508002527058,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -100,8 +114,8 @@
       "expected_tool": "email_send",
       "result_tool": "email_send",
       "result_args": {},
-      "confidence": 0.5308,
-      "latency_ms": 8.049623000260908,
+      "confidence": 0.8237,
+      "latency_ms": 6.5640459943097085,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -112,15 +126,15 @@
       "top_3": [
         {
           "tool": "email_send",
-          "score": 0.5308
+          "score": 0.8237
         },
         {
           "tool": "email_send",
-          "score": 0.5274
+          "score": 0.8228
         },
         {
           "tool": "email_send",
-          "score": 0.5274
+          "score": 0.8204
         }
       ]
     },
@@ -132,7 +146,7 @@
       "result_tool": "crm_get_contact",
       "result_args": {},
       "confidence": 0.8242,
-      "latency_ms": 5.019576001359383,
+      "latency_ms": 6.514440014143474,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -163,7 +177,7 @@
       "result_tool": "stripe_refund",
       "result_args": {},
       "confidence": 0.8232,
-      "latency_ms": 4.98612299998058,
+      "latency_ms": 6.260428999667056,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -194,7 +208,7 @@
       "result_tool": "calendar_create_event",
       "result_args": {},
       "confidence": 0.8245,
-      "latency_ms": 5.143333997693844,
+      "latency_ms": 5.846465996000916,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -225,7 +239,7 @@
       "result_tool": "gdrive_upload",
       "result_args": {},
       "confidence": 0.5856,
-      "latency_ms": 4.909532002784545,
+      "latency_ms": 5.850750996614806,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -256,7 +270,7 @@
       "result_tool": "jira_create_ticket",
       "result_args": {},
       "confidence": 0.8259,
-      "latency_ms": 5.19557299776352,
+      "latency_ms": 5.411819001892582,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -287,7 +301,7 @@
       "result_tool": "analytics_track_event",
       "result_args": {},
       "confidence": 0.592,
-      "latency_ms": 4.830590001802193,
+      "latency_ms": 6.256000997382216,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -305,8 +319,8 @@
           "score": 0.5882
         },
         {
-          "tool": "analytics_get_metrics",
-          "score": 0.2989
+          "tool": "analytics_track_event",
+          "score": 0.5881
         }
       ]
     },
@@ -318,7 +332,7 @@
       "result_tool": "slack_search_messages",
       "result_args": {},
       "confidence": 0.5862,
-      "latency_ms": 4.951429997163359,
+      "latency_ms": 5.436163002741523,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -349,7 +363,7 @@
       "result_tool": "stripe_cancel_subscription",
       "result_args": {},
       "confidence": 0.827,
-      "latency_ms": 5.0219129989272915,
+      "latency_ms": 5.24626299738884,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -380,7 +394,7 @@
       "result_tool": "slack_set_status",
       "result_args": {},
       "confidence": 0.5246,
-      "latency_ms": 5.116987002111273,
+      "latency_ms": 5.628608996630646,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -411,7 +425,7 @@
       "result_tool": "jira_search",
       "result_args": {},
       "confidence": 0.8225,
-      "latency_ms": 5.488003000209574,
+      "latency_ms": 5.7706489897100255,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -442,7 +456,7 @@
       "result_tool": "analytics_get_funnel",
       "result_args": {},
       "confidence": 0.8212,
-      "latency_ms": 4.993904000002658,
+      "latency_ms": 5.418115993961692,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -473,7 +487,7 @@
       "result_tool": "calendar_list_events",
       "result_args": {},
       "confidence": 0.82,
-      "latency_ms": 4.896820999420015,
+      "latency_ms": 5.679929003235884,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -504,7 +518,7 @@
       "result_tool": "gdrive_share",
       "result_args": {},
       "confidence": 0.8229,
-      "latency_ms": 4.750486001285026,
+      "latency_ms": 5.578256997978315,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -535,7 +549,7 @@
       "result_tool": "email_reply",
       "result_args": {},
       "confidence": 0.8222,
-      "latency_ms": 4.973215000063647,
+      "latency_ms": 6.751934008207172,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -566,7 +580,7 @@
       "result_tool": "jira_add_comment",
       "result_args": {},
       "confidence": 0.8241,
-      "latency_ms": 4.863523001404246,
+      "latency_ms": 5.844490005983971,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -597,7 +611,7 @@
       "result_tool": "stripe_get_customer",
       "result_args": {},
       "confidence": 0.822,
-      "latency_ms": 4.837880998820765,
+      "latency_ms": 5.182637003599666,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -612,11 +626,11 @@
         },
         {
           "tool": "crm_get_contact",
-          "score": 0.2999
+          "score": 0.532
         },
         {
           "tool": "crm_get_contact",
-          "score": 0.2986
+          "score": 0.2999
         }
       ]
     },
@@ -628,7 +642,7 @@
       "result_tool": "crm_create_deal",
       "result_args": {},
       "confidence": 0.8219,
-      "latency_ms": 4.854538998188218,
+      "latency_ms": 5.1464099960867316,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -659,7 +673,7 @@
       "result_tool": "slack_send_dm",
       "result_args": {},
       "confidence": 0.8235,
-      "latency_ms": 5.548084998736158,
+      "latency_ms": 5.890583997825161,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -690,7 +704,7 @@
       "result_tool": "slack_send_dm",
       "result_args": {},
       "confidence": 0.533,
-      "latency_ms": 4.8071989986056,
+      "latency_ms": 5.246796004939824,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -721,7 +735,7 @@
       "result_tool": "email_search",
       "result_args": {},
       "confidence": 0.5314,
-      "latency_ms": 4.746907001390355,
+      "latency_ms": 5.00631399336271,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -751,8 +765,8 @@
       "expected_tool": "crm_get_contact",
       "result_tool": "crm_get_contact",
       "result_args": {},
-      "confidence": 0.5904,
-      "latency_ms": 5.234406999079511,
+      "confidence": 0.8258,
+      "latency_ms": 5.843152001034468,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -763,15 +777,15 @@
       "top_3": [
         {
           "tool": "crm_get_contact",
+          "score": 0.8258
+        },
+        {
+          "tool": "crm_get_contact",
           "score": 0.5904
         },
         {
           "tool": "crm_get_contact",
           "score": 0.5902
-        },
-        {
-          "tool": "crm_get_contact",
-          "score": 0.589
         }
       ]
     },
@@ -783,7 +797,7 @@
       "result_tool": "stripe_cancel_subscription",
       "result_args": {},
       "confidence": 0.8244,
-      "latency_ms": 4.8930699995253235,
+      "latency_ms": 5.125541996676475,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -814,7 +828,7 @@
       "result_tool": "jira_assign_ticket",
       "result_args": {},
       "confidence": 0.8227,
-      "latency_ms": 4.949505000695353,
+      "latency_ms": 4.959458005032502,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -845,7 +859,7 @@
       "result_tool": "slack_send_message",
       "result_args": {},
       "confidence": 0.5311,
-      "latency_ms": 6.320364998828154,
+      "latency_ms": 5.898561008507386,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -876,7 +890,7 @@
       "result_tool": "gdrive_search",
       "result_args": {},
       "confidence": 0.8228,
-      "latency_ms": 6.1858259978180286,
+      "latency_ms": 5.254435993265361,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -906,8 +920,8 @@
       "expected_tool": "stripe_list_invoices",
       "result_tool": "stripe_list_invoices",
       "result_args": {},
-      "confidence": 0.8246,
-      "latency_ms": 4.9592249997658655,
+      "confidence": 0.8258,
+      "latency_ms": 5.048017992521636,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -918,15 +932,15 @@
       "top_3": [
         {
           "tool": "stripe_list_invoices",
+          "score": 0.8258
+        },
+        {
+          "tool": "stripe_list_invoices",
           "score": 0.8246
         },
         {
           "tool": "stripe_list_invoices",
           "score": 0.8229
-        },
-        {
-          "tool": "email_list_labels",
-          "score": 0.3012
         }
       ]
     },
@@ -938,7 +952,7 @@
       "result_tool": "crm_create_contact",
       "result_args": {},
       "confidence": 0.528,
-      "latency_ms": 5.390332000388298,
+      "latency_ms": 5.7140459975926206,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -969,7 +983,7 @@
       "result_tool": "email_create_draft",
       "result_args": {},
       "confidence": 0.8242,
-      "latency_ms": 6.000923000101466,
+      "latency_ms": 5.248539993772283,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -1000,7 +1014,7 @@
       "result_tool": "calendar_find_free_time",
       "result_args": {},
       "confidence": 0.5363,
-      "latency_ms": 5.021229000703897,
+      "latency_ms": 5.156457002158277,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -1031,7 +1045,7 @@
       "result_tool": "stripe_charge",
       "result_args": {},
       "confidence": 0.8234,
-      "latency_ms": 4.984090999641921,
+      "latency_ms": 5.886095997993834,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -1062,7 +1076,7 @@
       "result_tool": "slack_list_channels",
       "result_args": {},
       "confidence": 0.8241,
-      "latency_ms": 5.552212001930457,
+      "latency_ms": 5.386723001720384,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -1092,8 +1106,8 @@
       "expected_tool": "analytics_identify_user",
       "result_tool": "analytics_identify_user",
       "result_args": {},
-      "confidence": 0.8237,
-      "latency_ms": 5.049346000305377,
+      "confidence": 0.8252,
+      "latency_ms": 5.107581993797794,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -1104,15 +1118,15 @@
       "top_3": [
         {
           "tool": "analytics_identify_user",
+          "score": 0.8252
+        },
+        {
+          "tool": "analytics_identify_user",
           "score": 0.8237
         },
         {
           "tool": "analytics_identify_user",
           "score": 0.8228
-        },
-        {
-          "tool": "analytics_track_event",
-          "score": 0.2987
         }
       ]
     },
@@ -1124,7 +1138,7 @@
       "result_tool": "calendar_delete_event",
       "result_args": {},
       "confidence": 0.8237,
-      "latency_ms": 5.029253999964567,
+      "latency_ms": 5.729272990720347,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -1148,6 +1162,626 @@
       ]
     },
     {
+      "query_id": "coll_16",
+      "category": "near_collision",
+      "query": "Pull up the customer record for lisa@bigcorp.com",
+      "expected_tool": "crm_get_contact",
+      "result_tool": "crm_get_contact",
+      "result_args": {},
+      "confidence": 0.8226,
+      "latency_ms": 5.211544994381256,
+      "tokens": 0,
+      "tool_correct": true,
+      "tool_label": "correct",
+      "invalid_tool": false,
+      "schema_valid": true,
+      "schema_errors": null,
+      "abstain_correct": null,
+      "top_3": [
+        {
+          "tool": "crm_get_contact",
+          "score": 0.8226
+        },
+        {
+          "tool": "crm_get_contact",
+          "score": 0.5924
+        },
+        {
+          "tool": "crm_get_contact",
+          "score": 0.5891
+        }
+      ]
+    },
+    {
+      "query_id": "coll_17",
+      "category": "near_collision",
+      "query": "I need the customer record for cus_abc from Stripe",
+      "expected_tool": "stripe_get_customer",
+      "result_tool": "stripe_get_customer",
+      "result_args": {},
+      "confidence": 0.8206,
+      "latency_ms": 5.020418000640348,
+      "tokens": 0,
+      "tool_correct": true,
+      "tool_label": "correct",
+      "invalid_tool": false,
+      "schema_valid": true,
+      "schema_errors": null,
+      "abstain_correct": null,
+      "top_3": [
+        {
+          "tool": "stripe_get_customer",
+          "score": 0.8206
+        },
+        {
+          "tool": "crm_get_contact",
+          "score": 0.5302
+        },
+        {
+          "tool": "crm_get_contact",
+          "score": 0.3028
+        }
+      ]
+    },
+    {
+      "query_id": "coll_18",
+      "category": "near_collision",
+      "query": "Show me the customer details for someone at Acme Corp",
+      "expected_tool": "crm_get_contact",
+      "result_tool": "crm_get_contact",
+      "result_args": {},
+      "confidence": 0.8214,
+      "latency_ms": 5.873399990377948,
+      "tokens": 0,
+      "tool_correct": true,
+      "tool_label": "correct",
+      "invalid_tool": false,
+      "schema_valid": true,
+      "schema_errors": null,
+      "abstain_correct": null,
+      "top_3": [
+        {
+          "tool": "crm_get_contact",
+          "score": 0.8214
+        },
+        {
+          "tool": "crm_get_contact",
+          "score": 0.5935
+        },
+        {
+          "tool": "crm_get_contact",
+          "score": 0.5904
+        }
+      ]
+    },
+    {
+      "query_id": "coll_19",
+      "category": "near_collision",
+      "query": "Get the billing record for customer cus_xyz999",
+      "expected_tool": "stripe_get_customer",
+      "result_tool": "stripe_get_customer",
+      "result_args": {},
+      "confidence": 0.5888,
+      "latency_ms": 5.197790000238456,
+      "tokens": 0,
+      "tool_correct": true,
+      "tool_label": "correct",
+      "invalid_tool": false,
+      "schema_valid": true,
+      "schema_errors": null,
+      "abstain_correct": null,
+      "top_3": [
+        {
+          "tool": "stripe_get_customer",
+          "score": 0.5888
+        },
+        {
+          "tool": "crm_get_contact",
+          "score": 0.5367
+        },
+        {
+          "tool": "crm_get_contact",
+          "score": 0.5341
+        }
+      ]
+    },
+    {
+      "query_id": "coll_20",
+      "category": "near_collision",
+      "query": "Look up the payment history for our enterprise client",
+      "expected_tool": "stripe_list_invoices",
+      "result_tool": "stripe_list_invoices",
+      "result_args": {},
+      "confidence": 0.8246,
+      "latency_ms": 4.977603995939717,
+      "tokens": 0,
+      "tool_correct": true,
+      "tool_label": "correct",
+      "invalid_tool": false,
+      "schema_valid": true,
+      "schema_errors": null,
+      "abstain_correct": null,
+      "top_3": [
+        {
+          "tool": "stripe_list_invoices",
+          "score": 0.8246
+        },
+        {
+          "tool": "stripe_list_invoices",
+          "score": 0.8234
+        },
+        {
+          "tool": "stripe_list_invoices",
+          "score": 0.823
+        }
+      ]
+    },
+    {
+      "query_id": "coll_21",
+      "category": "near_collision",
+      "query": "Find the contact info for the Globex account",
+      "expected_tool": "crm_get_contact",
+      "result_tool": "crm_get_contact",
+      "result_args": {},
+      "confidence": 0.8247,
+      "latency_ms": 5.698926994227804,
+      "tokens": 0,
+      "tool_correct": true,
+      "tool_label": "correct",
+      "invalid_tool": false,
+      "schema_valid": true,
+      "schema_errors": null,
+      "abstain_correct": null,
+      "top_3": [
+        {
+          "tool": "crm_get_contact",
+          "score": 0.8247
+        },
+        {
+          "tool": "crm_get_contact",
+          "score": 0.8243
+        },
+        {
+          "tool": "crm_get_contact",
+          "score": 0.8201
+        }
+      ]
+    },
+    {
+      "query_id": "coll_22",
+      "category": "near_collision",
+      "query": "Log that user u_900 switched from free to premium",
+      "expected_tool": "analytics_identify_user",
+      "result_tool": "analytics_identify_user",
+      "result_args": {},
+      "confidence": 0.8264,
+      "latency_ms": 5.317359988112003,
+      "tokens": 0,
+      "tool_correct": true,
+      "tool_label": "correct",
+      "invalid_tool": false,
+      "schema_valid": true,
+      "schema_errors": null,
+      "abstain_correct": null,
+      "top_3": [
+        {
+          "tool": "analytics_identify_user",
+          "score": 0.8264
+        },
+        {
+          "tool": "analytics_identify_user",
+          "score": 0.8239
+        },
+        {
+          "tool": "analytics_identify_user",
+          "score": 0.8203
+        }
+      ]
+    },
+    {
+      "query_id": "coll_23",
+      "category": "near_collision",
+      "query": "Record a checkout_completed event for user u_900",
+      "expected_tool": "analytics_track_event",
+      "result_tool": "analytics_track_event",
+      "result_args": {},
+      "confidence": 0.8253,
+      "latency_ms": 5.239589998382144,
+      "tokens": 0,
+      "tool_correct": true,
+      "tool_label": "correct",
+      "invalid_tool": false,
+      "schema_valid": true,
+      "schema_errors": null,
+      "abstain_correct": null,
+      "top_3": [
+        {
+          "tool": "analytics_track_event",
+          "score": 0.8253
+        },
+        {
+          "tool": "analytics_track_event",
+          "score": 0.8246
+        },
+        {
+          "tool": "analytics_track_event",
+          "score": 0.8236
+        }
+      ]
+    },
+    {
+      "query_id": "coll_24",
+      "category": "near_collision",
+      "query": "Log that user u_321 changed their email to new@acme.com",
+      "expected_tool": "analytics_identify_user",
+      "result_tool": "analytics_identify_user",
+      "result_args": {},
+      "confidence": 0.8258,
+      "latency_ms": 5.809071997646242,
+      "tokens": 0,
+      "tool_correct": true,
+      "tool_label": "correct",
+      "invalid_tool": false,
+      "schema_valid": true,
+      "schema_errors": null,
+      "abstain_correct": null,
+      "top_3": [
+        {
+          "tool": "analytics_identify_user",
+          "score": 0.8258
+        },
+        {
+          "tool": "analytics_identify_user",
+          "score": 0.822
+        },
+        {
+          "tool": "analytics_identify_user",
+          "score": 0.8195
+        }
+      ]
+    },
+    {
+      "query_id": "coll_25",
+      "category": "near_collision",
+      "query": "Track the button_click event on the pricing page",
+      "expected_tool": "analytics_track_event",
+      "result_tool": "analytics_track_event",
+      "result_args": {},
+      "confidence": 0.5897,
+      "latency_ms": 5.251388007309288,
+      "tokens": 0,
+      "tool_correct": true,
+      "tool_label": "correct",
+      "invalid_tool": false,
+      "schema_valid": true,
+      "schema_errors": null,
+      "abstain_correct": null,
+      "top_3": [
+        {
+          "tool": "analytics_track_event",
+          "score": 0.5897
+        },
+        {
+          "tool": "analytics_track_event",
+          "score": 0.586
+        },
+        {
+          "tool": "analytics_track_event",
+          "score": 0.5854
+        }
+      ]
+    },
+    {
+      "query_id": "coll_26",
+      "category": "near_collision",
+      "query": "Message Alice on Slack about the deadline",
+      "expected_tool": "slack_send_dm",
+      "result_tool": "slack_send_dm",
+      "result_args": {},
+      "confidence": 0.5902,
+      "latency_ms": 5.190607000258751,
+      "tokens": 0,
+      "tool_correct": true,
+      "tool_label": "correct",
+      "invalid_tool": false,
+      "schema_valid": true,
+      "schema_errors": null,
+      "abstain_correct": null,
+      "top_3": [
+        {
+          "tool": "slack_send_dm",
+          "score": 0.5902
+        },
+        {
+          "tool": "slack_send_message",
+          "score": 0.5893
+        },
+        {
+          "tool": "slack_send_message",
+          "score": 0.5893
+        }
+      ]
+    },
+    {
+      "query_id": "coll_27",
+      "category": "near_collision",
+      "query": "Send Alice an email about the deadline",
+      "expected_tool": "email_send",
+      "result_tool": "email_send",
+      "result_args": {},
+      "confidence": 0.8246,
+      "latency_ms": 5.704098002752289,
+      "tokens": 0,
+      "tool_correct": true,
+      "tool_label": "correct",
+      "invalid_tool": false,
+      "schema_valid": true,
+      "schema_errors": null,
+      "abstain_correct": null,
+      "top_3": [
+        {
+          "tool": "email_send",
+          "score": 0.8246
+        },
+        {
+          "tool": "email_send",
+          "score": 0.8225
+        },
+        {
+          "tool": "email_send",
+          "score": 0.8222
+        }
+      ]
+    },
+    {
+      "query_id": "coll_28",
+      "category": "near_collision",
+      "query": "Ping bob@acme.com about the standup \u2014 just a quick Slack message",
+      "expected_tool": "slack_send_dm",
+      "result_tool": "slack_send_dm",
+      "result_args": {},
+      "confidence": 0.8246,
+      "latency_ms": 5.388735997257754,
+      "tokens": 0,
+      "tool_correct": true,
+      "tool_label": "correct",
+      "invalid_tool": false,
+      "schema_valid": true,
+      "schema_errors": null,
+      "abstain_correct": null,
+      "top_3": [
+        {
+          "tool": "slack_send_dm",
+          "score": 0.8246
+        },
+        {
+          "tool": "slack_send_dm",
+          "score": 0.8214
+        },
+        {
+          "tool": "slack_send_dm",
+          "score": 0.8212
+        }
+      ]
+    },
+    {
+      "query_id": "coll_29",
+      "category": "near_collision",
+      "query": "Notify the team in #releases that v2.0 shipped",
+      "expected_tool": "slack_send_message",
+      "result_tool": "slack_send_message",
+      "result_args": {},
+      "confidence": 0.5314,
+      "latency_ms": 5.183478002436459,
+      "tokens": 0,
+      "tool_correct": true,
+      "tool_label": "correct",
+      "invalid_tool": false,
+      "schema_valid": true,
+      "schema_errors": null,
+      "abstain_correct": null,
+      "top_3": [
+        {
+          "tool": "slack_send_message",
+          "score": 0.5314
+        },
+        {
+          "tool": "slack_send_message",
+          "score": 0.5306
+        },
+        {
+          "tool": "slack_send_message",
+          "score": 0.53
+        }
+      ]
+    },
+    {
+      "query_id": "coll_30",
+      "category": "near_collision",
+      "query": "Check the invoices for customer cus_abc to see if they paid",
+      "expected_tool": "stripe_list_invoices",
+      "result_tool": "stripe_list_invoices",
+      "result_args": {},
+      "confidence": 0.8249,
+      "latency_ms": 5.831351998494938,
+      "tokens": 0,
+      "tool_correct": true,
+      "tool_label": "correct",
+      "invalid_tool": false,
+      "schema_valid": true,
+      "schema_errors": null,
+      "abstain_correct": null,
+      "top_3": [
+        {
+          "tool": "stripe_list_invoices",
+          "score": 0.8249
+        },
+        {
+          "tool": "stripe_list_invoices",
+          "score": 0.8231
+        },
+        {
+          "tool": "stripe_list_invoices",
+          "score": 0.8228
+        }
+      ]
+    },
+    {
+      "query_id": "coll_31",
+      "category": "near_collision",
+      "query": "Update the CRM record for contact con_456 with new phone number",
+      "expected_tool": "crm_update_contact",
+      "result_tool": "crm_update_contact",
+      "result_args": {},
+      "confidence": 0.8248,
+      "latency_ms": 5.467904004035518,
+      "tokens": 0,
+      "tool_correct": true,
+      "tool_label": "correct",
+      "invalid_tool": false,
+      "schema_valid": true,
+      "schema_errors": null,
+      "abstain_correct": null,
+      "top_3": [
+        {
+          "tool": "crm_update_contact",
+          "score": 0.8248
+        },
+        {
+          "tool": "crm_get_contact",
+          "score": 0.5375
+        },
+        {
+          "tool": "crm_get_contact",
+          "score": 0.5369
+        }
+      ]
+    },
+    {
+      "query_id": "coll_32",
+      "category": "near_collision",
+      "query": "Find all the files shared with me in Drive",
+      "expected_tool": "gdrive_search",
+      "result_tool": "gdrive_search",
+      "result_args": {},
+      "confidence": 0.8246,
+      "latency_ms": 5.068491009296849,
+      "tokens": 0,
+      "tool_correct": true,
+      "tool_label": "correct",
+      "invalid_tool": false,
+      "schema_valid": true,
+      "schema_errors": null,
+      "abstain_correct": null,
+      "top_3": [
+        {
+          "tool": "gdrive_search",
+          "score": 0.8246
+        },
+        {
+          "tool": "gdrive_search",
+          "score": 0.8223
+        },
+        {
+          "tool": "gdrive_share",
+          "score": 0.5331
+        }
+      ]
+    },
+    {
+      "query_id": "coll_33",
+      "category": "near_collision",
+      "query": "Search Jira for all stories in the MOBILE project",
+      "expected_tool": "jira_search",
+      "result_tool": "jira_search",
+      "result_args": {},
+      "confidence": 0.8215,
+      "latency_ms": 5.678673012880608,
+      "tokens": 0,
+      "tool_correct": true,
+      "tool_label": "correct",
+      "invalid_tool": false,
+      "schema_valid": true,
+      "schema_errors": null,
+      "abstain_correct": null,
+      "top_3": [
+        {
+          "tool": "jira_search",
+          "score": 0.8215
+        },
+        {
+          "tool": "jira_create_ticket",
+          "score": 0.5344
+        },
+        {
+          "tool": "jira_assign_ticket",
+          "score": 0.5338
+        }
+      ]
+    },
+    {
+      "query_id": "coll_34",
+      "category": "near_collision",
+      "query": "Create a task in Jira for the API migration and assign it to dave@acme.com",
+      "expected_tool": "jira_create_ticket",
+      "result_tool": "jira_create_ticket",
+      "result_args": {},
+      "confidence": 0.8261,
+      "latency_ms": 5.3274800011422485,
+      "tokens": 0,
+      "tool_correct": true,
+      "tool_label": "correct",
+      "invalid_tool": false,
+      "schema_valid": true,
+      "schema_errors": null,
+      "abstain_correct": null,
+      "top_3": [
+        {
+          "tool": "jira_create_ticket",
+          "score": 0.8261
+        },
+        {
+          "tool": "jira_create_ticket",
+          "score": 0.8239
+        },
+        {
+          "tool": "jira_update_ticket",
+          "score": 0.536
+        }
+      ]
+    },
+    {
+      "query_id": "coll_35",
+      "category": "near_collision",
+      "query": "Email the invoice to billing@client.com and cc the account manager",
+      "expected_tool": "email_send",
+      "result_tool": "email_send",
+      "result_args": {},
+      "confidence": 0.8258,
+      "latency_ms": 5.075634006061591,
+      "tokens": 0,
+      "tool_correct": true,
+      "tool_label": "correct",
+      "invalid_tool": false,
+      "schema_valid": true,
+      "schema_errors": null,
+      "abstain_correct": null,
+      "top_3": [
+        {
+          "tool": "email_send",
+          "score": 0.8258
+        },
+        {
+          "tool": "email_send",
+          "score": 0.825
+        },
+        {
+          "tool": "email_send",
+          "score": 0.8235
+        }
+      ]
+    },
+    {
       "query_id": "oos_01",
       "category": "open_set",
       "query": "What's the weather like in San Francisco today?",
@@ -1155,7 +1789,7 @@
       "result_tool": null,
       "result_args": {},
       "confidence": 0.0126,
-      "latency_ms": 5.378074998589,
+      "latency_ms": 5.973867999273352,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1186,7 +1820,7 @@
       "result_tool": null,
       "result_args": {},
       "confidence": 0.0109,
-      "latency_ms": 5.072615000244696,
+      "latency_ms": 5.471372001920827,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1217,7 +1851,7 @@
       "result_tool": null,
       "result_args": {},
       "confidence": 0.0092,
-      "latency_ms": 5.141788999026176,
+      "latency_ms": 5.117439999594353,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1248,7 +1882,7 @@
       "result_tool": null,
       "result_args": {},
       "confidence": 0.0113,
-      "latency_ms": 6.1750660024699755,
+      "latency_ms": 6.019369000568986,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1279,7 +1913,7 @@
       "result_tool": null,
       "result_args": {},
       "confidence": 0.0098,
-      "latency_ms": 5.14931100042304,
+      "latency_ms": 5.468716990435496,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1310,7 +1944,7 @@
       "result_tool": null,
       "result_args": {},
       "confidence": 0.012,
-      "latency_ms": 5.490536001161672,
+      "latency_ms": 5.262377992039546,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1341,7 +1975,7 @@
       "result_tool": null,
       "result_args": {},
       "confidence": 0.2404,
-      "latency_ms": 5.35606999983429,
+      "latency_ms": 5.664206008077599,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1372,7 +2006,7 @@
       "result_tool": null,
       "result_args": {},
       "confidence": 0.2404,
-      "latency_ms": 5.138866999914171,
+      "latency_ms": 5.423982001957484,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1403,7 +2037,7 @@
       "result_tool": null,
       "result_args": {},
       "confidence": 0.0102,
-      "latency_ms": 5.886606999411015,
+      "latency_ms": 5.103065006551333,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1434,7 +2068,7 @@
       "result_tool": null,
       "result_args": {},
       "confidence": 0.0108,
-      "latency_ms": 10.42930199764669,
+      "latency_ms": 5.6820199970388785,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1465,7 +2099,7 @@
       "result_tool": null,
       "result_args": {},
       "confidence": 0.0118,
-      "latency_ms": 6.076051999116316,
+      "latency_ms": 5.472864999319427,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1496,7 +2130,7 @@
       "result_tool": null,
       "result_args": {},
       "confidence": 0.0119,
-      "latency_ms": 6.260663001739886,
+      "latency_ms": 5.2672680030809715,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1527,7 +2161,7 @@
       "result_tool": null,
       "result_args": {},
       "confidence": 0.2369,
-      "latency_ms": 5.992591999529395,
+      "latency_ms": 5.687205004505813,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1545,8 +2179,8 @@
           "score": 0.2357
         },
         {
-          "tool": "stripe_get_customer",
-          "score": 0.0084
+          "tool": "analytics_identify_user",
+          "score": 0.233
         }
       ]
     },
@@ -1558,7 +2192,7 @@
       "result_tool": null,
       "result_args": {},
       "confidence": 0.0115,
-      "latency_ms": 5.657522000547033,
+      "latency_ms": 5.650075996527448,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1589,7 +2223,7 @@
       "result_tool": null,
       "result_args": {},
       "confidence": 0.0093,
-      "latency_ms": 6.84700899728341,
+      "latency_ms": 5.142973008332774,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1620,7 +2254,7 @@
       "result_tool": "stripe_refund",
       "result_args": {},
       "confidence": 0.8252,
-      "latency_ms": 6.193468998390017,
+      "latency_ms": 6.01317900873255,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -1651,7 +2285,7 @@
       "result_tool": "slack_send_message",
       "result_args": {},
       "confidence": 0.8274,
-      "latency_ms": 6.252398998185527,
+      "latency_ms": 5.431279001641087,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -1682,7 +2316,7 @@
       "result_tool": "jira_create_ticket",
       "result_args": {},
       "confidence": 0.8263,
-      "latency_ms": 6.074248001823435,
+      "latency_ms": 5.196188998525031,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -1713,7 +2347,7 @@
       "result_tool": null,
       "result_args": {},
       "confidence": 0.0111,
-      "latency_ms": 5.963825999060646,
+      "latency_ms": 5.586145998677239,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1731,8 +2365,8 @@
           "score": 0.0111
         },
         {
-          "tool": "stripe_get_customer",
-          "score": 0.0061
+          "tool": "stripe_list_invoices",
+          "score": 0.0065
         }
       ]
     },
@@ -1744,7 +2378,7 @@
       "result_tool": null,
       "result_args": {},
       "confidence": 0.0092,
-      "latency_ms": 6.440722001570975,
+      "latency_ms": 5.5642299994360656,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1775,7 +2409,7 @@
       "result_tool": null,
       "result_args": {},
       "confidence": 0.233,
-      "latency_ms": 6.239938000362599,
+      "latency_ms": 5.283817008603364,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1805,8 +2439,8 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.2379,
-      "latency_ms": 5.950143997324631,
+      "confidence": 0.2374,
+      "latency_ms": 5.703118004021235,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1816,16 +2450,16 @@
       "abstain_correct": true,
       "top_3": [
         {
-          "tool": "slack_list_channels",
-          "score": 0.2379
+          "tool": "slack_search_messages",
+          "score": 0.2374
         },
         {
-          "tool": "slack_list_channels",
-          "score": 0.2373
+          "tool": "jira_create_ticket",
+          "score": 0.0094
         },
         {
-          "tool": "slack_send_message",
-          "score": 0.2366
+          "tool": "slack_set_status",
+          "score": 0.0091
         }
       ]
     },
@@ -1836,8 +2470,8 @@
       "expected_tool": "stripe_get_customer",
       "result_tool": "stripe_get_customer",
       "result_args": {},
-      "confidence": 0.8276,
-      "latency_ms": 5.92211699768086,
+      "confidence": 0.8259,
+      "latency_ms": 6.235025997739285,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -1848,15 +2482,15 @@
       "top_3": [
         {
           "tool": "stripe_get_customer",
-          "score": 0.8276
+          "score": 0.8259
         },
         {
           "tool": "crm_get_contact",
-          "score": 0.3002
+          "score": 0.5327
         },
         {
           "tool": "crm_get_contact",
-          "score": 0.2997
+          "score": 0.3004
         }
       ]
     },
@@ -1868,7 +2502,7 @@
       "result_tool": null,
       "result_args": {},
       "confidence": 0.2312,
-      "latency_ms": 5.443335001473315,
+      "latency_ms": 5.1974460075143725,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1899,7 +2533,7 @@
       "result_tool": null,
       "result_args": {},
       "confidence": 0.2356,
-      "latency_ms": 5.175481001060689,
+      "latency_ms": 5.651250001392327,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1930,7 +2564,7 @@
       "result_tool": null,
       "result_args": {},
       "confidence": 0.2317,
-      "latency_ms": 5.820988000778016,
+      "latency_ms": 5.492673997650854,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1961,7 +2595,7 @@
       "result_tool": null,
       "result_args": {},
       "confidence": 0.234,
-      "latency_ms": 5.284827999275876,
+      "latency_ms": 5.196557991439477,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -1988,11 +2622,11 @@
       "query_id": "adv_13",
       "category": "adversarial",
       "query": "Send a Slack message to #general and also create a Jira ticket about the outage",
-      "expected_tool": "slack_send_message",
-      "result_tool": "slack_send_message",
+      "expected_tool": "jira_create_ticket",
+      "result_tool": "jira_create_ticket",
       "result_args": {},
-      "confidence": 0.5256,
-      "latency_ms": 5.380124999646796,
+      "confidence": 0.5913,
+      "latency_ms": 5.600825999863446,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -2002,16 +2636,16 @@
       "abstain_correct": null,
       "top_3": [
         {
-          "tool": "slack_send_message",
-          "score": 0.5256
+          "tool": "jira_create_ticket",
+          "score": 0.5913
         },
         {
-          "tool": "slack_send_message",
-          "score": 0.524
+          "tool": "jira_create_ticket",
+          "score": 0.5907
         },
         {
-          "tool": "slack_send_message",
-          "score": 0.5239
+          "tool": "jira_search",
+          "score": 0.2991
         }
       ]
     },
@@ -2022,8 +2656,8 @@
       "expected_tool": "stripe_refund",
       "result_tool": "stripe_refund",
       "result_args": {},
-      "confidence": 0.5334,
-      "latency_ms": 5.392318998929113,
+      "confidence": 0.5347,
+      "latency_ms": 5.516199991689064,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -2034,15 +2668,15 @@
       "top_3": [
         {
           "tool": "stripe_refund",
-          "score": 0.5334
+          "score": 0.5347
         },
         {
           "tool": "stripe_refund",
-          "score": 0.5292
+          "score": 0.5305
         },
         {
-          "tool": "email_send",
-          "score": 0.3003
+          "tool": "crm_search_contacts",
+          "score": 0.2962
         }
       ]
     },
@@ -2053,8 +2687,8 @@
       "expected_tool": null,
       "result_tool": null,
       "result_args": {},
-      "confidence": 0.2337,
-      "latency_ms": 5.159675001777941,
+      "confidence": 0.2356,
+      "latency_ms": 5.178217994398437,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct_abstain",
@@ -2065,15 +2699,15 @@
       "top_3": [
         {
           "tool": "stripe_list_invoices",
+          "score": 0.2356
+        },
+        {
+          "tool": "stripe_list_invoices",
           "score": 0.2337
         },
         {
           "tool": "stripe_list_invoices",
           "score": 0.2326
-        },
-        {
-          "tool": "jira_create_ticket",
-          "score": 0.0109
         }
       ]
     },
@@ -2085,7 +2719,7 @@
       "result_tool": "stripe_charge",
       "result_args": {},
       "confidence": 0.8256,
-      "latency_ms": 5.016054998122854,
+      "latency_ms": 5.844204992172308,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -2115,8 +2749,8 @@
       "expected_tool": "email_send",
       "result_tool": "email_send",
       "result_args": {},
-      "confidence": 0.5313,
-      "latency_ms": 5.666648998158053,
+      "confidence": 0.8242,
+      "latency_ms": 5.403046001447365,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -2127,15 +2761,15 @@
       "top_3": [
         {
           "tool": "email_send",
-          "score": 0.5313
+          "score": 0.8242
         },
         {
           "tool": "email_send",
-          "score": 0.5309
+          "score": 0.8238
         },
         {
           "tool": "email_send",
-          "score": 0.5294
+          "score": 0.8224
         }
       ]
     },
@@ -2147,7 +2781,7 @@
       "result_tool": "jira_create_ticket",
       "result_args": {},
       "confidence": 0.823,
-      "latency_ms": 5.177129998628516,
+      "latency_ms": 5.088709003757685,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -2178,7 +2812,7 @@
       "result_tool": "gdrive_share",
       "result_args": {},
       "confidence": 0.587,
-      "latency_ms": 5.251916998531669,
+      "latency_ms": 5.584826998529024,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -2209,7 +2843,7 @@
       "result_tool": "calendar_create_event",
       "result_args": {},
       "confidence": 0.8229,
-      "latency_ms": 5.6972319980559405,
+      "latency_ms": 5.445104994578287,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -2240,7 +2874,7 @@
       "result_tool": "stripe_refund",
       "result_args": {},
       "confidence": 0.8246,
-      "latency_ms": 5.100252001284389,
+      "latency_ms": 5.296545001328923,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -2271,7 +2905,7 @@
       "result_tool": "stripe_create_subscription",
       "result_args": {},
       "confidence": 0.8244,
-      "latency_ms": 5.20248700195225,
+      "latency_ms": 5.781822997960262,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -2302,7 +2936,7 @@
       "result_tool": "analytics_get_metrics",
       "result_args": {},
       "confidence": 0.5287,
-      "latency_ms": 5.879209002159769,
+      "latency_ms": 5.452165991300717,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -2333,7 +2967,7 @@
       "result_tool": "crm_search_contacts",
       "result_args": {},
       "confidence": 0.5914,
-      "latency_ms": 5.128063003212446,
+      "latency_ms": 5.320619995472953,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",
@@ -2364,7 +2998,7 @@
       "result_tool": "slack_send_message",
       "result_args": {},
       "confidence": 0.5334,
-      "latency_ms": 5.373161002353299,
+      "latency_ms": 5.851336012710817,
       "tokens": 0,
       "tool_correct": true,
       "tool_label": "correct",

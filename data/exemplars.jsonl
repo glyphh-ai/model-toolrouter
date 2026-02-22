@@ -61,3 +61,8 @@
 {"tool_id": "analytics_get_funnel", "action": "get", "target": "funnel", "domain": "analytics", "keywords": ["funnel", "conversion", "analytics", "steps", "flow"]}
 {"tool_id": "analytics_identify_user", "action": "identify", "target": "user", "domain": "analytics", "keywords": ["identify", "user", "analytics", "traits", "profile"]}
 {"tool_id": "analytics_identify_user", "action": "identify", "target": "user", "domain": "analytics", "keywords": ["identify", "user", "upgraded", "plan", "traits", "analytics"]}
+{"tool_id": "analytics_identify_user", "action": "identify", "target": "user", "domain": "analytics", "keywords": ["identify", "user", "switched", "plan", "changed", "analytics"]}
+{"tool_id": "analytics_track_event", "action": "track", "target": "metric", "domain": "analytics", "keywords": ["record", "event", "checkout", "analytics", "track", "completed"]}
+{"tool_id": "crm_get_contact", "action": "get", "target": "customer", "domain": "crm", "keywords": ["customer", "details", "crm", "contact", "company", "record"]}
+{"tool_id": "stripe_list_invoices", "action": "list", "target": "invoice", "domain": "payments", "keywords": ["check", "invoices", "stripe", "paid", "customer", "list"]}
+{"tool_id": "email_send", "action": "send", "target": "email", "domain": "email", "keywords": ["email", "send", "invoice", "cc", "billing", "to"]}

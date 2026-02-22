@@ -129,17 +129,33 @@ _PHRASE_ACTIONS = [
     ("grant access", "share"),
     ("read-only access", "share"),
     ("read only access", "share"),
+    # create-specific (must beat "assign it to" when "create" comes first)
+    ("create a task", "create"),
+    ("create a ticket", "create"),
+    ("create a bug", "create"),
+    ("create a story", "create"),
+    ("create a epic", "create"),
+    ("create a jira", "create"),
     # assign-specific (must beat "update" when "assign" is in the query)
     ("assign it to", "assign"),
     ("assign to", "assign"),
     ("assign ticket", "assign"),
-    # list-specific (must beat "look up" → search)
+    # list-specific (must beat "look up" → get)
     ("look up what channels", "list"),
     ("look up channels", "list"),
+    ("check the invoices", "list"),
+    ("check invoices", "list"),
     # search-specific
     ("search for the invoice email", "search"),
     ("search for the email", "search"),
+    # email-as-verb (must beat "charge" from "invoice")
+    ("email the", "send"),
+    ("email it to", "send"),
     # get-specific
+    ("i need the", "get"),
+    ("i need", "get"),
+    ("look up the payment history", "list"),
+    ("look up payment history", "list"),
     ("look up", "get"),
     ("look for", "search"),
     ("find the customer", "get"),
@@ -148,14 +164,16 @@ _PHRASE_ACTIONS = [
     # identify (trait changes) — must come before track/log
     ("upgraded to", "identify"),
     ("downgraded to", "identify"),
+    ("switched from", "identify"),
     ("changed plan", "identify"),
+    ("changed their", "identify"),
     # track/log
     ("log that", "track"),
     ("log event", "track"),
     # dm-specific
     ("send a dm", "send"),
     ("send dm", "send"),
-    # payment history
+    # payment/invoice history
     ("payment history", "list"),
     ("billing history", "list"),
     ("invoice history", "list"),
@@ -167,6 +185,9 @@ _PHRASE_TARGETS = [
     ("payment history", "invoice"),
     ("billing history", "invoice"),
     ("invoice history", "invoice"),
+    ("customer details", "customer"),
+    ("customer record", "customer"),
+    ("contact info", "contact"),
     ("free time", "free_time"),
     ("available time", "free_time"),
     ("time slot", "free_time"),
@@ -182,8 +203,12 @@ _PHRASE_TARGETS = [
     ("page views", "metric"),
     ("page_views", "metric"),
     ("pageviews", "metric"),
+    ("checkout_completed", "metric"),
+    ("checkout completed", "metric"),
     ("upgraded to", "user"),
     ("downgraded to", "user"),
+    ("switched from", "user"),
+    ("changed their", "user"),
 ]
 
 _ACTION_MAP = {
@@ -202,6 +227,7 @@ _ACTION_MAP = {
     # get/read actions
     "get": "get", "fetch": "get", "retrieve": "get", "show": "get",
     "check": "get", "view": "get", "pull": "get", "see": "get",
+    "need": "get",
     # list actions
     "list": "list", "enumerate": "list",
     # update actions
@@ -277,24 +303,24 @@ _TARGET_MAP = {
 _DOMAIN_SIGNALS = {
     "messaging": ["slack", "dm", "channel", "#"],
     "email": ["email", "mail", "gmail", "inbox", "subject", "cc", "bcc", "draft"],
-    "crm": ["crm", "contact", "deal", "pipeline", "hubspot", "salesforce", "customer record"],
-    "payments": ["stripe", "charge", "refund", "invoice", "subscription", "payment", "cus_", "ch_", "sub_", "price_"],
+    "crm": ["crm", "contact", "deal", "pipeline", "hubspot", "salesforce", "customer record", "customer details", "contact info"],
+    "payments": ["stripe", "charge", "refund", "invoice", "subscription", "payment", "cus_", "ch_", "sub_", "price_", "billing"],
     "calendar": ["calendar", "meeting", "event", "schedule", "appointment", "free time", "availability"],
     "files": ["drive", "gdrive", "upload", "file", "folder", "share", "document"],
     "tickets": ["jira", "ticket", "issue", "bug", "epic", "story", "eng-", "ENG-", "sprint"],
-    "analytics": ["analytics", "track", "funnel", "metric", "pageview", "conversion", "identify", "upgraded", "traits"],
+    "analytics": ["analytics", "track", "funnel", "metric", "pageview", "conversion", "identify", "upgraded", "traits", "switched from", "changed their", "checkout"],
 }
 
 # Weighted domain signals — some signals are stronger indicators than others
 _DOMAIN_SIGNAL_WEIGHTS = {
     "messaging": {"slack": 3, "dm": 2, "channel": 2, "#": 2},
     "email": {"email": 2, "mail": 2, "gmail": 3, "inbox": 2, "subject": 2, "cc": 2, "bcc": 2, "draft": 1},
-    "crm": {"crm": 3, "contact": 2, "deal": 2, "pipeline": 1, "hubspot": 3, "salesforce": 3, "customer record": 3},
-    "payments": {"stripe": 3, "charge": 2, "refund": 2, "invoice": 2, "subscription": 2, "payment": 2, "cus_": 3, "ch_": 3, "sub_": 2, "price_": 3},
+    "crm": {"crm": 3, "contact": 2, "deal": 2, "pipeline": 1, "hubspot": 3, "salesforce": 3, "customer record": 3, "customer details": 3, "contact info": 3},
+    "payments": {"stripe": 3, "charge": 2, "refund": 2, "invoice": 2, "subscription": 2, "payment": 2, "cus_": 3, "ch_": 3, "sub_": 2, "price_": 3, "billing": 2},
     "calendar": {"calendar": 3, "meeting": 2, "event": 1, "schedule": 2, "appointment": 2, "free time": 2, "availability": 2},
     "files": {"drive": 3, "gdrive": 3, "upload": 2, "file": 1, "folder": 2, "share": 1, "document": 1},
     "tickets": {"jira": 3, "ticket": 2, "issue": 1, "bug": 2, "epic": 2, "story": 1, "eng-": 3, "ENG-": 3, "sprint": 2},
-    "analytics": {"analytics": 3, "track": 2, "funnel": 3, "metric": 2, "pageview": 3, "conversion": 2, "identify": 2, "upgraded": 2, "traits": 2},
+    "analytics": {"analytics": 3, "track": 2, "funnel": 3, "metric": 2, "pageview": 3, "conversion": 2, "identify": 2, "upgraded": 2, "traits": 2, "switched from": 3, "changed their": 3, "checkout": 2},
 }
 
 # Out-of-scope qualifiers — if the query contains these patterns, it's likely
@@ -338,7 +364,7 @@ _STOP_WORDS = {
     "and", "or", "of", "with", "from", "this", "that", "about",
     "how", "what", "when", "where", "which", "who", "also",
     "then", "but", "just", "them", "their", "its", "be", "been",
-    "have", "has", "had", "not", "dont", "need", "want", "think",
+    "have", "has", "had", "not", "dont", "want", "think",
     "use", "call", "run", "execute", "tool", "function", "api",
 }
 
@@ -375,11 +401,52 @@ def _extract_action(text: str, words: list[str]) -> str:
         if phrase in text_lower:
             return action
 
-    # Phase 2: single-word matching
-    for w in words:
+    # Phase 2: single-word matching — collect ALL actions found, pick highest-impact
+    # Impact ranking: irreversible/state-changing actions outrank notifications/reads
+    _IMPACT_RANK = {
+        "charge": 10, "refund": 10, "cancel": 10, "delete": 10,
+        "create": 9, "subscribe": 9,
+        "update": 8, "assign": 8, "share": 8, "upload": 8,
+        "identify": 7, "track": 7, "comment": 7,
+        "set": 6,
+        "send": 5, "reply": 5, "draft": 5,
+        "search": 3, "get": 2, "list": 2,
+    }
+    # Words that map to actions but are commonly used as non-verbs
+    # (e.g. "new feature" — "new" maps to "create" but isn't a verb here)
+    _WEAK_ACTION_WORDS = {"new", "open", "file", "start", "record", "book", "move"}
+
+    # Context-dependent weak words: these are only weak when preceded by certain words
+    # (e.g. "project update" — "update" is a noun, not a verb)
+    _CONTEXTUAL_WEAK = {
+        "update": {"project", "status", "the"},  # "project update", "status update"
+    }
+
+    found_actions = []
+    strong_actions = []
+    for i, w in enumerate(words):
         clean = re.sub(r"[^a-z]", "", w)
         if clean in _ACTION_MAP:
-            return _ACTION_MAP[clean]
+            action = _ACTION_MAP[clean]
+            found_actions.append(action)
+            is_weak = clean in _WEAK_ACTION_WORDS
+            # Check contextual weakness
+            if not is_weak and clean in _CONTEXTUAL_WEAK:
+                prev_word = re.sub(r"[^a-z]", "", words[i - 1]) if i > 0 else ""
+                if prev_word in _CONTEXTUAL_WEAK[clean]:
+                    is_weak = True
+            if not is_weak:
+                strong_actions.append(action)
+
+    # Use strong actions for impact ranking; fall back to all if no strong ones
+    candidates = strong_actions if strong_actions else found_actions
+
+    if candidates:
+        # If multiple distinct actions found, pick highest-impact (Policy C)
+        unique_actions = list(dict.fromkeys(candidates))  # preserve order, dedupe
+        if len(unique_actions) > 1:
+            return max(unique_actions, key=lambda a: _IMPACT_RANK.get(a, 0))
+        return unique_actions[0]
 
     # Phase 3: extract action from camelCase tool names in the query
     # e.g. "createJiraStory" → "create", "sendSlackNotification" → "send"
@@ -394,13 +461,26 @@ def _extract_action(text: str, words: list[str]) -> str:
     return "get"
 
 
-def _extract_target(text: str, words: list[str]) -> str:
+def _extract_target(text: str, words: list[str], action: str = "") -> str:
     text_lower = text.lower()
 
     # Phase 1: multi-word phrase matching
     for phrase, target in _PHRASE_TARGETS:
         if phrase in text_lower:
             return target
+
+    # Phase 1b: action-aligned target override for multi-action queries
+    # If the action is high-impact (create/delete/cancel/charge/refund) and
+    # a matching target noun exists, prefer it over positional signals like #channel
+    _HIGH_IMPACT_ACTIONS = {"create", "delete", "cancel", "charge", "refund", "update", "assign"}
+    if action in _HIGH_IMPACT_ACTIONS:
+        for w in words:
+            clean = re.sub(r"[^a-z]", "", w)
+            if clean in _TARGET_MAP:
+                candidate = _TARGET_MAP[clean]
+                # Only override if the candidate is a "real" target (not generic)
+                if candidate not in ("general",):
+                    return candidate
 
     # Phase 2: channel vs DM disambiguation
     # If we see # followed by a word, it's a channel message
@@ -440,14 +520,17 @@ def _infer_domain(text: str) -> str:
     # Strip email addresses to avoid false domain signals from "@" addresses
     text_no_emails = re.sub(r'\S+@\S+\.\S+', '', text_lower)
     scores = {}
+    # Signals that need word-boundary matching to avoid false positives
+    # (e.g. "cc" in "access", "mail" in "email", "dm" in "admin")
+    _BOUNDARY_SIGNALS = {"cc", "bcc", "dm", "#", "mail", "bug"}
+
     for domain, signals in _DOMAIN_SIGNALS.items():
         weights = _DOMAIN_SIGNAL_WEIGHTS.get(domain, {})
         score = 0
         for s in signals:
             s_lower = s.lower()
-            # For short signals (<=3 chars), use word boundary matching
-            # to avoid false positives like "cc" in "access"
-            if len(s_lower) <= 3:
+            # For signals prone to substring false positives, use word boundary
+            if s_lower in _BOUNDARY_SIGNALS or len(s_lower) <= 3:
                 if re.search(r'\b' + re.escape(s_lower) + r'\b', text_no_emails):
                     score += weights.get(s, 1)
             else:
@@ -554,7 +637,7 @@ def encode_query(query: str) -> dict:
     words = cleaned.split()
 
     action = _extract_action(query, words)
-    target = _extract_target(query, words)
+    target = _extract_target(query, words, action=action)
     domain = _infer_domain(query)
     keywords = " ".join(w for w in words if w not in _STOP_WORDS)
 

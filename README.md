@@ -1,85 +1,84 @@
-# DevOps Tool Router
+# SaaS Tool Router
 
-Routes natural language DevOps requests to release step functions using HDC similarity matching on intent vectors.
+Routes natural language SaaS requests to the correct tool function using HDC
+similarity matching on intent vectors. 38 tools across 8 domains — Slack,
+email, CRM, Stripe, calendar, Google Drive, Jira, and analytics.
 
 ## How It Works
 
-You describe what you want to do in plain English — "create a release branch", "run the tests", "tag the release" — and the model routes your request to the correct tool function via cosine similarity on HDC-encoded intent vectors. No LLM in the loop. No hallucinations. Just math.
+Describe what you want in plain English — "refund charge ch_abc123", "create a
+bug ticket in ENG", "find a time for a 30-minute call" — and the encoder
+decomposes your query into action, target, domain, and keyword signals, encodes
+them as high-dimensional vectors, and matches against exemplars via cosine
+similarity. No LLM required for routing. Deterministic. Sub-10ms.
 
-The exemplars in `data/exemplars.jsonl` define the tool catalog — each tool has multiple phrasings encoded as concepts. Your query is encoded the same way, and the closest match wins.
+## Benchmark Results
+
+> **Internal Glyphh Eval — Formal Benchmark Validation Pending**
+
+95 queries, 38 tools, 5 difficulty categories (clear, near-collision,
+adversarial, open-set, schema-trap). Four strategies compared:
+
+| Strategy | What it does | Routing Acc | In-Scope | Tokens | Latency |
+|---|---|---|---|---|---|
+| LLM Only | LLM picks tool + args | 91.6% | 88.7% | 229K | 1,820 ms |
+| Glyphh Only | HDC routes, no args | 100% | 100% | 0 | 6 ms |
+| Glyphh Route → LLM Args | HDC routes, LLM fills args | 100% | 100% | 22K | 658 ms |
+| LLM + Glyphh Sidecar | LLM does everything, HDC confirms/overrides | 98.9% | 100% | 232K | 1,655 ms |
+
+**Glyphh Route → LLM Args** delivers 100% accuracy with 90% fewer tokens and
+64% lower latency than LLM-only. The LLM never sees the full catalog — it
+receives one tool definition and extracts args. This is the architecture for
+cost-sensitive, high-volume deployments.
+
+**LLM + Glyphh Sidecar** is the drop-in pattern for existing LLM pipelines.
+Keep your LLM, bolt Glyphh on as a sidecar. It catches and corrects every
+in-scope routing error the LLM makes — 100% in-scope accuracy with zero
+changes to your LLM prompt or flow.
+
+Full analysis: [`benchmark/analysis.md`](benchmark/analysis.md)
 
 ## Model Structure
 
 ```
-model-toolrouter/
-├── manifest.yaml          # model identity and metadata
-├── config.yaml            # runtime config, roles, similarity settings
-├── encoder.py             # EncoderConfig + encode_query + entry_to_record
-├── build.py               # package model into .glyphh file
-├── tests.py               # test runner entry point
+toolrouter/
+├── config.yaml              # model config, roles, similarity settings
+├── encoder.py               # EncoderConfig + NL query encoder
 ├── data/
-│   └── exemplars.jsonl    # tool exemplar definitions
-├── tests/
-│   ├── test-queries.json  # test query → expected tool mappings
-│   ├── conftest.py        # shared fixtures
-│   ├── test_encoding.py   # config validation, role encoding
-│   ├── test_similarity.py # routing correctness
-│   └── test_queries.py    # NL query attribute extraction
-└── README.md
+│   └── exemplars.jsonl      # 68 tool exemplars across 38 tools
+├── benchmark/
+│   ├── run.py               # 4-strategy benchmark runner
+│   ├── queries.json         # 95 test queries (v2.2.0)
+│   ├── tool_catalog.json    # 38 tool definitions with schemas
+│   ├── analysis.md          # detailed findings
+│   └── results/             # raw JSON results per strategy
+├── tests/                   # unit tests
+├── build.py                 # package model into .glyphh file
+└── manifest.yaml            # model identity
 ```
 
 ## Encoder Architecture
 
-Two-layer HDC encoder tuned for intent routing:
+Two-layer HDC encoder (10,000 dimensions):
 
 | Layer | Weight | Segments | Purpose |
-|-------|--------|----------|---------|
-| intent | 0.7 | action (verb + object), scope (domain) | Primary routing signal |
+|---|---|---|---|
+| intent | 0.7 | action (verb + target), scope (domain) | Primary routing signal |
 | context | 0.3 | keywords | Disambiguation via keyword overlap |
 
-### Roles
+## Domains
 
-| Role | Type | Weight | Description |
-|------|------|--------|-------------|
-| verb | categorical | 1.0 | Action class: build, deploy, query, manage |
-| object | text | 0.8 | Target: branch, tag, tests, sdk, runtime, etc. |
-| domain | categorical | 1.0 | Context: release, test, build, docker |
-| keywords | text | 1.0 | Filtered query terms for disambiguation |
+Messaging (Slack), Email (Gmail), CRM, Payments (Stripe), Calendar, Files
+(Google Drive), Tickets (Jira), Analytics.
 
-## Tools
-
-| Tool ID | Description |
-|---------|-------------|
-| create_branch | Create a release branch from main |
-| run_tests | Run the test suite |
-| merge_to_main | Merge the release branch into main |
-| create_tag | Tag the release on main |
-| check_workflow_status | Check CI/CD build status |
-| cleanup_branch | Delete the release branch |
-| release_sdk | Full SDK release flow |
-| release_runtime | Full runtime release flow |
-| release_platform | Full platform release flow |
-| release_studio | Full studio release flow |
-| rebuild_runtime | Rebuild runtime docker container |
-| rebuild_studio | Rebuild studio docker container |
-| rebuild_all | Rebuild all docker containers |
-| restart_runtime | Restart runtime container |
-| restart_all | Restart all containers |
-| docker_logs | Show docker container logs |
-| docker_status | Show docker container status |
-
-## Testing
+## Running the Benchmark
 
 ```bash
-# Via CLI
-glyphh model test ./model-toolrouter
-glyphh model test ./model-toolrouter -v
+# Glyphh-only (no API key needed)
+./dev-models.sh benchmark toolrouter
 
-# Or directly
-cd model-toolrouter/
-python tests.py
+# All 4 strategies (requires OPENAI_API_KEY)
+export $(grep OPENAI_API_KEY .env | xargs)
+./dev-models.sh benchmark toolrouter --strategies 1 2 3 4 \
+  --output glyphh-models/toolrouter/benchmark/results/
 ```
-
-## Benchmark (coming soon)
-
-A benchmark comparing Glyphh HDC routing vs. LLM-based tool selection on the same query set — measuring accuracy, latency, and cost.

@@ -1,25 +1,571 @@
 {
   "metadata": {
-    "description": "Tool catalog shared by both Glyphh and LLM for fair comparison",
-    "version": "1.0.0"
+    "version": "2.0.0",
+    "description": "Real-world SaaS tool catalog for hallucination benchmarking. 40 tools across 8 domains with deliberate overlaps in verbs and nouns.",
+    "domains": ["messaging", "email", "crm", "payments", "calendar", "files", "tickets", "analytics"]
   },
   "tools": [
-    {"id": "create_branch", "name": "Create Release Branch", "description": "Create a release branch from main for a new version", "parameters": []},
-    {"id": "run_tests", "name": "Run Tests", "description": "Run the full test suite (unit, property, regression)", "parameters": []},
-    {"id": "merge_to_main", "name": "Merge to Main", "description": "Merge the release branch into main", "parameters": []},
-    {"id": "create_tag", "name": "Create Tag", "description": "Create and push an annotated version tag on main", "parameters": [{"name": "version", "type": "string", "required": false, "description": "Version string (e.g. v1.2.0)"}]},
-    {"id": "check_workflow_status", "name": "Check Workflow Status", "description": "Check the CI/CD build and workflow status", "parameters": []},
-    {"id": "cleanup_branch", "name": "Cleanup Branch", "description": "Delete the release branch after merge", "parameters": []},
-    {"id": "release_sdk", "name": "Release SDK", "description": "Run the full SDK release flow (branch, test, merge, tag, build)", "parameters": [{"name": "version", "type": "string", "required": false, "description": "Version to release"}]},
-    {"id": "release_runtime", "name": "Release Runtime", "description": "Run the full runtime release flow (build docker image, deploy)", "parameters": [{"name": "version", "type": "string", "required": false, "description": "Version to release"}]},
-    {"id": "release_platform", "name": "Release Platform", "description": "Run the full platform release flow (build, deploy backend services)", "parameters": [{"name": "version", "type": "string", "required": false, "description": "Version to release"}]},
-    {"id": "release_studio", "name": "Release Studio", "description": "Run the full studio release flow (build frontend, deploy)", "parameters": [{"name": "version", "type": "string", "required": false, "description": "Version to release"}]},
-    {"id": "rebuild_runtime", "name": "Rebuild Runtime", "description": "Rebuild the runtime docker container from scratch", "parameters": []},
-    {"id": "rebuild_studio", "name": "Rebuild Studio", "description": "Rebuild the studio docker container from scratch", "parameters": []},
-    {"id": "rebuild_all", "name": "Rebuild All", "description": "Rebuild all docker containers (full docker-compose recreate)", "parameters": []},
-    {"id": "restart_runtime", "name": "Restart Runtime", "description": "Restart the runtime container without rebuilding", "parameters": []},
-    {"id": "restart_all", "name": "Restart All", "description": "Restart all docker containers", "parameters": []},
-    {"id": "docker_logs", "name": "Docker Logs", "description": "Show docker container logs", "parameters": [{"name": "service", "type": "string", "required": false, "description": "Service name to show logs for"}]},
-    {"id": "docker_status", "name": "Docker Status", "description": "Show status of all docker containers", "parameters": []}
+    {
+      "name": "slack_send_message",
+      "description": "Send a message to a Slack channel.",
+      "domain": "messaging",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "channel": {"type": "string", "description": "Channel name (e.g. #general)"},
+          "text": {"type": "string", "description": "Message content"},
+          "thread_ts": {"type": "string", "description": "Thread timestamp to reply in-thread"}
+        },
+        "required": ["channel", "text"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "slack_send_dm",
+      "description": "Send a direct message to a Slack user by email or user ID.",
+      "domain": "messaging",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "user": {"type": "string", "description": "User email or Slack user ID"},
+          "text": {"type": "string", "description": "Message content"}
+        },
+        "required": ["user", "text"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "slack_set_status",
+      "description": "Set the authenticated user's Slack status emoji and text.",
+      "domain": "messaging",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "status_text": {"type": "string", "description": "Status text"},
+          "status_emoji": {"type": "string", "description": "Emoji code (e.g. :coffee:)"},
+          "expiration": {"type": "integer", "description": "Unix timestamp when status expires, 0 for no expiry"}
+        },
+        "required": ["status_text"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "slack_list_channels",
+      "description": "List all public Slack channels in the workspace.",
+      "domain": "messaging",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "limit": {"type": "integer", "description": "Max results (default 100)"},
+          "cursor": {"type": "string", "description": "Pagination cursor"}
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "slack_search_messages",
+      "description": "Search Slack messages by keyword across all channels the user has access to.",
+      "domain": "messaging",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "query": {"type": "string", "description": "Search query"},
+          "sort": {"type": "string", "enum": ["score", "timestamp"], "description": "Sort order"},
+          "count": {"type": "integer", "description": "Number of results"}
+        },
+        "required": ["query"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "email_send",
+      "description": "Send an email to one or more recipients via SMTP/API.",
+      "domain": "email",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "to": {"type": "array", "items": {"type": "string"}, "description": "Recipient email addresses"},
+          "subject": {"type": "string"},
+          "body": {"type": "string", "description": "Email body (plain text or HTML)"},
+          "cc": {"type": "array", "items": {"type": "string"}},
+          "bcc": {"type": "array", "items": {"type": "string"}}
+        },
+        "required": ["to", "subject", "body"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "email_search",
+      "description": "Search the user's email inbox by query string.",
+      "domain": "email",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "query": {"type": "string", "description": "Search query (supports Gmail-style operators)"},
+          "max_results": {"type": "integer", "description": "Max emails to return"},
+          "label": {"type": "string", "description": "Filter by label (INBOX, SENT, etc.)"}
+        },
+        "required": ["query"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "email_reply",
+      "description": "Reply to an existing email thread by message ID.",
+      "domain": "email",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "message_id": {"type": "string", "description": "ID of the message to reply to"},
+          "body": {"type": "string", "description": "Reply body"},
+          "reply_all": {"type": "boolean", "description": "Reply to all recipients (default false)"}
+        },
+        "required": ["message_id", "body"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "email_create_draft",
+      "description": "Create an email draft without sending it.",
+      "domain": "email",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "to": {"type": "array", "items": {"type": "string"}},
+          "subject": {"type": "string"},
+          "body": {"type": "string"}
+        },
+        "required": ["to", "subject", "body"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "email_list_labels",
+      "description": "List all email labels/folders for the authenticated user.",
+      "domain": "email",
+      "schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "crm_get_contact",
+      "description": "Fetch a CRM contact record by email address or contact ID.",
+      "domain": "crm",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "email": {"type": "string"},
+          "contact_id": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "crm_create_contact",
+      "description": "Create a new contact in the CRM.",
+      "domain": "crm",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "email": {"type": "string"},
+          "first_name": {"type": "string"},
+          "last_name": {"type": "string"},
+          "company": {"type": "string"},
+          "phone": {"type": "string"}
+        },
+        "required": ["email"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "crm_update_contact",
+      "description": "Update fields on an existing CRM contact.",
+      "domain": "crm",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "contact_id": {"type": "string", "description": "Contact ID to update"},
+          "fields": {"type": "object", "description": "Key-value pairs of fields to update"}
+        },
+        "required": ["contact_id", "fields"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "crm_search_contacts",
+      "description": "Search CRM contacts by name, email, company, or custom field.",
+      "domain": "crm",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "query": {"type": "string", "description": "Search query"},
+          "field": {"type": "string", "description": "Specific field to search (email, name, company)"},
+          "limit": {"type": "integer"}
+        },
+        "required": ["query"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "crm_create_deal",
+      "description": "Create a new deal/opportunity in the CRM pipeline.",
+      "domain": "crm",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "title": {"type": "string"},
+          "contact_id": {"type": "string"},
+          "amount": {"type": "number", "description": "Deal value in dollars"},
+          "stage": {"type": "string", "description": "Pipeline stage (e.g. prospecting, negotiation, closed_won)"},
+          "close_date": {"type": "string", "description": "Expected close date (ISO 8601)"}
+        },
+        "required": ["title", "contact_id"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "stripe_charge",
+      "description": "Create a one-time charge on a customer's payment method.",
+      "domain": "payments",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "customer_id": {"type": "string"},
+          "amount_cents": {"type": "integer", "description": "Amount in cents"},
+          "currency": {"type": "string", "description": "ISO currency code (default usd)"},
+          "description": {"type": "string"}
+        },
+        "required": ["customer_id", "amount_cents"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "stripe_refund",
+      "description": "Refund a payment by charge ID. Optionally specify a partial amount.",
+      "domain": "payments",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "charge_id": {"type": "string", "description": "The charge ID to refund"},
+          "amount_cents": {"type": "integer", "description": "Partial refund amount in cents (omit for full refund)"}
+        },
+        "required": ["charge_id"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "stripe_get_customer",
+      "description": "Retrieve a Stripe customer record by customer ID or email.",
+      "domain": "payments",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "customer_id": {"type": "string"},
+          "email": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "stripe_list_invoices",
+      "description": "List invoices for a Stripe customer.",
+      "domain": "payments",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "customer_id": {"type": "string"},
+          "status": {"type": "string", "enum": ["draft", "open", "paid", "void", "uncollectible"]},
+          "limit": {"type": "integer"}
+        },
+        "required": ["customer_id"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "stripe_create_subscription",
+      "description": "Create a new subscription for a customer with a given price/plan.",
+      "domain": "payments",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "customer_id": {"type": "string"},
+          "price_id": {"type": "string", "description": "Stripe price ID"},
+          "trial_days": {"type": "integer", "description": "Number of trial days (0 for none)"}
+        },
+        "required": ["customer_id", "price_id"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "stripe_cancel_subscription",
+      "description": "Cancel an active subscription immediately or at period end.",
+      "domain": "payments",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "subscription_id": {"type": "string"},
+          "at_period_end": {"type": "boolean", "description": "If true, cancel at end of billing period"}
+        },
+        "required": ["subscription_id"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "calendar_create_event",
+      "description": "Create a new calendar event with optional attendees.",
+      "domain": "calendar",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "title": {"type": "string"},
+          "start": {"type": "string", "description": "Start time (ISO 8601)"},
+          "end": {"type": "string", "description": "End time (ISO 8601)"},
+          "attendees": {"type": "array", "items": {"type": "string"}, "description": "Attendee email addresses"},
+          "location": {"type": "string"},
+          "description": {"type": "string"}
+        },
+        "required": ["title", "start", "end"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "calendar_list_events",
+      "description": "List upcoming calendar events within a date range.",
+      "domain": "calendar",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "start_date": {"type": "string", "description": "Start of range (ISO 8601)"},
+          "end_date": {"type": "string", "description": "End of range (ISO 8601)"},
+          "max_results": {"type": "integer"}
+        },
+        "required": ["start_date"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "calendar_delete_event",
+      "description": "Delete a calendar event by event ID.",
+      "domain": "calendar",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "event_id": {"type": "string"}
+        },
+        "required": ["event_id"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "calendar_find_free_time",
+      "description": "Find available time slots across one or more people's calendars.",
+      "domain": "calendar",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "attendees": {"type": "array", "items": {"type": "string"}, "description": "Email addresses to check"},
+          "duration_minutes": {"type": "integer"},
+          "start_date": {"type": "string"},
+          "end_date": {"type": "string"}
+        },
+        "required": ["attendees", "duration_minutes"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "gdrive_upload",
+      "description": "Upload a file to Google Drive.",
+      "domain": "files",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "file_path": {"type": "string", "description": "Local path to the file"},
+          "folder_id": {"type": "string", "description": "Target Drive folder ID"},
+          "name": {"type": "string", "description": "Override filename in Drive"}
+        },
+        "required": ["file_path"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "gdrive_search",
+      "description": "Search for files in Google Drive by name or content.",
+      "domain": "files",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "query": {"type": "string", "description": "Search query"},
+          "mime_type": {"type": "string", "description": "Filter by MIME type"},
+          "max_results": {"type": "integer"}
+        },
+        "required": ["query"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "gdrive_share",
+      "description": "Share a Google Drive file or folder with a user by email.",
+      "domain": "files",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "file_id": {"type": "string"},
+          "email": {"type": "string", "description": "Email of the person to share with"},
+          "role": {"type": "string", "enum": ["reader", "writer", "commenter"], "description": "Permission level"}
+        },
+        "required": ["file_id", "email"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "gdrive_create_folder",
+      "description": "Create a new folder in Google Drive.",
+      "domain": "files",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {"type": "string", "description": "Folder name"},
+          "parent_id": {"type": "string", "description": "Parent folder ID"}
+        },
+        "required": ["name"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "jira_create_ticket",
+      "description": "Create a new Jira issue/ticket in a project.",
+      "domain": "tickets",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "project_key": {"type": "string", "description": "Jira project key (e.g. ENG)"},
+          "summary": {"type": "string", "description": "Ticket title"},
+          "description": {"type": "string"},
+          "issue_type": {"type": "string", "enum": ["bug", "task", "story", "epic"], "description": "Issue type"},
+          "assignee": {"type": "string", "description": "Assignee email or user ID"},
+          "priority": {"type": "string", "enum": ["highest", "high", "medium", "low", "lowest"]}
+        },
+        "required": ["project_key", "summary", "issue_type"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "jira_update_ticket",
+      "description": "Update fields on an existing Jira ticket.",
+      "domain": "tickets",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "issue_key": {"type": "string", "description": "Issue key (e.g. ENG-1234)"},
+          "fields": {"type": "object", "description": "Fields to update (status, assignee, priority, etc.)"}
+        },
+        "required": ["issue_key", "fields"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "jira_search",
+      "description": "Search Jira issues using JQL or text query.",
+      "domain": "tickets",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "jql": {"type": "string", "description": "JQL query string"},
+          "max_results": {"type": "integer"}
+        },
+        "required": ["jql"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "jira_add_comment",
+      "description": "Add a comment to an existing Jira ticket.",
+      "domain": "tickets",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "issue_key": {"type": "string"},
+          "body": {"type": "string", "description": "Comment text"}
+        },
+        "required": ["issue_key", "body"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "jira_assign_ticket",
+      "description": "Assign a Jira ticket to a user.",
+      "domain": "tickets",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "issue_key": {"type": "string"},
+          "assignee": {"type": "string", "description": "User email or account ID"}
+        },
+        "required": ["issue_key", "assignee"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "analytics_track_event",
+      "description": "Track a custom analytics event with properties.",
+      "domain": "analytics",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "event_name": {"type": "string"},
+          "user_id": {"type": "string"},
+          "properties": {"type": "object", "description": "Event properties as key-value pairs"}
+        },
+        "required": ["event_name"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "analytics_get_metrics",
+      "description": "Retrieve analytics metrics (page views, events, conversions) for a date range.",
+      "domain": "analytics",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "metric": {"type": "string", "description": "Metric name (page_views, unique_visitors, events, conversions)"},
+          "start_date": {"type": "string"},
+          "end_date": {"type": "string"},
+          "group_by": {"type": "string", "enum": ["day", "week", "month"]}
+        },
+        "required": ["metric", "start_date"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "analytics_get_funnel",
+      "description": "Get conversion funnel data for a sequence of events.",
+      "domain": "analytics",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "steps": {"type": "array", "items": {"type": "string"}, "description": "Ordered list of event names"},
+          "start_date": {"type": "string"},
+          "end_date": {"type": "string"}
+        },
+        "required": ["steps", "start_date"],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "analytics_identify_user",
+      "description": "Associate a user ID with traits (name, email, plan, etc.) for analytics.",
+      "domain": "analytics",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "user_id": {"type": "string"},
+          "traits": {"type": "object", "description": "User traits as key-value pairs"}
+        },
+        "required": ["user_id", "traits"],
+        "additionalProperties": false
+      }
+    }
   ]
 }

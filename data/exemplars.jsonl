@@ -1,78 +1,63 @@
-{"question": "create a release branch from main", "tool_id": "create_branch", "verb": "build", "object": "branch", "domain": "release", "keywords": ["create", "release", "branch"], "description": "Create a release branch from main"}
-{"question": "start a new release branch", "tool_id": "create_branch", "verb": "build", "object": "branch", "domain": "release", "keywords": ["start", "release", "branch", "cut"], "description": "Start a new release"}
-{"question": "prepare a release candidate", "tool_id": "create_branch", "verb": "build", "object": "branch", "domain": "release", "keywords": ["prepare", "release", "candidate", "branch"], "description": "Prepare a release candidate"}
-{"question": "cut a new release branch for v2", "tool_id": "create_branch", "verb": "build", "object": "branch", "domain": "release", "keywords": ["cut", "release", "branch", "version"], "description": "Cut a new release branch"}
-{"question": "run the full regression suite", "tool_id": "run_tests", "verb": "deploy", "object": "tests", "domain": "test", "keywords": ["run", "tests", "regression", "suite", "pytest"], "description": "Run the full regression suite"}
-{"question": "execute unit and property tests", "tool_id": "run_tests", "verb": "deploy", "object": "tests", "domain": "test", "keywords": ["execute", "unit", "property", "tests", "validate"], "description": "Execute tests to validate the release"}
-{"question": "check if tests are passing", "tool_id": "run_tests", "verb": "query", "object": "tests", "domain": "test", "keywords": ["check", "tests", "passing", "green"], "description": "Check if tests are passing"}
-{"question": "run pytest on the release branch", "tool_id": "run_tests", "verb": "deploy", "object": "tests", "domain": "test", "keywords": ["run", "pytest", "release", "branch"], "description": "Run pytest on the release branch"}
-{"question": "are all tests green", "tool_id": "run_tests", "verb": "query", "object": "tests", "domain": "test", "keywords": ["tests", "green", "passing", "status"], "description": "Check test status"}
-{"question": "merge the release branch into main", "tool_id": "merge_to_main", "verb": "deploy", "object": "merge", "domain": "release", "keywords": ["merge", "release", "branch", "main"], "description": "Merge the release branch into main"}
-{"question": "integrate the release into main", "tool_id": "merge_to_main", "verb": "deploy", "object": "merge", "domain": "release", "keywords": ["merge", "push", "main", "integrate"], "description": "Integrate the release into main"}
-{"question": "merge release to main and close the PR", "tool_id": "merge_to_main", "verb": "deploy", "object": "merge", "domain": "release", "keywords": ["merge", "main", "close", "PR"], "description": "Merge and close the release PR"}
-{"question": "tag the release on main", "tool_id": "create_tag", "verb": "deploy", "object": "tag", "domain": "release", "keywords": ["tag", "version", "create", "git", "annotated"], "description": "Tag the release on main"}
-{"question": "create and push the version tag", "tool_id": "create_tag", "verb": "deploy", "object": "tag", "domain": "release", "keywords": ["create", "tag", "push", "trigger", "build", "git"], "description": "Create and push the version tag"}
-{"question": "tag the merge commit on main", "tool_id": "create_tag", "verb": "deploy", "object": "tag", "domain": "release", "keywords": ["tag", "commit", "main", "version", "annotated"], "description": "Tag the merge commit on main"}
-{"question": "add a release tag for v1.2.0", "tool_id": "create_tag", "verb": "deploy", "object": "tag", "domain": "release", "keywords": ["tag", "release", "version", "git", "push"], "description": "Tag the release version"}
-{"question": "check the CI build status", "tool_id": "check_workflow_status", "verb": "query", "object": "workflow", "domain": "build", "keywords": ["check", "build", "status", "workflow", "ci"], "description": "Check the CI build status"}
-{"question": "monitor the release pipeline", "tool_id": "check_workflow_status", "verb": "query", "object": "workflow", "domain": "build", "keywords": ["monitor", "pipeline", "github", "actions"], "description": "Monitor the release pipeline"}
-{"question": "is the build done", "tool_id": "check_workflow_status", "verb": "query", "object": "build", "domain": "build", "keywords": ["build", "done", "wheels", "published"], "description": "Check if the build is complete"}
-{"question": "what is the workflow status", "tool_id": "check_workflow_status", "verb": "query", "object": "workflow", "domain": "build", "keywords": ["workflow", "status", "github", "actions"], "description": "Check workflow status"}
-{"question": "delete the release branch", "tool_id": "cleanup_branch", "verb": "manage", "object": "branch", "domain": "release", "keywords": ["cleanup", "delete", "release", "branch"], "description": "Delete the release branch"}
-{"question": "clean up after the release", "tool_id": "cleanup_branch", "verb": "manage", "object": "branch", "domain": "release", "keywords": ["clean", "up", "remove", "branch", "done"], "description": "Clean up after the release"}
-{"question": "remove the old release branch", "tool_id": "cleanup_branch", "verb": "manage", "object": "branch", "domain": "release", "keywords": ["remove", "old", "release", "branch"], "description": "Remove the old release branch"}
-{"question": "run the full SDK release flow", "tool_id": "release_sdk", "verb": "deploy", "object": "release", "domain": "release", "keywords": ["release", "sdk", "full", "flow", "all", "steps"], "description": "Run the full SDK release flow"}
-{"question": "ship a new SDK version", "tool_id": "release_sdk", "verb": "deploy", "object": "sdk", "domain": "release", "keywords": ["ship", "new", "version", "release", "everything"], "description": "Ship a new SDK version"}
-{"question": "do the whole SDK release start to finish", "tool_id": "release_sdk", "verb": "deploy", "object": "sdk", "domain": "release", "keywords": ["whole", "release", "start", "finish"], "description": "Execute the complete SDK release pipeline"}
-{"question": "build the SDK wheels", "tool_id": "release_sdk", "verb": "build", "object": "sdk", "domain": "build", "keywords": ["build", "sdk", "wheels", "whl", "package"], "description": "Build the SDK wheels"}
-{"question": "release the runtime", "tool_id": "release_runtime", "verb": "deploy", "object": "runtime", "domain": "release", "keywords": ["release", "runtime", "docker", "image", "deploy"], "description": "Run the full runtime release flow"}
-{"question": "build the runtime docker image", "tool_id": "release_runtime", "verb": "build", "object": "runtime", "domain": "build", "keywords": ["build", "runtime", "docker", "image", "container"], "description": "Build the runtime docker image"}
-{"question": "deploy the runtime to production", "tool_id": "release_runtime", "verb": "deploy", "object": "runtime", "domain": "release", "keywords": ["deploy", "runtime", "production"], "description": "Deploy the runtime"}
-{"question": "release the platform", "tool_id": "release_platform", "verb": "deploy", "object": "platform", "domain": "release", "keywords": ["release", "platform", "services", "backend", "deploy"], "description": "Run the full platform release flow"}
-{"question": "build the platform backend", "tool_id": "release_platform", "verb": "build", "object": "platform", "domain": "build", "keywords": ["build", "platform", "services", "backend"], "description": "Build the platform"}
-{"question": "deploy platform to heroku", "tool_id": "release_platform", "verb": "deploy", "object": "platform", "domain": "release", "keywords": ["deploy", "platform", "heroku", "production"], "description": "Deploy platform to production"}
-{"question": "release the studio frontend", "tool_id": "release_studio", "verb": "deploy", "object": "studio", "domain": "release", "keywords": ["release", "studio", "frontend", "web", "app", "deploy"], "description": "Run the full studio release flow"}
-{"question": "build the studio app", "tool_id": "release_studio", "verb": "build", "object": "studio", "domain": "build", "keywords": ["build", "studio", "frontend", "web", "app", "bundle"], "description": "Build the studio"}
-{"question": "deploy studio to production", "tool_id": "release_studio", "verb": "deploy", "object": "studio", "domain": "release", "keywords": ["deploy", "studio", "production", "frontend"], "description": "Deploy studio to production"}
-{"question": "rebuild the runtime docker container", "tool_id": "rebuild_runtime", "verb": "build", "object": "runtime", "domain": "docker", "keywords": ["rebuild", "runtime", "docker", "container", "recreate"], "description": "Rebuild the runtime docker container"}
-{"question": "rebuild runtime from scratch", "tool_id": "rebuild_runtime", "verb": "build", "object": "runtime", "domain": "docker", "keywords": ["docker", "rebuild", "runtime", "fresh", "image"], "description": "Rebuild runtime from scratch"}
-{"question": "rebuild the studio docker container", "tool_id": "rebuild_studio", "verb": "build", "object": "studio", "domain": "docker", "keywords": ["rebuild", "studio", "docker", "container", "frontend", "recreate"], "description": "Rebuild the studio docker container"}
-{"question": "rebuild all docker containers", "tool_id": "rebuild_all", "verb": "build", "object": "docker", "domain": "docker", "keywords": ["rebuild", "all", "docker", "containers", "full", "everything"], "description": "Rebuild all docker containers"}
-{"question": "nuke and rebuild everything", "tool_id": "rebuild_all", "verb": "build", "object": "docker", "domain": "docker", "keywords": ["nuke", "rebuild", "everything", "scratch", "docker"], "description": "Nuke and rebuild everything"}
-{"question": "full docker rebuild of all services", "tool_id": "rebuild_all", "verb": "build", "object": "docker", "domain": "docker", "keywords": ["full", "rebuild", "docker", "compose", "recreate", "all", "services"], "description": "Full docker rebuild of all services"}
-{"question": "restart the runtime container", "tool_id": "restart_runtime", "verb": "manage", "object": "runtime", "domain": "docker", "keywords": ["restart", "runtime", "docker", "container"], "description": "Restart the runtime container"}
-{"question": "bounce the runtime service", "tool_id": "restart_runtime", "verb": "manage", "object": "runtime", "domain": "docker", "keywords": ["bounce", "restart", "runtime", "service"], "description": "Bounce the runtime service"}
-{"question": "restart all docker containers", "tool_id": "restart_all", "verb": "manage", "object": "docker", "domain": "docker", "keywords": ["restart", "all", "docker", "containers", "services"], "description": "Restart all docker containers"}
-{"question": "bounce all services", "tool_id": "restart_all", "verb": "manage", "object": "docker", "domain": "docker", "keywords": ["bounce", "restart", "everything", "all", "services"], "description": "Bounce all services"}
-{"question": "show docker container logs", "tool_id": "docker_logs", "verb": "query", "object": "logs", "domain": "docker", "keywords": ["docker", "logs", "runtime", "container", "output"], "description": "Show docker container logs"}
-{"question": "tail the runtime logs", "tool_id": "docker_logs", "verb": "query", "object": "logs", "domain": "docker", "keywords": ["show", "logs", "tail", "output", "container"], "description": "Tail container logs"}
-{"question": "show status of docker containers", "tool_id": "docker_status", "verb": "query", "object": "docker", "domain": "docker", "keywords": ["docker", "status", "ps", "containers", "running"], "description": "Show status of docker containers"}
-{"question": "what containers are running", "tool_id": "docker_status", "verb": "query", "object": "docker", "domain": "docker", "keywords": ["containers", "running", "docker", "ps", "status"], "description": "Check which containers are running"}
-
-{"question": "spin up a new branch", "tool_id": "create_branch", "verb": "build", "object": "branch", "domain": "release", "keywords": ["spin", "up", "new", "branch", "version"], "description": "Spin up a new release branch"}
-{"question": "kick off the release", "tool_id": "create_branch", "verb": "build", "object": "branch", "domain": "release", "keywords": ["kick", "off", "release", "start"], "description": "Kick off a new release"}
-{"question": "make sure nothing is broken", "tool_id": "run_tests", "verb": "deploy", "object": "tests", "domain": "test", "keywords": ["make", "sure", "nothing", "broken", "tests"], "description": "Verify nothing is broken"}
-{"question": "kick the tires on the test suite", "tool_id": "run_tests", "verb": "deploy", "object": "tests", "domain": "test", "keywords": ["kick", "tires", "test", "suite", "verify"], "description": "Kick the tires on tests"}
-{"question": "verify everything works", "tool_id": "run_tests", "verb": "deploy", "object": "tests", "domain": "test", "keywords": ["verify", "everything", "works", "tests"], "description": "Verify everything works"}
-{"question": "fold the branch back into main", "tool_id": "merge_to_main", "verb": "deploy", "object": "merge", "domain": "release", "keywords": ["fold", "branch", "back", "main", "merge"], "description": "Fold branch back into main"}
-{"question": "push the changes to main", "tool_id": "merge_to_main", "verb": "deploy", "object": "merge", "domain": "release", "keywords": ["push", "changes", "main", "merge"], "description": "Push changes to main"}
-{"question": "stamp it with a version number", "tool_id": "create_tag", "verb": "deploy", "object": "tag", "domain": "release", "keywords": ["stamp", "version", "number", "tag"], "description": "Stamp with a version tag"}
-{"question": "put a bow on this release", "tool_id": "create_tag", "verb": "deploy", "object": "tag", "domain": "release", "keywords": ["bow", "release", "finalize", "tag"], "description": "Finalize the release with a tag"}
-{"question": "finish the release", "tool_id": "create_tag", "verb": "deploy", "object": "tag", "domain": "release", "keywords": ["finish", "release", "finalize", "tag", "done"], "description": "Finish the release (tag it)"}
-{"question": "how is the pipeline doing", "tool_id": "check_workflow_status", "verb": "query", "object": "workflow", "domain": "build", "keywords": ["how", "pipeline", "doing", "status"], "description": "Check pipeline status"}
-{"question": "is everything green", "tool_id": "check_workflow_status", "verb": "query", "object": "workflow", "domain": "build", "keywords": ["everything", "green", "status", "passing"], "description": "Check if everything is green"}
-{"question": "check on things", "tool_id": "check_workflow_status", "verb": "query", "object": "workflow", "domain": "build", "keywords": ["check", "things", "status"], "description": "Check on build status"}
-{"question": "get rid of the old branch", "tool_id": "cleanup_branch", "verb": "manage", "object": "branch", "domain": "release", "keywords": ["get", "rid", "old", "branch", "delete"], "description": "Get rid of the old branch"}
-{"question": "ship it", "tool_id": "release_sdk", "verb": "deploy", "object": "release", "domain": "release", "keywords": ["ship", "it", "release", "deploy"], "description": "Ship it (full release)"}
-{"question": "deploy", "tool_id": "release_sdk", "verb": "deploy", "object": "release", "domain": "release", "keywords": ["deploy", "release"], "description": "Deploy (full release)"}
-{"question": "start the release", "tool_id": "create_branch", "verb": "build", "object": "branch", "domain": "release", "keywords": ["start", "release", "begin", "branch"], "description": "Start the release process"}
-{"question": "nuke everything and start fresh", "tool_id": "rebuild_all", "verb": "build", "object": "docker", "domain": "docker", "keywords": ["nuke", "everything", "start", "fresh", "rebuild", "all"], "description": "Nuke and rebuild everything"}
-{"question": "rebuild it", "tool_id": "rebuild_all", "verb": "build", "object": "docker", "domain": "docker", "keywords": ["rebuild", "it", "all", "docker"], "description": "Rebuild everything"}
-{"question": "what boxes are up", "tool_id": "docker_status", "verb": "query", "object": "docker", "domain": "docker", "keywords": ["boxes", "up", "containers", "running", "status"], "description": "Check what containers are running"}
-{"question": "give the runtime a fresh coat of paint", "tool_id": "rebuild_runtime", "verb": "build", "object": "runtime", "domain": "docker", "keywords": ["fresh", "coat", "paint", "runtime", "rebuild"], "description": "Rebuild the runtime fresh"}
-{"question": "bounce the backend", "tool_id": "restart_runtime", "verb": "manage", "object": "runtime", "domain": "docker", "keywords": ["bounce", "backend", "restart", "runtime"], "description": "Bounce the backend service"}
-{"question": "restart all services", "tool_id": "restart_all", "verb": "manage", "object": "docker", "domain": "docker", "keywords": ["restart", "all", "services", "everything"], "description": "Restart all services"}
-{"question": "show docker logs", "tool_id": "docker_logs", "verb": "query", "object": "logs", "domain": "docker", "keywords": ["show", "docker", "logs", "output"], "description": "Show docker logs"}
-{"question": "show the docker logs", "tool_id": "docker_logs", "verb": "query", "object": "logs", "domain": "docker", "keywords": ["show", "docker", "logs"], "description": "Show the docker logs"}
-{"question": "refresh the runtime container", "tool_id": "rebuild_runtime", "verb": "build", "object": "runtime", "domain": "docker", "keywords": ["refresh", "runtime", "container", "rebuild", "docker"], "description": "Refresh the runtime container"}
-{"question": "redo the runtime docker image", "tool_id": "rebuild_runtime", "verb": "build", "object": "runtime", "domain": "docker", "keywords": ["redo", "runtime", "docker", "image", "rebuild"], "description": "Redo the runtime docker image"}
+{"tool_id": "slack_send_message", "action": "send", "target": "channel", "domain": "messaging", "keywords": ["send", "message", "slack", "channel", "post", "#"]}
+{"tool_id": "slack_send_message", "action": "send", "target": "channel", "domain": "messaging", "keywords": ["post", "channel", "slack", "notify", "announce", "#general"]}
+{"tool_id": "slack_send_message", "action": "send", "target": "channel", "domain": "messaging", "keywords": ["send", "slack", "channel", "threaded", "reply", "thread"]}
+{"tool_id": "slack_send_dm", "action": "send", "target": "dm", "domain": "messaging", "keywords": ["dm", "direct", "message", "slack", "user"]}
+{"tool_id": "slack_send_dm", "action": "send", "target": "dm", "domain": "messaging", "keywords": ["send", "slack", "dm", "private", "user", "email"]}
+{"tool_id": "slack_send_dm", "action": "send", "target": "dm", "domain": "messaging", "keywords": ["message", "person", "slack", "dm", "direct"]}
+{"tool_id": "slack_set_status", "action": "set", "target": "status", "domain": "messaging", "keywords": ["set", "status", "slack", "emoji", "away"]}
+{"tool_id": "slack_set_status", "action": "set", "target": "status", "domain": "messaging", "keywords": ["status", "slack", "meeting", "busy", "set"]}
+{"tool_id": "slack_list_channels", "action": "list", "target": "channel", "domain": "messaging", "keywords": ["list", "channels", "slack", "workspace", "available"]}
+{"tool_id": "slack_list_channels", "action": "list", "target": "channel", "domain": "messaging", "keywords": ["channels", "available", "slack", "look", "up"]}
+{"tool_id": "slack_search_messages", "action": "search", "target": "message", "domain": "messaging", "keywords": ["search", "slack", "messages", "find", "keyword"]}
+{"tool_id": "email_send", "action": "send", "target": "email", "domain": "email", "keywords": ["send", "email", "to", "subject", "body"]}
+{"tool_id": "email_send", "action": "send", "target": "email", "domain": "email", "keywords": ["email", "send", "recipients", "cc", "bcc"]}
+{"tool_id": "email_send", "action": "send", "target": "email", "domain": "email", "keywords": ["email", "team", "send", "about", "subject"]}
+{"tool_id": "email_search", "action": "search", "target": "email", "domain": "email", "keywords": ["search", "email", "inbox", "find", "query"]}
+{"tool_id": "email_reply", "action": "reply", "target": "email", "domain": "email", "keywords": ["reply", "email", "respond", "thread", "message"]}
+{"tool_id": "email_create_draft", "action": "draft", "target": "draft", "domain": "email", "keywords": ["draft", "email", "create", "save", "dont", "send"]}
+{"tool_id": "email_list_labels", "action": "list", "target": "label", "domain": "email", "keywords": ["list", "labels", "folders", "email", "inbox"]}
+{"tool_id": "crm_get_contact", "action": "get", "target": "contact", "domain": "crm", "keywords": ["get", "contact", "crm", "lookup", "email", "record"]}
+{"tool_id": "crm_get_contact", "action": "get", "target": "contact", "domain": "crm", "keywords": ["look", "up", "contact", "crm", "record", "profile"]}
+{"tool_id": "crm_get_contact", "action": "get", "target": "contact", "domain": "crm", "keywords": ["find", "customer", "record", "crm", "contact"]}
+{"tool_id": "crm_create_contact", "action": "create", "target": "contact", "domain": "crm", "keywords": ["create", "contact", "crm", "new", "add"]}
+{"tool_id": "crm_create_contact", "action": "create", "target": "contact", "domain": "crm", "keywords": ["new", "contact", "crm", "email", "company", "name"]}
+{"tool_id": "crm_update_contact", "action": "update", "target": "contact", "domain": "crm", "keywords": ["update", "contact", "crm", "edit", "change", "fields"]}
+{"tool_id": "crm_search_contacts", "action": "search", "target": "contact", "domain": "crm", "keywords": ["search", "contacts", "crm", "find", "query", "everyone"]}
+{"tool_id": "crm_search_contacts", "action": "search", "target": "contact", "domain": "crm", "keywords": ["search", "crm", "company", "all", "contacts"]}
+{"tool_id": "crm_create_deal", "action": "create", "target": "deal", "domain": "crm", "keywords": ["create", "deal", "crm", "opportunity", "pipeline", "amount"]}
+{"tool_id": "stripe_charge", "action": "charge", "target": "payment", "domain": "payments", "keywords": ["charge", "stripe", "payment", "customer", "amount", "cents"]}
+{"tool_id": "stripe_refund", "action": "refund", "target": "refund", "domain": "payments", "keywords": ["refund", "stripe", "charge", "payment", "return"]}
+{"tool_id": "stripe_refund", "action": "refund", "target": "refund", "domain": "payments", "keywords": ["refund", "partial", "full", "charge", "stripe", "amount"]}
+{"tool_id": "stripe_get_customer", "action": "get", "target": "customer", "domain": "payments", "keywords": ["get", "customer", "stripe", "record", "lookup", "cus_"]}
+{"tool_id": "stripe_list_invoices", "action": "list", "target": "invoice", "domain": "payments", "keywords": ["list", "invoices", "stripe", "customer", "payment", "history"]}
+{"tool_id": "stripe_list_invoices", "action": "list", "target": "invoice", "domain": "payments", "keywords": ["payment", "history", "invoices", "stripe", "billing"]}
+{"tool_id": "stripe_create_subscription", "action": "subscribe", "target": "subscription", "domain": "payments", "keywords": ["create", "subscription", "stripe", "plan", "price", "trial"]}
+{"tool_id": "stripe_cancel_subscription", "action": "cancel", "target": "subscription", "domain": "payments", "keywords": ["cancel", "subscription", "stripe", "end", "period"]}
+{"tool_id": "stripe_cancel_subscription", "action": "cancel", "target": "subscription", "domain": "payments", "keywords": ["cancel", "subscription", "customer", "stripe", "billing"]}
+{"tool_id": "calendar_create_event", "action": "create", "target": "event", "domain": "calendar", "keywords": ["create", "event", "calendar", "meeting", "schedule", "attendees"]}
+{"tool_id": "calendar_create_event", "action": "create", "target": "event", "domain": "calendar", "keywords": ["schedule", "meeting", "calendar", "book", "appointment"]}
+{"tool_id": "calendar_list_events", "action": "list", "target": "event", "domain": "calendar", "keywords": ["list", "events", "calendar", "upcoming", "schedule"]}
+{"tool_id": "calendar_delete_event", "action": "delete", "target": "event", "domain": "calendar", "keywords": ["delete", "event", "calendar", "remove", "cancel"]}
+{"tool_id": "calendar_find_free_time", "action": "search", "target": "free_time", "domain": "calendar", "keywords": ["find", "free", "time", "available", "slot", "calendar"]}
+{"tool_id": "calendar_find_free_time", "action": "search", "target": "free_time", "domain": "calendar", "keywords": ["find", "time", "works", "available", "calendar", "call"]}
+{"tool_id": "gdrive_upload", "action": "upload", "target": "file", "domain": "files", "keywords": ["upload", "file", "drive", "gdrive", "document"]}
+{"tool_id": "gdrive_search", "action": "search", "target": "file", "domain": "files", "keywords": ["search", "files", "drive", "gdrive", "find", "document"]}
+{"tool_id": "gdrive_search", "action": "search", "target": "file", "domain": "files", "keywords": ["search", "files", "find", "document", "drive", "folder"]}
+{"tool_id": "gdrive_share", "action": "share", "target": "file", "domain": "files", "keywords": ["share", "file", "drive", "gdrive", "permission", "access"]}
+{"tool_id": "gdrive_share", "action": "share", "target": "file", "domain": "files", "keywords": ["give", "access", "share", "drive", "file", "folder", "reader", "writer"]}
+{"tool_id": "gdrive_create_folder", "action": "create", "target": "folder", "domain": "files", "keywords": ["create", "folder", "drive", "gdrive", "directory"]}
+{"tool_id": "jira_create_ticket", "action": "create", "target": "ticket", "domain": "tickets", "keywords": ["create", "ticket", "jira", "issue", "bug", "story", "epic"]}
+{"tool_id": "jira_create_ticket", "action": "create", "target": "ticket", "domain": "tickets", "keywords": ["file", "bug", "jira", "open", "ticket", "task"]}
+{"tool_id": "jira_update_ticket", "action": "update", "target": "ticket", "domain": "tickets", "keywords": ["update", "ticket", "jira", "edit", "change", "fields"]}
+{"tool_id": "jira_search", "action": "search", "target": "ticket", "domain": "tickets", "keywords": ["search", "jira", "issues", "find", "jql", "query", "bugs"]}
+{"tool_id": "jira_add_comment", "action": "comment", "target": "comment", "domain": "tickets", "keywords": ["comment", "jira", "ticket", "add", "note"]}
+{"tool_id": "jira_add_comment", "action": "comment", "target": "comment", "domain": "tickets", "keywords": ["add", "comment", "jira", "note", "saying", "ticket"]}
+{"tool_id": "jira_assign_ticket", "action": "assign", "target": "ticket", "domain": "tickets", "keywords": ["assign", "ticket", "jira", "user", "assignee"]}
+{"tool_id": "jira_assign_ticket", "action": "assign", "target": "ticket", "domain": "tickets", "keywords": ["assign", "ticket", "jira", "to", "person", "update"]}
+{"tool_id": "analytics_track_event", "action": "track", "target": "metric", "domain": "analytics", "keywords": ["track", "event", "analytics", "log", "record"]}
+{"tool_id": "analytics_track_event", "action": "track", "target": "metric", "domain": "analytics", "keywords": ["track", "signup", "event", "user", "analytics"]}
+{"tool_id": "analytics_get_metrics", "action": "get", "target": "metric", "domain": "analytics", "keywords": ["get", "metrics", "analytics", "pageviews", "visitors"]}
+{"tool_id": "analytics_get_metrics", "action": "get", "target": "metric", "domain": "analytics", "keywords": ["page", "views", "metrics", "analytics", "get", "week"]}
+{"tool_id": "analytics_get_funnel", "action": "get", "target": "funnel", "domain": "analytics", "keywords": ["funnel", "conversion", "analytics", "steps", "flow"]}
+{"tool_id": "analytics_identify_user", "action": "identify", "target": "user", "domain": "analytics", "keywords": ["identify", "user", "analytics", "traits", "profile"]}
+{"tool_id": "analytics_identify_user", "action": "identify", "target": "user", "domain": "analytics", "keywords": ["identify", "user", "upgraded", "plan", "traits", "analytics"]}

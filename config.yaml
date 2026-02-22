@@ -1,15 +1,15 @@
-# DevOps Tool Router
-# Routes natural language requests to release step functions
+# SaaS Tool Router
+# Routes natural language requests to SaaS tool functions
 # using HDC similarity on intent vectors.
 
-name: devops-tool-router
-version: 0.1.0
+name: saas-tool-router
+version: 2.0.0
 description: |
-  Routes natural language DevOps requests (e.g. "create a release branch",
-  "run the tests", "tag the release") to the correct tool function via
-  HDC cosine similarity on intent segments. Encodes verb, object, domain,
-  and keyword signals into high-dimensional vectors and matches against
-  a catalog of tool exemplars.
+  Routes natural language SaaS requests (e.g. "send a Slack message",
+  "refund the charge", "create a Jira ticket") to the correct tool
+  function via HDC cosine similarity on intent segments. Encodes action,
+  target, domain, and keyword signals into high-dimensional vectors and
+  matches against a catalog of 38 tool exemplars across 8 domains.
 
 author: Glyphh AI
 license: MIT
@@ -20,45 +20,51 @@ encoder:
 
 auto_load_concepts: true
 
-tests:
-  file: tests.py
-  directory: tests/
-  data: tests/test-queries.json
-
 roles:
-  verb:
+  action:
     type: categorical
     values:
-      - build
-      - deploy
-      - query
-      - manage
+      - send
+      - search
+      - create
+      - get
+      - list
+      - update
+      - delete
+      - reply
+      - share
+      - upload
+      - track
+      - identify
+      - assign
+      - comment
+      - charge
+      - refund
+      - cancel
+      - subscribe
+      - set
+      - draft
+      - none
 
-  object:
+  target:
     type: text
 
   domain:
     type: categorical
     values:
-      - release
-      - test
-      - build
-      - docker
+      - messaging
+      - email
+      - crm
+      - payments
+      - calendar
+      - files
+      - tickets
+      - analytics
 
   keywords:
     type: text
     optional: true
 
-  tool_id:
-    type: text
-    key_part: true
-
-  confidence:
-    type: numeric
-    bin_width: 0.05
-    min_value: 0.0
-    max_value: 1.0
-
 similarity:
-  threshold: 0.59
+  threshold: 0.52
   top_k: 3

@@ -59,12 +59,13 @@ toolrouter/
 
 ## Encoder Architecture
 
+NL extraction via `glyphh.intent.IntentExtractor` (SDK) — no local extraction tables needed.
 Two-layer HDC encoder (10,000 dimensions):
 
 | Layer | Weight | Segments | Purpose |
 |---|---|---|---|
-| intent | 0.7 | action (verb + target), scope (domain) | Primary routing signal |
-| context | 0.3 | keywords | Disambiguation via keyword overlap |
+| intent | 0.4 | action (verb + target), scope (domain) | Primary routing signal |
+| semantics | 0.6 | description + keywords (BoW) | Fuzzy HDC matching |
 
 ## Domains
 

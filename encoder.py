@@ -1,21 +1,29 @@
 """
-Custom encoder for the SaaS tool router model.
+Encoder for the SaaS tool router model.
 
 Exports:
-  ENCODER_CONFIG — EncoderConfig with intent-focused routing layers
+  ENCODER_CONFIG — EncoderConfig with intent + semantics layers
+  SIDECAR_CONFIG — EncoderConfig for tool name validation (seed=73)
   encode_query(query) — converts NL text to a Concept dict for similarity search
+  entry_to_record(entry) — converts a JSONL exemplar entry to a build record
+  extract_tool_reference(query) — detects tool name references in queries
+  ToolNameSidecar — validates tool references against the real catalog
 
-Uses Glyphh HDC primitives:
-  - Two-layer architecture: intent (action/target/domain) + context (keywords)
-  - Action carries highest weight for verb disambiguation
-  - Domain layer separates messaging/email/crm/payments/calendar/files/tickets/analytics
-  - Lexicons on roles for NL query matching
+Architecture:
+  Main model (seed=42):
+  - Intent layer (0.4): action (lexicon) + target (lexicon) + domain (lexicon)
+    → Provides strong signal when extraction is correct (binary match)
+  - Semantics layer (0.6): description (BoW) + keywords (BoW)
+    → Provides fuzzy HDC matching when extraction is imperfect
+
+  Sidecar model (seed=73):
+  - Identity layer (0.7): name_tokens (BoW) — tool name split on underscores
+  - Capability layer (0.3): action (lexicon) — primary verb
+    → Validates whether a referenced tool name matches a real catalog entry
 """
 
 import hashlib
-import json
 import re
-from pathlib import Path
 
 from glyphh.core.config import (
     EncoderConfig,
@@ -31,10 +39,12 @@ from glyphh.core.config import (
 ENCODER_CONFIG = EncoderConfig(
     dimension=10000,
     seed=42,
+    apply_weights_during_encoding=False,
+    include_temporal=False,
     layers=[
         Layer(
             name="intent",
-            similarity_weight=0.7,
+            similarity_weight=0.4,
             segments=[
                 Segment(
                     name="action",
@@ -53,7 +63,7 @@ ENCODER_CONFIG = EncoderConfig(
                         ),
                         Role(
                             name="target",
-                            similarity_weight=0.8,
+                            similarity_weight=0.7,
                             lexicons=[
                                 "message", "email", "contact", "customer",
                                 "ticket", "event", "file", "folder",
@@ -70,7 +80,7 @@ ENCODER_CONFIG = EncoderConfig(
                     roles=[
                         Role(
                             name="domain",
-                            similarity_weight=1.0,
+                            similarity_weight=0.8,
                             lexicons=[
                                 "slack", "email", "gmail", "crm", "stripe",
                                 "calendar", "drive", "gdrive", "jira",
@@ -83,21 +93,21 @@ ENCODER_CONFIG = EncoderConfig(
             ],
         ),
         Layer(
-            name="context",
-            similarity_weight=0.3,
+            name="semantics",
+            similarity_weight=0.6,
             segments=[
                 Segment(
-                    name="keywords",
+                    name="text",
                     roles=[
                         Role(
-                            name="keywords",
+                            name="description",
                             similarity_weight=1.0,
-                            lexicons=[
-                                "send", "message", "email", "search", "find",
-                                "create", "update", "delete", "refund", "charge",
-                                "cancel", "subscribe", "schedule", "meeting",
-                                "ticket", "bug", "file", "upload", "share",
-                            ],
+                            text_encoding="bag_of_words",
+                        ),
+                        Role(
+                            name="keywords",
+                            similarity_weight=0.8,
+                            text_encoding="bag_of_words",
                         ),
                     ],
                 ),
@@ -111,104 +121,73 @@ ENCODER_CONFIG = EncoderConfig(
 # NL extraction helpers
 # ---------------------------------------------------------------------------
 
-# Multi-word phrases that should be matched BEFORE single-word action extraction.
-# Order matters: longer/more-specific phrases first.
+# Critical disambiguation phrases only — cases where BoW alone can't resolve
+# the ambiguity because competing tools share too many words.
 _PHRASE_ACTIONS = [
-    # comment-specific (must beat "add" → create)
+    # comment vs create: "add a comment" must route to comment, not create
     ("add a comment", "comment"),
     ("add comment", "comment"),
     ("leave a comment", "comment"),
-    ("leave comment", "comment"),
     ("post a comment", "comment"),
-    # status-specific (must beat "set" → create)
+    # status vs create: "set status" is its own action
     ("set status", "set"),
     ("set my status", "set"),
     ("set my slack status", "set"),
-    # share/access
-    ("give access", "share"),
-    ("grant access", "share"),
-    ("read-only access", "share"),
-    ("read only access", "share"),
-    # create-specific (must beat "assign it to" when "create" comes first)
+    # create vs assign: "create a task" must win over "assign it to" in multi-action queries
     ("create a task", "create"),
     ("create a ticket", "create"),
     ("create a bug", "create"),
     ("create a story", "create"),
     ("create a epic", "create"),
     ("create a jira", "create"),
-    # assign-specific (must beat "update" when "assign" is in the query)
+    # assign vs update: "assign it to" must route to assign, not update
     ("assign it to", "assign"),
     ("assign to", "assign"),
     ("assign ticket", "assign"),
-    # list-specific (must beat "look up" → get)
-    ("look up what channels", "list"),
-    ("look up channels", "list"),
-    ("check the invoices", "list"),
-    ("check invoices", "list"),
-    # search-specific
-    ("search for the invoice email", "search"),
-    ("search for the email", "search"),
-    # email-as-verb (must beat "charge" from "invoice")
-    ("email the", "send"),
-    ("email it to", "send"),
-    # get-specific
-    ("i need the", "get"),
-    ("i need", "get"),
-    ("look up the payment history", "list"),
-    ("look up payment history", "list"),
-    ("look up", "get"),
-    ("look for", "search"),
+    # get vs search: "find the customer/contact/record" is lookup, not search
     ("find the customer", "get"),
     ("find the contact", "get"),
     ("find the record", "get"),
-    # identify (trait changes) — must come before track/log
+    ("find the contact info", "get"),
+    ("look up", "get"),
+    ("i need the", "get"),
+    ("i need", "get"),
+    # identify vs track: trait changes route to identify
     ("upgraded to", "identify"),
     ("downgraded to", "identify"),
     ("switched from", "identify"),
     ("changed plan", "identify"),
     ("changed their", "identify"),
-    # track/log
-    ("log that", "track"),
-    ("log event", "track"),
-    # dm-specific
-    ("send a dm", "send"),
-    ("send dm", "send"),
-    # payment/invoice history
+    # payment history is list, not get
     ("payment history", "list"),
     ("billing history", "list"),
     ("invoice history", "list"),
+    ("check the invoices", "list"),
+    ("check invoices", "list"),
+    # search-specific
+    ("search for the invoice email", "search"),
+    ("search for the email", "search"),
+    ("look for", "search"),
 ]
 
-# Multi-word phrases for target extraction
 _PHRASE_TARGETS = [
-    ("invoice email", "email"),
-    ("payment history", "invoice"),
-    ("billing history", "invoice"),
-    ("invoice history", "invoice"),
-    ("customer details", "customer"),
-    ("customer record", "customer"),
-    ("contact info", "contact"),
     ("free time", "free_time"),
     ("available time", "free_time"),
     ("time slot", "free_time"),
+    ("direct message", "dm"),
+    ("invoice email", "email"),
+    ("customer details", "customer"),
+    ("customer record", "customer"),
+    ("contact info", "contact"),
     ("add a comment", "comment"),
     ("add comment", "comment"),
     ("leave a comment", "comment"),
-    ("leave comment", "comment"),
-    ("post a comment", "comment"),
     ("set status", "status"),
     ("slack status", "status"),
     ("my status", "status"),
-    ("direct message", "dm"),
-    ("page views", "metric"),
-    ("page_views", "metric"),
-    ("pageviews", "metric"),
-    ("checkout_completed", "metric"),
-    ("checkout completed", "metric"),
-    ("upgraded to", "user"),
-    ("downgraded to", "user"),
-    ("switched from", "user"),
-    ("changed their", "user"),
+    ("payment history", "invoice"),
+    ("billing history", "invoice"),
+    ("invoice history", "invoice"),
 ]
 
 _ACTION_MAP = {
@@ -311,9 +290,8 @@ _DOMAIN_SIGNALS = {
     "analytics": ["analytics", "track", "funnel", "metric", "pageview", "conversion", "identify", "upgraded", "traits", "switched from", "changed their", "checkout"],
 }
 
-# Weighted domain signals — some signals are stronger indicators than others
 _DOMAIN_SIGNAL_WEIGHTS = {
-    "messaging": {"slack": 3, "dm": 2, "channel": 2, "#": 2},
+    "messaging": {"slack": 3, "dm": 2, "channel": 2, "#": 1},
     "email": {"email": 2, "mail": 2, "gmail": 3, "inbox": 2, "subject": 2, "cc": 2, "bcc": 2, "draft": 1},
     "crm": {"crm": 3, "contact": 2, "deal": 2, "pipeline": 1, "hubspot": 3, "salesforce": 3, "customer record": 3, "customer details": 3, "contact info": 3},
     "payments": {"stripe": 3, "charge": 2, "refund": 2, "invoice": 2, "subscription": 2, "payment": 2, "cus_": 3, "ch_": 3, "sub_": 2, "price_": 3, "billing": 2},
@@ -322,41 +300,6 @@ _DOMAIN_SIGNAL_WEIGHTS = {
     "tickets": {"jira": 3, "ticket": 2, "issue": 1, "bug": 2, "epic": 2, "story": 1, "eng-": 3, "ENG-": 3, "sprint": 2},
     "analytics": {"analytics": 3, "track": 2, "funnel": 3, "metric": 2, "pageview": 3, "conversion": 2, "identify": 2, "upgraded": 2, "traits": 2, "switched from": 3, "changed their": 3, "checkout": 2},
 }
-
-# Out-of-scope qualifiers — if the query contains these patterns, it's likely
-# NOT a tool invocation even if domain words appear.
-_OOS_QUESTION_PATTERNS = [
-    # Questions about policy/docs (not actions)
-    "what does", "what is", "what are", "how does", "how do", "how many",
-    "how much", "why does", "why is", "can you explain", "tell me about",
-    "what's the", "whats the",
-    # Greetings
-    "hello", "hi there", "hey there", "how are you",
-]
-
-# These are OOS only when they appear as the PRIMARY action (first few words)
-_OOS_ACTION_PATTERNS = [
-    "deploy the", "deploy to", "deploy application",
-    "merge the", "merge branch",
-    "restart the", "restart server",
-    "approve the", "approve pending",
-    "translate this", "translate the",
-    "summarize the", "summarize last",
-    "generate a pdf", "generate pdf",
-    "book a flight",
-    "update the dns", "update dns records",
-    "run the ci", "run ci",
-]
-
-# These are OOS regardless of position
-_OOS_ANYWHERE_PATTERNS = [
-    "text message to +", "sms to +",
-    "ci pipeline", "ci/cd",
-    "pull request from",
-    "database server",
-    "dns records for",
-    "flight to",
-]
 
 _STOP_WORDS = {
     "the", "a", "an", "to", "for", "on", "in", "is", "it", "i",
@@ -369,40 +312,15 @@ _STOP_WORDS = {
 }
 
 
-def _is_oos_query(text: str) -> bool:
-    """Check if the query matches out-of-scope patterns."""
-    text_lower = text.lower()
-
-    # Question patterns — match anywhere
-    for pattern in _OOS_QUESTION_PATTERNS:
-        if pattern in text_lower:
-            return True
-
-    # Anywhere patterns — match anywhere
-    for pattern in _OOS_ANYWHERE_PATTERNS:
-        if pattern in text_lower:
-            return True
-
-    # Action patterns — only match if they appear near the start of the query
-    # (first ~40 chars) to avoid matching "deploy" in message bodies
-    prefix = text_lower[:50]
-    for pattern in _OOS_ACTION_PATTERNS:
-        if pattern in prefix:
-            return True
-
-    return False
-
-
 def _extract_action(text: str, words: list[str]) -> str:
     text_lower = text.lower()
 
-    # Phase 1: multi-word phrase matching (highest priority)
+    # Phase 1: multi-word phrase matching for critical disambiguation
     for phrase, action in _PHRASE_ACTIONS:
         if phrase in text_lower:
             return action
 
-    # Phase 2: single-word matching — collect ALL actions found, pick highest-impact
-    # Impact ranking: irreversible/state-changing actions outrank notifications/reads
+    # Phase 2: single-word matching with impact ranking
     _IMPACT_RANK = {
         "charge": 10, "refund": 10, "cancel": 10, "delete": 10,
         "create": 9, "subscribe": 9,
@@ -412,51 +330,33 @@ def _extract_action(text: str, words: list[str]) -> str:
         "send": 5, "reply": 5, "draft": 5,
         "search": 3, "get": 2, "list": 2,
     }
-    # Words that map to actions but are commonly used as non-verbs
-    # (e.g. "new feature" — "new" maps to "create" but isn't a verb here)
     _WEAK_ACTION_WORDS = {"new", "open", "file", "start", "record", "book", "move"}
-
-    # Context-dependent weak words: these are only weak when preceded by certain words
-    # (e.g. "project update" — "update" is a noun, not a verb)
+    # Words that are only weak when preceded by certain nouns
     _CONTEXTUAL_WEAK = {
-        "update": {"project", "status", "the"},  # "project update", "status update"
+        "update": {"project", "status", "the"},
     }
 
     found_actions = []
     strong_actions = []
-    for i, w in enumerate(words):
+    for idx, w in enumerate(words):
         clean = re.sub(r"[^a-z]", "", w)
         if clean in _ACTION_MAP:
             action = _ACTION_MAP[clean]
             found_actions.append(action)
             is_weak = clean in _WEAK_ACTION_WORDS
-            # Check contextual weakness
             if not is_weak and clean in _CONTEXTUAL_WEAK:
-                prev_word = re.sub(r"[^a-z]", "", words[i - 1]) if i > 0 else ""
+                prev_word = re.sub(r"[^a-z]", "", words[idx - 1]) if idx > 0 else ""
                 if prev_word in _CONTEXTUAL_WEAK[clean]:
                     is_weak = True
             if not is_weak:
                 strong_actions.append(action)
 
-    # Use strong actions for impact ranking; fall back to all if no strong ones
     candidates = strong_actions if strong_actions else found_actions
-
     if candidates:
-        # If multiple distinct actions found, pick highest-impact (Policy C)
-        unique_actions = list(dict.fromkeys(candidates))  # preserve order, dedupe
+        unique_actions = list(dict.fromkeys(candidates))
         if len(unique_actions) > 1:
             return max(unique_actions, key=lambda a: _IMPACT_RANK.get(a, 0))
         return unique_actions[0]
-
-    # Phase 3: extract action from camelCase tool names in the query
-    # e.g. "createJiraStory" → "create", "sendSlackNotification" → "send"
-    camel_pattern = re.compile(r'([a-z]+)[A-Z]')
-    for w in text.split():
-        m = camel_pattern.match(w)
-        if m:
-            verb = m.group(1).lower()
-            if verb in _ACTION_MAP:
-                return _ACTION_MAP[verb]
 
     return "get"
 
@@ -469,30 +369,12 @@ def _extract_target(text: str, words: list[str], action: str = "") -> str:
         if phrase in text_lower:
             return target
 
-    # Phase 1b: action-aligned target override for multi-action queries
-    # If the action is high-impact (create/delete/cancel/charge/refund) and
-    # a matching target noun exists, prefer it over positional signals like #channel
-    _HIGH_IMPACT_ACTIONS = {"create", "delete", "cancel", "charge", "refund", "update", "assign"}
-    if action in _HIGH_IMPACT_ACTIONS:
-        for w in words:
-            clean = re.sub(r"[^a-z]", "", w)
-            if clean in _TARGET_MAP:
-                candidate = _TARGET_MAP[clean]
-                # Only override if the candidate is a "real" target (not generic)
-                if candidate not in ("general",):
-                    return candidate
-
     # Phase 2: channel vs DM disambiguation
-    # If we see # followed by a word, it's a channel message
     if re.search(r"#\w+", text):
         return "channel"
-    # If "dm" or "direct message" appears, it's a DM
     if "dm " in text_lower or text_lower.startswith("dm ") or "direct message" in text_lower:
         return "dm"
-    # If an email address is present and the action is "send"/"message",
-    # it's likely a DM (not a channel message)
     if re.search(r'\b\S+@\S+\.\S+', text) and not re.search(r"#\w+", text):
-        # Check if the context suggests messaging (not email)
         if "message" in text_lower or "send a message" in text_lower:
             return "dm"
 
@@ -502,26 +384,13 @@ def _extract_target(text: str, words: list[str], action: str = "") -> str:
         if clean in _TARGET_MAP:
             return _TARGET_MAP[clean]
 
-    # Phase 4: extract target from camelCase tool names
-    # e.g. "createJiraStory" → look for "story" → "ticket"
-    camel_parts = re.compile(r'[A-Z][a-z]+')
-    for w in text.split():
-        parts = camel_parts.findall(w)
-        for part in parts:
-            part_lower = part.lower()
-            if part_lower in _TARGET_MAP:
-                return _TARGET_MAP[part_lower]
-
     return "general"
 
 
 def _infer_domain(text: str) -> str:
     text_lower = text.lower()
-    # Strip email addresses to avoid false domain signals from "@" addresses
     text_no_emails = re.sub(r'\S+@\S+\.\S+', '', text_lower)
     scores = {}
-    # Signals that need word-boundary matching to avoid false positives
-    # (e.g. "cc" in "access", "mail" in "email", "dm" in "admin")
     _BOUNDARY_SIGNALS = {"cc", "bcc", "dm", "#", "mail", "bug"}
 
     for domain, signals in _DOMAIN_SIGNALS.items():
@@ -529,8 +398,11 @@ def _infer_domain(text: str) -> str:
         score = 0
         for s in signals:
             s_lower = s.lower()
-            # For signals prone to substring false positives, use word boundary
-            if s_lower in _BOUNDARY_SIGNALS or len(s_lower) <= 3:
+            if s_lower == "#":
+                # Special: '#' is non-word, \b doesn't apply — just check for '#' + word
+                if re.search(r'#\w+', text_no_emails):
+                    score += weights.get(s, 1)
+            elif s_lower in _BOUNDARY_SIGNALS or len(s_lower) <= 3:
                 if re.search(r'\b' + re.escape(s_lower) + r'\b', text_no_emails):
                     score += weights.get(s, 1)
             else:
@@ -543,116 +415,95 @@ def _infer_domain(text: str) -> str:
     return "general"
 
 
-# Known real tool names in the catalog
-_REAL_TOOLS = {
-    "slack_send_message", "slack_send_dm", "slack_set_status",
-    "slack_list_channels", "slack_search_messages",
-    "email_send", "email_search", "email_reply",
-    "email_create_draft", "email_list_labels",
-    "crm_get_contact", "crm_create_contact", "crm_update_contact",
-    "crm_search_contacts", "crm_create_deal",
-    "stripe_charge", "stripe_refund", "stripe_get_customer",
-    "stripe_list_invoices", "stripe_create_subscription",
-    "stripe_cancel_subscription",
-    "calendar_create_event", "calendar_list_events",
-    "calendar_delete_event", "calendar_find_free_time",
-    "gdrive_upload", "gdrive_search", "gdrive_share",
-    "gdrive_create_folder",
-    "jira_create_ticket", "jira_update_ticket", "jira_search",
-    "jira_add_comment", "jira_assign_ticket",
-    "analytics_track_event", "analytics_get_metrics",
-    "analytics_get_funnel", "analytics_identify_user",
-}
-
-# Patterns that look like tool/function names (snake_case identifiers)
-_TOOL_NAME_PATTERN = re.compile(r'\b([a-z]+_[a-z_]+[a-z])\b')
-
-# Phrases that indicate the user is explicitly naming a tool
-_TOOL_INVOCATION_CUES = [
-    "use the ", "use ", "call the ", "call ", "run the ", "run ",
-    "execute the ", "execute ", "invoke the ", "invoke ",
-    "tool is called ", "tool called ",
-]
-
-
-def _mentions_fake_tool(text: str) -> bool:
-    """Detect if the user explicitly names a tool that doesn't exist,
-    AND the underlying intent doesn't map to a real tool action."""
-    text_lower = text.lower()
-
-    # Only check if there's a tool invocation cue
-    has_cue = any(cue in text_lower for cue in _TOOL_INVOCATION_CUES)
-    if not has_cue:
-        return False
-
-    # Find all snake_case identifiers that look like tool names
-    candidates = _TOOL_NAME_PATTERN.findall(text_lower)
-    fake_found = False
-    for candidate in candidates:
-        if candidate not in _REAL_TOOLS and len(candidate) > 5:
-            fake_found = True
-            break
-
-    if not fake_found:
-        # Also check for camelCase tool names (e.g. "sendSlackNotification")
-        camel_pattern = re.compile(r'\b([a-z]+[A-Z][a-zA-Z]+)\b')
-        camel_candidates = camel_pattern.findall(text)
-        for candidate in camel_candidates:
-            snake = re.sub(r'([A-Z])', r'_\1', candidate).lower()
-            if snake not in _REAL_TOOLS:
-                fake_found = True
-                break
-
-    if not fake_found:
-        return False
-
-    # A fake tool name was found. But does the query's underlying intent
-    # still map to a real action? If so, let it through (the user just
-    # got the tool name wrong but the intent is valid).
-    # We check: does the query contain strong action verbs that map to
-    # real tool actions?
-    _STRONG_INTENT_VERBS = {
-        "refund", "charge", "send", "create", "search", "find",
-        "get", "list", "update", "delete", "reply", "share",
-        "upload", "track", "assign", "cancel", "tell", "post",
-        "dm", "add", "set", "draft", "book", "schedule",
-        "comment", "notify",
-    }
-    words = set(re.sub(r"[^a-z\s]", "", text_lower).split())
-    if words & _STRONG_INTENT_VERBS:
-        return False  # Strong intent verb present — let it through
-
-    # No strong intent verb — the fake tool name IS the only signal.
-    # Block it.
-    return True
-
-
 # ---------------------------------------------------------------------------
 # encode_query — NL text → Concept dict
 # ---------------------------------------------------------------------------
 
+# Informational question patterns — these are never tool invocations.
+# We suppress lexicon signals but keep BoW so the threshold handles it.
+_QUESTION_PATTERNS = [
+    "what does", "what is", "what are", "what's the", "whats the",
+    "how does", "how do", "how many", "how much",
+    "why does", "why is",
+    "can you explain", "tell me about",
+]
+
+_GREETING_PATTERNS = [
+    "hello", "hi there", "hey there", "how are you",
+]
+
+# Actions that are clearly outside the SaaS tool catalog.
+# These are system/devops operations, not SaaS API calls.
+_NON_SAAS_PATTERNS = [
+    "deploy the", "deploy to", "deploy application",
+    "merge the", "merge branch",
+    "restart the", "restart server",
+    "run the ci", "run ci", "ci pipeline", "ci/cd",
+    "pull request", "database server", "dns records",
+]
+
+
+def _is_question(text: str) -> bool:
+    """Detect if the query is an informational question, not a tool command."""
+    text_lower = text.lower()
+    for pattern in _QUESTION_PATTERNS:
+        if pattern in text_lower:
+            return True
+    for pattern in _GREETING_PATTERNS:
+        if text_lower.startswith(pattern):
+            return True
+    return False
+
+
+def _is_non_saas(text: str) -> bool:
+    """Detect system/devops actions that are outside the SaaS tool catalog."""
+    text_lower = text.lower()
+    for pattern in _NON_SAAS_PATTERNS:
+        if pattern in text_lower:
+            return True
+    return False
+
+
+def _split_camel_case(text: str) -> str:
+    """Split camelCase and PascalCase tokens into separate words.
+    E.g., 'createJiraStory' → 'create Jira Story'
+    Must be applied BEFORE lowercasing to detect case boundaries.
+    """
+    return re.sub(r'([a-z])([A-Z])', r'\1 \2', text)
+
+
 def encode_query(query: str) -> dict:
-    """Convert a raw NL query into a Concept-compatible dict for tool routing."""
-    cleaned = re.sub(r"[^\w\s#@._\-]", "", query.lower())
+    """Convert a raw NL query into a Concept-compatible dict for tool routing.
+
+    Returns a dict with 'name' and 'attributes' keys. Attributes include:
+      action, target, domain — categorical signals from lightweight extraction
+      description — full query text (stop words removed) for BoW matching
+      keywords — same as description, for BoW matching against exemplar keywords
+
+    For informational questions ("what is...", "how does..."), lexicon signals
+    (action, domain) are suppressed so the threshold handles abstention.
+    BoW signals are preserved for any residual matching.
+    """
+    # Split camelCase BEFORE lowercasing to detect case boundaries.
+    # "createJiraStory" → "create Jira Story" → "create jira story"
+    # Snake_case tokens like "stripe_pause_subscription" stay intact
+    # (one token, not split — prevents enriching fake tool names).
+    camel_split = _split_camel_case(query)
+    cleaned = re.sub(r"[^\w\s#@._\-]", "", camel_split.lower())
     words = cleaned.split()
 
     action = _extract_action(query, words)
     target = _extract_target(query, words, action=action)
     domain = _infer_domain(query)
-    keywords = " ".join(w for w in words if w not in _STOP_WORDS)
 
-    # OOS check — if the query looks out-of-scope, force domain to "general"
-    # so it won't match any tool domain strongly
-    if _is_oos_query(query):
-        domain = "none"
-        action = "none"
+    # BoW text: stop words removed
+    bow_text = " ".join(w for w in words if w not in _STOP_WORDS)
 
-    # Fake tool name detection — if the user explicitly names a tool-like
-    # identifier (e.g. "use stripe_pause_subscription") that doesn't exist
-    # in our catalog, suppress the match
-    if _mentions_fake_tool(query):
-        domain = "none"
+    # Suppress lexicon signals for informational questions/greetings
+    # and for clearly non-SaaS operations (deploy, CI, merge, etc.)
+    if _is_question(query) or _is_non_saas(query):
         action = "none"
+        domain = "none"
 
     stable_id = int(hashlib.md5(query.encode()).hexdigest()[:8], 16)
 
@@ -662,6 +513,271 @@ def encode_query(query: str) -> dict:
             "action": action,
             "target": target,
             "domain": domain,
-            "keywords": keywords,
+            "description": bow_text,
+            "keywords": bow_text,
         },
     }
+
+
+# ---------------------------------------------------------------------------
+# entry_to_record — JSONL exemplar → build record
+# ---------------------------------------------------------------------------
+
+def entry_to_record(entry: dict) -> dict:
+    """Convert a JSONL exemplar entry into a record for building/encoding.
+
+    Expects entry keys: tool_id, action, target, domain, keywords, description.
+    Returns: {"concept_text": str, "attributes": dict, "metadata": dict}
+    """
+    keywords = entry.get("keywords", [])
+    if isinstance(keywords, list):
+        keywords = " ".join(keywords)
+
+    description = entry.get("description", keywords)
+
+    return {
+        "concept_text": entry["tool_id"],
+        "attributes": {
+            "action": entry["action"],
+            "target": entry["target"],
+            "domain": entry["domain"],
+            "description": description,
+            "keywords": keywords,
+        },
+        "metadata": {
+            "tool_id": entry["tool_id"],
+        },
+    }
+
+
+# ---------------------------------------------------------------------------
+# SIDECAR_CONFIG — Tool name validation in independent vector space
+# ---------------------------------------------------------------------------
+
+SIDECAR_CONFIG = EncoderConfig(
+    dimension=10000,
+    seed=73,  # Independent vector space from main model (seed=42)
+    apply_weights_during_encoding=False,
+    include_temporal=False,
+    layers=[
+        Layer(
+            name="identity",
+            similarity_weight=0.7,
+            segments=[
+                Segment(
+                    name="name",
+                    roles=[
+                        Role(
+                            name="name_tokens",
+                            similarity_weight=1.0,
+                            text_encoding="bag_of_words",
+                        ),
+                    ],
+                ),
+            ],
+        ),
+        Layer(
+            name="capability",
+            similarity_weight=0.3,
+            segments=[
+                Segment(
+                    name="action",
+                    roles=[
+                        Role(
+                            name="action",
+                            similarity_weight=1.0,
+                            lexicons=[
+                                "send", "search", "create", "get", "list",
+                                "update", "delete", "reply", "share", "upload",
+                                "track", "identify", "assign", "comment",
+                                "charge", "refund", "cancel", "subscribe",
+                                "draft", "find", "set", "schedule", "book",
+                                "add", "none",
+                            ],
+                        ),
+                    ],
+                ),
+            ],
+        ),
+    ],
+)
+
+
+# ---------------------------------------------------------------------------
+# Tool reference extraction
+# ---------------------------------------------------------------------------
+
+# ID prefixes that look like snake_case but are data values, not tool names
+_ID_PREFIXES = {"ch_", "sub_", "cus_", "u_", "inv_", "price_", "pi_", "pm_"}
+
+# snake_case pattern: 2+ segments of 2+ lowercase letters each
+_SNAKE_CASE_RE = re.compile(r'\b([a-z]{2,}(?:_[a-z]{2,})+)\b')
+
+# camelCase pattern: starts lowercase, has at least one uppercase letter
+_CAMEL_CASE_RE = re.compile(r'\b([a-z]+[A-Z][a-zA-Z]*)\b')
+
+
+def extract_tool_reference(query: str) -> str | None:
+    """Extract a tool name reference from a query, if present.
+
+    Detects snake_case (e.g., stripe_pause_subscription) and camelCase
+    (e.g., sendSlackNotification) patterns that look like tool names.
+    Filters out IDs (ch_xxx, sub_xxx) and event names.
+
+    Returns the extracted reference as space-separated lowercase tokens,
+    or None if no tool reference is found.
+    """
+    # Check snake_case patterns
+    for m in _SNAKE_CASE_RE.finditer(query):
+        candidate = m.group(1)
+        # Filter out ID prefixes
+        if any(candidate.startswith(p) for p in _ID_PREFIXES):
+            continue
+        # Filter out event/data names: preceded by "event", "a", "an"
+        # or followed by "event", "events"
+        start = m.start()
+        end = m.end()
+        prefix = query[:start].rstrip().lower()
+        suffix = query[end:].lstrip().lower()
+        if prefix.endswith(("event", " a", " an")):
+            continue
+        if suffix.startswith(("event", "events")):
+            continue
+        # Split on underscore → space-separated tokens
+        return candidate.replace("_", " ").lower()
+
+    # Check camelCase patterns
+    for m in _CAMEL_CASE_RE.finditer(query):
+        candidate = m.group(1)
+        # Split camelCase → tokens
+        tokens = re.sub(r'([a-z])([A-Z])', r'\1 \2', candidate).lower()
+        return tokens
+
+    return None
+
+
+def _extract_action_from_tokens(tokens: str) -> str:
+    """Extract the primary action verb from space-separated tool name tokens."""
+    words = tokens.split()
+    for w in words:
+        if w in _ACTION_MAP:
+            return _ACTION_MAP[w]
+    return "none"
+
+
+# ---------------------------------------------------------------------------
+# ToolNameSidecar — validates tool references against the real catalog
+# ---------------------------------------------------------------------------
+
+class ToolNameSidecar:
+    """Sidecar model that validates tool name references in an independent
+    vector space (seed=73).
+
+    Encodes the 38 real tool names as BoW + action lexicon glyphs.
+    When the main model's confidence is uncertain and the query references
+    a tool by name, the sidecar checks if that name matches a real tool.
+    """
+
+    def __init__(self, exemplar_path: str | None = None):
+        from pathlib import Path
+        from glyphh.encoder import Encoder
+        from glyphh.core.types import Concept
+
+        self.encoder = Encoder(SIDECAR_CONFIG)
+        self.tool_glyphs: list[tuple] = []  # (glyph, tool_id)
+        self._Concept = Concept
+
+        if exemplar_path is None:
+            exemplar_path = str(
+                Path(__file__).parent / "data" / "exemplars.jsonl"
+            )
+        self._build_catalog(exemplar_path)
+
+    def _build_catalog(self, exemplar_path: str):
+        """Build one sidecar glyph per unique tool_id."""
+        import json
+
+        seen = set()
+        with open(exemplar_path) as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                entry = json.loads(line)
+                tool_id = entry["tool_id"]
+                if tool_id in seen:
+                    continue
+                seen.add(tool_id)
+
+                # name_tokens: tool_id split on '_'
+                name_tokens = tool_id.replace("_", " ")
+                # action: from exemplar data
+                action = entry.get("action", "none")
+
+                concept = self._Concept(
+                    name=f"sidecar_{tool_id}",
+                    attributes={
+                        "name_tokens": name_tokens,
+                        "action": action,
+                    },
+                )
+                glyph = self.encoder.encode(concept)
+                self.tool_glyphs.append((glyph, tool_id))
+
+    def validate(self, tool_ref_tokens: str, threshold: float = 0.55) -> str | None:
+        """Check if a tool reference matches a real tool in the catalog.
+
+        Args:
+            tool_ref_tokens: Space-separated lowercase tokens from the
+                tool reference (output of extract_tool_reference).
+            threshold: Minimum sidecar similarity to confirm a match.
+
+        Returns:
+            The matching real tool_id if above threshold, else None.
+        """
+        from glyphh.core.ops import cosine_similarity as cos_sim
+
+        # Encode the referenced tool name in sidecar space
+        action = _extract_action_from_tokens(tool_ref_tokens)
+        ref_concept = self._Concept(
+            name="ref",
+            attributes={
+                "name_tokens": tool_ref_tokens,
+                "action": action,
+            },
+        )
+        ref_glyph = self.encoder.encode(ref_concept)
+
+        # Role-level weighted scoring in sidecar space
+        sidecar_weights = {"name_tokens": 0.7, "action": 0.3}
+
+        ref_roles = {}
+        for layer in ref_glyph.layers.values():
+            for seg in layer.segments.values():
+                ref_roles.update(seg.roles)
+
+        best_score = 0.0
+        best_tool = None
+
+        for glyph, tool_id in self.tool_glyphs:
+            cat_roles = {}
+            for layer in glyph.layers.values():
+                for seg in layer.segments.values():
+                    cat_roles.update(seg.roles)
+
+            weighted_sum = 0.0
+            weight_total = 0.0
+            for rname, w in sidecar_weights.items():
+                if rname in ref_roles and rname in cat_roles:
+                    sim = float(cos_sim(ref_roles[rname].data, cat_roles[rname].data))
+                    weighted_sum += sim * w
+                    weight_total += w
+
+            score = weighted_sum / weight_total if weight_total > 0 else 0.0
+            if score > best_score:
+                best_score = score
+                best_tool = tool_id
+
+        if best_score >= threshold:
+            return best_tool
+        return None

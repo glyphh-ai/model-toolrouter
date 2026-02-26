@@ -1,70 +1,101 @@
 # SaaS Tool Router
 # Routes natural language requests to SaaS tool functions
-# using HDC similarity on intent vectors.
+# using HDC similarity on intent + semantic vectors,
+# with a sidecar model for adversarial tool name validation.
 
 name: saas-tool-router
-version: 2.2.0
+version: 3.1.0
 description: |
   Routes natural language SaaS requests (e.g. "send a Slack message",
   "refund the charge", "create a Jira ticket") to the correct tool
-  function via HDC cosine similarity on intent segments. Encodes action,
-  target, domain, and keyword signals into high-dimensional vectors and
-  matches against a catalog of 38 tool exemplars across 8 domains.
+  function via HDC cosine similarity. Main model uses intent lexicons +
+  semantic BoW for fuzzy matching. Sidecar model (seed=73) validates
+  tool name references against the real catalog in an independent vector
+  space, blocking adversarial fake-tool hallucination. 38 tools, 8 domains.
 
 author: Glyphh AI
 license: MIT
 
+# --- Main model (seed=42) ---
 encoder:
   dimensions: 10000
   seed: 42
 
 auto_load_concepts: true
 
-roles:
-  action:
-    type: categorical
-    values:
-      - send
-      - search
-      - create
-      - get
-      - list
-      - update
-      - delete
-      - reply
-      - share
-      - upload
-      - track
-      - identify
-      - assign
-      - comment
-      - charge
-      - refund
-      - cancel
-      - subscribe
-      - set
-      - draft
-      - none
+layers:
+  intent:
+    weight: 0.4
+    roles:
+      action:
+        type: categorical
+        values:
+          - send
+          - search
+          - create
+          - get
+          - list
+          - update
+          - delete
+          - reply
+          - share
+          - upload
+          - track
+          - identify
+          - assign
+          - comment
+          - charge
+          - refund
+          - cancel
+          - subscribe
+          - set
+          - draft
+          - none
 
-  target:
-    type: text
+      target:
+        type: categorical
+        weight: 0.7
 
-  domain:
-    type: categorical
-    values:
-      - messaging
-      - email
-      - crm
-      - payments
-      - calendar
-      - files
-      - tickets
-      - analytics
+      domain:
+        type: categorical
+        weight: 0.8
+        values:
+          - messaging
+          - email
+          - crm
+          - payments
+          - calendar
+          - files
+          - tickets
+          - analytics
 
-  keywords:
-    type: text
-    optional: true
+  semantics:
+    weight: 0.6
+    roles:
+      description:
+        type: bag_of_words
+      keywords:
+        type: bag_of_words
+        weight: 0.8
 
 similarity:
-  threshold: 0.52
+  threshold: 0.40
+  sidecar_upper: 0.55
   top_k: 3
+
+# --- Sidecar model (seed=73) ---
+sidecar:
+  dimensions: 10000
+  seed: 73
+  threshold: 0.55
+  layers:
+    identity:
+      weight: 0.7
+      roles:
+        name_tokens:
+          type: bag_of_words
+    capability:
+      weight: 0.3
+      roles:
+        action:
+          type: categorical

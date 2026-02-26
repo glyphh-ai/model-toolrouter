@@ -39,7 +39,7 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from encoder import ENCODER_CONFIG, encode_query
+from encoder import ENCODER_CONFIG, encode_query, extract_tool_reference, ToolNameSidecar
 from glyphh.core.types import Concept
 from glyphh.core.ops import cosine_similarity
 from glyphh.encoder import Encoder
@@ -48,7 +48,7 @@ BENCHMARK_DIR = Path(__file__).parent
 QUERIES_PATH = BENCHMARK_DIR / "queries.json"
 CATALOG_PATH = BENCHMARK_DIR / "tool_catalog.json"
 
-GLYPHH_THRESHOLD = 0.52
+GLYPHH_THRESHOLD = 0.40
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -109,6 +109,9 @@ def validate_args(tool_name: str, args: dict | None, tools: list[dict]) -> dict:
 # Glyphh HDC Router
 # ═══════════════════════════════════════════════════════════════
 
+SIDECAR_UPPER = 0.55  # Main model confidence below this triggers sidecar check
+
+
 class GlyphhRouter:
     def __init__(self, threshold: float = GLYPHH_THRESHOLD):
         self.threshold = threshold
@@ -116,6 +119,9 @@ class GlyphhRouter:
         self.exemplar_glyphs = []
         self.exemplar_meta: list[dict] = []
         self._load_exemplars()
+        self.sidecar = ToolNameSidecar(
+            str(BENCHMARK_DIR.parent / "data" / "exemplars.jsonl")
+        )
 
     def _load_exemplars(self):
         data_path = BENCHMARK_DIR.parent / "data" / "exemplars.jsonl"
@@ -125,13 +131,18 @@ class GlyphhRouter:
                 if not line:
                     continue
                 entry = json.loads(line)
+                keywords = entry.get("keywords", [])
+                if isinstance(keywords, list):
+                    keywords = " ".join(keywords)
+                description = entry.get("description", keywords)
                 concept = Concept(
                     name=f"tool_{entry['tool_id']}",
                     attributes={
                         "action": entry["action"],
                         "target": entry["target"],
                         "domain": entry["domain"],
-                        "keywords": " ".join(entry["keywords"]) if isinstance(entry["keywords"], list) else entry["keywords"],
+                        "description": description,
+                        "keywords": keywords,
                     },
                 )
                 glyph = self.encoder.encode(concept)
@@ -147,7 +158,7 @@ class GlyphhRouter:
         q_glyph = self.encoder.encode(q_concept)
 
         # Role-level weighted similarity
-        role_weights = {"action": 1.0, "target": 0.8, "domain": 1.0, "keywords": 0.6}
+        role_weights = {"action": 1.0, "target": 0.7, "domain": 0.8, "description": 1.0, "keywords": 0.8}
 
         q_roles: dict[str, Any] = {}
         for layer in q_glyph.layers.values():
@@ -180,8 +191,31 @@ class GlyphhRouter:
 
         if scores and scores[0][0] >= self.threshold:
             best_score, best_idx = scores[0]
+            best_tool = self.exemplar_meta[best_idx]["tool_id"]
+
+            # Sidecar validation: when main model is uncertain and query
+            # references a tool by name, validate against the real catalog
+            # in an independent vector space.
+            if best_score < SIDECAR_UPPER:
+                tool_ref = extract_tool_reference(query)
+                if tool_ref is not None:
+                    sidecar_match = self.sidecar.validate(tool_ref)
+                    if sidecar_match is None:
+                        # Fake tool name — no real match in catalog
+                        return {
+                            "tool": None,
+                            "confidence": round(best_score, 4),
+                            "latency_ms": elapsed_ms,
+                            "top_3": top_3,
+                            "args": {},
+                            "sidecar_action": "rejected",
+                        }
+                    else:
+                        # Sidecar confirmed a real tool
+                        best_tool = sidecar_match
+
             return {
-                "tool": self.exemplar_meta[best_idx]["tool_id"],
+                "tool": best_tool,
                 "confidence": round(best_score, 4),
                 "latency_ms": elapsed_ms,
                 "top_3": top_3,

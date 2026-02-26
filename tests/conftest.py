@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from encoder import ENCODER_CONFIG, encode_query, entry_to_record
+from encoder import ENCODER_CONFIG, encode_query, entry_to_record, ToolNameSidecar
 from glyphh.core.types import Concept
 from glyphh.encoder import Encoder
 
@@ -14,6 +14,13 @@ from glyphh.encoder import Encoder
 def encoder():
     """Session-scoped encoder instance."""
     return Encoder(ENCODER_CONFIG)
+
+
+@pytest.fixture(scope="session")
+def sidecar():
+    """Session-scoped sidecar instance."""
+    data_path = str(Path(__file__).parent.parent / "data" / "exemplars.jsonl")
+    return ToolNameSidecar(data_path)
 
 
 @pytest.fixture(scope="session")
@@ -44,8 +51,9 @@ def exemplar_glyphs(encoder, exemplar_entries):
 
 
 @pytest.fixture(scope="session")
-def test_queries():
-    """Load test queries from JSON."""
-    path = Path(__file__).parent / "test-queries.json"
+def benchmark_queries():
+    """Load benchmark queries from JSON."""
+    path = Path(__file__).parent.parent / "benchmark" / "queries.json"
     with open(path) as f:
-        return json.load(f)
+        data = json.load(f)
+    return data["queries"]

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Build the DevOps tool router model from JSONL exemplar data.
+Build the SaaS tool router model from JSONL exemplar data.
 
 Usage:
     python build.py
@@ -72,7 +72,7 @@ def build(output_path: Path | None = None) -> None:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Build DevOps tool router model")
+    parser = argparse.ArgumentParser(description="Build SaaS tool router model")
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     args = parser.parse_args()
     build(args.output)

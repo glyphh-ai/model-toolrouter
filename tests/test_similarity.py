@@ -1,93 +1,180 @@
 """Test similarity-based tool routing correctness."""
 
-from encoder import encode_query
+from encoder import encode_query, extract_tool_reference
 from glyphh.core.ops import cosine_similarity
 from glyphh.core.types import Concept
 
 
-def _route(query: str, encoder, exemplar_glyphs, threshold=0.35):
-    """Route a query and return (tool_id, confidence)."""
-    q_concept = Concept(name="q", attributes=encode_query(query)["attributes"])
+ROLE_WEIGHTS = {"action": 1.0, "target": 0.7, "domain": 0.8, "description": 1.0, "keywords": 0.8}
+THRESHOLD = 0.40
+SIDECAR_UPPER = 0.55
+
+
+def _route(query: str, encoder, exemplar_glyphs, sidecar=None, threshold=THRESHOLD):
+    """Route a query using weighted role-level similarity + optional sidecar."""
+    q_attrs = encode_query(query)["attributes"]
+    q_concept = Concept(name="q", attributes=q_attrs)
     q_glyph = encoder.encode(q_concept)
 
-    q_intent = q_glyph.layers.get("intent") and q_glyph.layers["intent"].segments.get("action")
+    # Extract query role vectors
+    q_roles = {}
+    for layer in q_glyph.layers.values():
+        for seg in layer.segments.values():
+            q_roles.update(seg.roles)
 
     best_score, best_tool = 0.0, None
     for eg, entry in exemplar_glyphs:
-        e_intent = eg.layers.get("intent") and eg.layers["intent"].segments.get("action")
-        if q_intent and e_intent:
-            score = float(cosine_similarity(q_intent.cortex.data, e_intent.cortex.data))
-        else:
-            score = float(cosine_similarity(q_glyph.global_cortex.data, eg.global_cortex.data))
+        e_roles = {}
+        for layer in eg.layers.values():
+            for seg in layer.segments.values():
+                e_roles.update(seg.roles)
+
+        weighted_sum = 0.0
+        weight_total = 0.0
+        for rname, w in ROLE_WEIGHTS.items():
+            if rname in q_roles and rname in e_roles:
+                sim = float(cosine_similarity(q_roles[rname].data, e_roles[rname].data))
+                weighted_sum += sim * w
+                weight_total += w
+
+        score = weighted_sum / weight_total if weight_total > 0 else 0.0
         if score > best_score:
             best_score = score
             best_tool = entry["tool_id"]
 
     if best_score >= threshold:
+        # Sidecar validation in uncertain zone
+        if sidecar is not None and best_score < SIDECAR_UPPER:
+            tool_ref = extract_tool_reference(query)
+            if tool_ref is not None:
+                sidecar_match = sidecar.validate(tool_ref)
+                if sidecar_match is None:
+                    return None, best_score
+                else:
+                    best_tool = sidecar_match
         return best_tool, best_score
     return None, best_score
 
 
-def test_route_create_branch(encoder, exemplar_glyphs):
-    tool, conf = _route("create a release branch", encoder, exemplar_glyphs)
-    assert tool == "create_branch", f"Expected create_branch, got {tool} ({conf:.3f})"
+# --- Clear routing tests ---
+
+def test_route_slack_message(encoder, exemplar_glyphs, sidecar):
+    tool, conf = _route("Send a message to #engineering saying the deploy is done", encoder, exemplar_glyphs, sidecar)
+    assert tool == "slack_send_message", f"Expected slack_send_message, got {tool} ({conf:.3f})"
 
 
-def test_route_run_tests(encoder, exemplar_glyphs):
-    tool, conf = _route("run the tests", encoder, exemplar_glyphs)
-    assert tool == "run_tests", f"Expected run_tests, got {tool} ({conf:.3f})"
+def test_route_email_send(encoder, exemplar_glyphs, sidecar):
+    tool, conf = _route("Email the quarterly report to finance@acme.com with subject Q4 Results", encoder, exemplar_glyphs, sidecar)
+    assert tool == "email_send", f"Expected email_send, got {tool} ({conf:.3f})"
 
 
-def test_route_merge(encoder, exemplar_glyphs):
-    tool, conf = _route("merge to main", encoder, exemplar_glyphs)
-    assert tool == "merge_to_main", f"Expected merge_to_main, got {tool} ({conf:.3f})"
+def test_route_stripe_refund(encoder, exemplar_glyphs, sidecar):
+    tool, conf = _route("Refund charge ch_3abc123 for the full amount", encoder, exemplar_glyphs, sidecar)
+    assert tool == "stripe_refund", f"Expected stripe_refund, got {tool} ({conf:.3f})"
 
 
-def test_route_tag(encoder, exemplar_glyphs):
-    tool, conf = _route("tag the release", encoder, exemplar_glyphs)
-    assert tool == "create_tag", f"Expected create_tag, got {tool} ({conf:.3f})"
+def test_route_jira_create(encoder, exemplar_glyphs, sidecar):
+    tool, conf = _route("Create a bug ticket in the ENG project: login page crashes on Safari", encoder, exemplar_glyphs, sidecar)
+    assert tool == "jira_create_ticket", f"Expected jira_create_ticket, got {tool} ({conf:.3f})"
 
 
-def test_route_check_build(encoder, exemplar_glyphs):
-    tool, conf = _route("check the build status", encoder, exemplar_glyphs)
-    assert tool == "check_workflow_status", f"Expected check_workflow_status, got {tool} ({conf:.3f})"
+def test_route_analytics_track(encoder, exemplar_glyphs, sidecar):
+    tool, conf = _route("Track a signup_completed event for user u_12345", encoder, exemplar_glyphs, sidecar)
+    assert tool == "analytics_track_event", f"Expected analytics_track_event, got {tool} ({conf:.3f})"
 
 
-def test_route_cleanup(encoder, exemplar_glyphs):
-    tool, conf = _route("delete the release branch", encoder, exemplar_glyphs)
-    assert tool == "cleanup_branch", f"Expected cleanup_branch, got {tool} ({conf:.3f})"
+def test_route_calendar_create(encoder, exemplar_glyphs, sidecar):
+    tool, conf = _route("Create a meeting called Sprint Planning on Monday at 10am", encoder, exemplar_glyphs, sidecar)
+    assert tool == "calendar_create_event", f"Expected calendar_create_event, got {tool} ({conf:.3f})"
 
 
-def test_route_release_sdk(encoder, exemplar_glyphs):
-    tool, conf = _route("ship the SDK", encoder, exemplar_glyphs)
-    assert tool == "release_sdk", f"Expected release_sdk, got {tool} ({conf:.3f})"
+# --- Disambiguation tests ---
+
+def test_disambiguate_slack_dm_vs_email(encoder, exemplar_glyphs, sidecar):
+    tool, _ = _route("Send a message to alice@acme.com about the project update", encoder, exemplar_glyphs, sidecar)
+    assert tool == "slack_send_dm", f"Expected slack_send_dm, got {tool}"
 
 
-def test_route_docker_rebuild(encoder, exemplar_glyphs):
-    tool, conf = _route("rebuild all docker containers", encoder, exemplar_glyphs)
-    assert tool == "rebuild_all", f"Expected rebuild_all, got {tool} ({conf:.3f})"
+def test_disambiguate_crm_vs_stripe_customer(encoder, exemplar_glyphs, sidecar):
+    tool, _ = _route("Find the customer record for bob@startup.io", encoder, exemplar_glyphs, sidecar)
+    assert tool == "crm_get_contact", f"Expected crm_get_contact, got {tool}"
 
 
-def test_route_docker_logs(encoder, exemplar_glyphs):
-    tool, conf = _route("show the docker logs", encoder, exemplar_glyphs)
-    assert tool == "docker_logs", f"Expected docker_logs, got {tool} ({conf:.3f})"
+def test_disambiguate_identify_vs_track(encoder, exemplar_glyphs, sidecar):
+    tool, _ = _route("Log that user u_555 just upgraded to the pro plan", encoder, exemplar_glyphs, sidecar)
+    assert tool == "analytics_identify_user", f"Expected analytics_identify_user, got {tool}"
 
 
-def test_all_test_queries(encoder, exemplar_glyphs, test_queries):
-    """Run all test queries from test-queries.json and check routing accuracy."""
+def test_disambiguate_track_event(encoder, exemplar_glyphs, sidecar):
+    tool, _ = _route("Record a checkout_completed event for user u_900", encoder, exemplar_glyphs, sidecar)
+    assert tool == "analytics_track_event", f"Expected analytics_track_event, got {tool}"
+
+
+def test_disambiguate_comment_vs_create(encoder, exemplar_glyphs, sidecar):
+    tool, _ = _route("Add a comment on ENG-4521 saying the fix is deployed to production", encoder, exemplar_glyphs, sidecar)
+    assert tool == "jira_add_comment", f"Expected jira_add_comment, got {tool}"
+
+
+# --- OOS / threshold-based abstention ---
+
+def test_oos_weather(encoder, exemplar_glyphs, sidecar):
+    tool, conf = _route("What's the weather like in San Francisco today?", encoder, exemplar_glyphs, sidecar)
+    assert tool is None, f"Expected None for OOS query, got {tool} ({conf:.3f})"
+
+
+def test_oos_greeting(encoder, exemplar_glyphs, sidecar):
+    tool, conf = _route("Hello, how are you?", encoder, exemplar_glyphs, sidecar)
+    assert tool is None, f"Expected None for greeting, got {tool} ({conf:.3f})"
+
+
+def test_oos_deploy(encoder, exemplar_glyphs, sidecar):
+    tool, conf = _route("Deploy the application to production", encoder, exemplar_glyphs, sidecar)
+    assert tool is None, f"Expected None for OOS deploy query, got {tool} ({conf:.3f})"
+
+
+# --- Adversarial tests (sidecar validates tool references) ---
+
+def test_adversarial_fake_tool_rejected(encoder, exemplar_glyphs, sidecar):
+    """Queries referencing fake tool names should be rejected by the sidecar."""
+    tool, _ = _route("Use stripe_pause_subscription to pause sub_abc for 30 days", encoder, exemplar_glyphs, sidecar)
+    assert tool is None, f"Expected None for fake tool, got {tool}"
+
+
+def test_adversarial_real_tool_synonym(encoder, exemplar_glyphs, sidecar):
+    """Queries using camelCase synonyms should route to the real tool."""
+    tool, _ = _route("Call sendSlackNotification to tell #ops the deploy is done", encoder, exemplar_glyphs, sidecar)
+    assert tool == "slack_send_message", f"Expected slack_send_message, got {tool}"
+
+
+def test_adversarial_fake_tool_no_match(encoder, exemplar_glyphs, sidecar):
+    """Fake tool with no catalog equivalent should abstain."""
+    tool, _ = _route("Execute gmail_archive to archive all emails from noreply@spam.com", encoder, exemplar_glyphs, sidecar)
+    assert tool is None, f"Expected None for fake gmail_archive, got {tool}"
+
+
+# --- Benchmark accuracy test ---
+
+def test_benchmark_accuracy(encoder, exemplar_glyphs, benchmark_queries, sidecar):
+    """Run all 95 benchmark queries and verify routing accuracy >= 95%."""
     correct = 0
     failures = []
-    for tq in test_queries:
-        tool, conf = _route(tq["query"], encoder, exemplar_glyphs)
-        if tool == tq["expected_tool"]:
+    for q in benchmark_queries:
+        tool, conf = _route(q["query"], encoder, exemplar_glyphs, sidecar)
+        expected = q["expected_tool"]
+        if tool == expected:
             correct += 1
         else:
-            failures.append(f"  '{tq['query']}': expected {tq['expected_tool']}, got {tool} ({conf:.3f})")
+            failures.append(
+                f"  [{q['id']}] '{q['query'][:60]}...' "
+                f"expected={expected}, got={tool} ({conf:.3f})"
+            )
 
-    accuracy = correct / len(test_queries) if test_queries else 0
+    accuracy = correct / len(benchmark_queries) if benchmark_queries else 0
     if failures:
-        fail_str = "\n".join(failures)
-        assert accuracy >= 0.80, (
-            f"Routing accuracy {accuracy:.1%} below 80% threshold.\n"
-            f"Failures:\n{fail_str}"
+        fail_str = "\n".join(failures[:20])
+        total_fail = len(failures)
+        assert accuracy >= 0.95, (
+            f"Routing accuracy {accuracy:.1%} ({correct}/{len(benchmark_queries)}) "
+            f"below 95% threshold.\n"
+            f"First {min(20, total_fail)} of {total_fail} failures:\n{fail_str}"
         )

@@ -1,23 +1,48 @@
 # Tool Router Benchmark: Glyphh HDC vs LLM
 
-Compares four tool routing strategies on the same 95-query, 38-tool SaaS catalog.
+Confidence-based tool routing for multi-turn agent architectures.
+Compares four strategies on a 95-query, 38-tool SaaS catalog.
+
+## How It Works
+
+The Glyphh router doesn't replace the LLM — it replaces the LLM's
+**reasoning about which tool to call**. The model decomposes a natural
+language query into structured intent signals (action, target, domain,
+keywords), encodes them as HDC vectors, and returns a match with a
+calibrated confidence score and fact tree.
+
+The downstream agent uses the confidence to decide:
+
+| Zone | Confidence | Agent Action |
+|---|---|---|
+| High | >= 0.55 | Execute — route is reliable |
+| Uncertain | 0.40–0.55 | Clarify — inspect fact tree, ask user |
+| Abstain | < 0.40 | No match — out of scope |
+
+The LLM never sees the full tool catalog. It only sees the single
+routed tool (for arg extraction) or the fact tree (for clarification).
 
 ## Strategies
 
 | # | Name | Flow | LLM Calls |
 |---|------|------|-----------|
 | 1 | LLM Only | query → LLM → tool + args | 1 |
-| 2 | Glyphh Only | query → main model + sidecar → tool (no args) | 0 |
+| 2 | Glyphh Only | query → main model + sidecar → tool + confidence | 0 |
 | 3 | Glyphh Route + LLM Args | query → Glyphh routes → LLM fills args for single tool | 1 |
 | 4 | LLM + Glyphh Sidecar | query → LLM → tool + args, Glyphh confirms or overrides | 1–2 |
 
 ## Architecture
 
-S2 uses a two-model HDC architecture:
-- **Main model** (seed=42): intent lexicons + semantic BoW for routing
-- **Sidecar model** (seed=73): tool name BoW + action lexicon for adversarial validation
+Two-model HDC architecture in independent vector spaces:
 
-The sidecar activates when the main model is uncertain (confidence 0.40–0.55) and the query references a tool by name (snake_case or camelCase pattern).
+- **Main model** (seed=42, 10,000-dim): intent lexicons + semantic BoW
+  for routing. Decomposes query into action/target/domain (categorical) +
+  description/keywords (bag-of-words), matches against 68 exemplar glyphs.
+
+- **Sidecar model** (seed=73, 10,000-dim): tool name BoW + action lexicon
+  for adversarial validation. Activates in the uncertain zone (0.40–0.55)
+  when the query references a tool by name. Validates whether the name
+  matches a real tool in the catalog.
 
 ## What It Measures
 
@@ -26,6 +51,7 @@ The sidecar activates when the main model is uncertain (confidence 0.40–0.55) 
 | Tool Accuracy | Correct tool selected for the query |
 | In-Scope Accuracy | Correct tool for queries that have a real tool match |
 | Abstain Accuracy | Correctly returns null for out-of-scope queries |
+| Confidence Distribution | Score distribution across confidence zones |
 | Invalid Tool Rate | Tool selected that doesn't exist in the catalog |
 | Schema Validity | Args match the tool's JSON Schema (Draft 7) |
 | E2E Accuracy | Correct tool AND schema-valid args |
@@ -77,4 +103,5 @@ Or from the monorepo root:
 - Schema validation: jsonschema Draft 7, enforced even on empty args
 - Routing policy: highest-impact action for multi-action queries
 - Ground truth labels are human-authored, not LLM-generated
+- Per-query confidence scores saved in raw JSON results
 - Raw results saved as JSON for independent verification

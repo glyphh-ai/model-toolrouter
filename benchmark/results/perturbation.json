@@ -2,7 +2,7 @@
   "test": "perturbation",
   "seed": 42,
   "glyphh_original_accuracy": 1.0,
-  "glyphh_perturbed_accuracy": 0.6213592233009708,
+  "glyphh_perturbed_accuracy": 0.8349514563106796,
   "total_original": 71,
   "total_perturbed": 206,
   "original_results": [
@@ -57,7 +57,7 @@
       "query": "Upload the design mockup to the shared Drive folder",
       "expected_tool": "gdrive_upload",
       "result_tool": "gdrive_upload",
-      "confidence": 0.5541,
+      "confidence": 0.7168,
       "correct": true
     },
     {
@@ -624,7 +624,7 @@
       "query": "Get page views grouped by week for January 2025",
       "expected_tool": "analytics_get_metrics",
       "result_tool": "analytics_get_metrics",
-      "confidence": 0.4029,
+      "confidence": 0.5658,
       "correct": true
     },
     {
@@ -642,7 +642,7 @@
       "query": "Send a threaded reply in #incidents about the resolution \u2014 thread ID is 1234567890.123456",
       "expected_tool": "slack_send_message",
       "result_tool": "slack_send_message",
-      "confidence": 0.6877,
+      "confidence": 0.4575,
       "correct": true
     }
   ],
@@ -654,9 +654,9 @@
       "original_query": "Send a message to #engineering saying the deploy is done",
       "paraphrased_query": "fire off a note to #engineering saying the deploy is done",
       "expected_tool": "slack_send_message",
-      "result_tool": null,
-      "confidence": 0.3579,
-      "correct": false,
+      "result_tool": "slack_send_message",
+      "confidence": 0.5895,
+      "correct": true,
       "original_confidence": 0.6669
     },
     {
@@ -678,9 +678,9 @@
       "original_query": "Send a message to #engineering saying the deploy is done",
       "paraphrased_query": "a notification should be sent to #engineering saying the deploy is done",
       "expected_tool": "slack_send_message",
-      "result_tool": null,
-      "confidence": 0.3496,
-      "correct": false,
+      "result_tool": "slack_send_message",
+      "confidence": 0.5812,
+      "correct": true,
       "original_confidence": 0.6669
     },
     {
@@ -690,9 +690,9 @@
       "original_query": "Email the quarterly report to finance@acme.com with subject Q4 Results",
       "paraphrased_query": "mail the quarterly report to finance@acme.com with subject Q4 Results",
       "expected_tool": "email_send",
-      "result_tool": null,
-      "confidence": 0.3952,
-      "correct": false,
+      "result_tool": "email_send",
+      "confidence": 0.6268,
+      "correct": true,
       "original_confidence": 0.4393
     },
     {
@@ -714,9 +714,9 @@
       "original_query": "Email the quarterly report to finance@acme.com with subject Q4 Results",
       "paraphrased_query": "mail the quarterly report to finance@acme.com with subject Q4 Results",
       "expected_tool": "email_send",
-      "result_tool": null,
-      "confidence": 0.3952,
-      "correct": false,
+      "result_tool": "email_send",
+      "confidence": 0.6268,
+      "correct": true,
       "original_confidence": 0.4393
     },
     {
@@ -762,9 +762,9 @@
       "original_query": "Refund charge ch_3abc123 for the full amount",
       "paraphrased_query": "return the money for charge ch_3abc123 for the full amount",
       "expected_tool": "stripe_refund",
-      "result_tool": "stripe_charge",
-      "confidence": 0.6906,
-      "correct": false,
+      "result_tool": "stripe_refund",
+      "confidence": 0.5697,
+      "correct": true,
       "original_confidence": 0.7653
     },
     {
@@ -786,9 +786,9 @@
       "original_query": "Refund charge ch_3abc123 for the full amount",
       "paraphrased_query": "return the money for charge ch_3abc123 for the full amount",
       "expected_tool": "stripe_refund",
-      "result_tool": "stripe_charge",
-      "confidence": 0.6906,
-      "correct": false,
+      "result_tool": "stripe_refund",
+      "confidence": 0.5697,
+      "correct": true,
       "original_confidence": 0.7653
     },
     {
@@ -798,9 +798,9 @@
       "original_query": "Create a meeting called Sprint Planning on Monday at 10am to 11am",
       "paraphrased_query": "set up a call called Sprint Planning on Monday at 10am to 11am",
       "expected_tool": "calendar_create_event",
-      "result_tool": null,
-      "confidence": 0.2673,
-      "correct": false,
+      "result_tool": "calendar_create_event",
+      "confidence": 0.6147,
+      "correct": true,
       "original_confidence": 0.6583
     },
     {
@@ -822,9 +822,9 @@
       "original_query": "Create a meeting called Sprint Planning on Monday at 10am to 11am",
       "paraphrased_query": "set up a session called Sprint Planning on Monday at 10am to 11am",
       "expected_tool": "calendar_create_event",
-      "result_tool": null,
-      "confidence": 0.2717,
-      "correct": false,
+      "result_tool": "calendar_create_event",
+      "confidence": 0.587,
+      "correct": true,
       "original_confidence": 0.6583
     },
     {
@@ -834,10 +834,10 @@
       "original_query": "Upload the design mockup to the shared Drive folder",
       "paraphrased_query": "drop in the design mockup to the shared Drive location",
       "expected_tool": "gdrive_upload",
-      "result_tool": null,
-      "confidence": 0.2543,
-      "correct": false,
-      "original_confidence": 0.5541
+      "result_tool": "gdrive_upload",
+      "confidence": 0.6474,
+      "correct": true,
+      "original_confidence": 0.7168
     },
     {
       "query_id": "clear_06_p2",
@@ -847,9 +847,9 @@
       "paraphrased_query": "Hey, upload the design mockup to the shared Drive folder",
       "expected_tool": "gdrive_upload",
       "result_tool": "gdrive_upload",
-      "confidence": 0.5312,
+      "confidence": 0.6939,
       "correct": true,
-      "original_confidence": 0.5541
+      "original_confidence": 0.7168
     },
     {
       "query_id": "clear_06_p3",
@@ -858,10 +858,10 @@
       "original_query": "Upload the design mockup to the shared Drive folder",
       "paraphrased_query": "put in the design mockup to the shared Drive directory",
       "expected_tool": "gdrive_upload",
-      "result_tool": null,
-      "confidence": 0.295,
-      "correct": false,
-      "original_confidence": 0.5541
+      "result_tool": "gdrive_upload",
+      "confidence": 0.6482,
+      "correct": true,
+      "original_confidence": 0.7168
     },
     {
       "query_id": "clear_07_p1",
@@ -871,7 +871,7 @@
       "paraphrased_query": "spin up a bug work item in the ENG project: login page crashes on Safari",
       "expected_tool": "jira_create_ticket",
       "result_tool": "jira_create_ticket",
-      "confidence": 0.4171,
+      "confidence": 0.649,
       "correct": true,
       "original_confidence": 0.7053
     },
@@ -895,7 +895,7 @@
       "paraphrased_query": "I'd like to spin up a bug issue in the ENG project: login page crashes on Safari",
       "expected_tool": "jira_create_ticket",
       "result_tool": "jira_create_ticket",
-      "confidence": 0.4293,
+      "confidence": 0.6612,
       "correct": true,
       "original_confidence": 0.7053
     },
@@ -906,9 +906,9 @@
       "original_query": "Track a signup_completed event for user u_12345",
       "paraphrased_query": "capture a signup_completed occurrence for user u_12345",
       "expected_tool": "analytics_track_event",
-      "result_tool": null,
-      "confidence": 0.234,
-      "correct": false,
+      "result_tool": "analytics_track_event",
+      "confidence": 0.4459,
+      "correct": true,
       "original_confidence": 0.5578
     },
     {
@@ -930,9 +930,9 @@
       "original_query": "Track a signup_completed event for user u_12345",
       "paraphrased_query": "for user u_12345, note a signup_completed occurrence",
       "expected_tool": "analytics_track_event",
-      "result_tool": null,
-      "confidence": 0.231,
-      "correct": false,
+      "result_tool": "analytics_track_event",
+      "confidence": 0.4445,
+      "correct": true,
       "original_confidence": 0.5578
     },
     {
@@ -942,9 +942,9 @@
       "original_query": "Search Slack for messages about the outage last Friday",
       "paraphrased_query": "dig through Slack for messages about the outage last Friday",
       "expected_tool": "slack_search_messages",
-      "result_tool": null,
-      "confidence": 0.2661,
-      "correct": false,
+      "result_tool": "slack_search_messages",
+      "confidence": 0.5012,
+      "correct": true,
       "original_confidence": 0.5519
     },
     {
@@ -966,9 +966,9 @@
       "original_query": "Search Slack for messages about the outage last Friday",
       "paraphrased_query": "Can you hunt for Slack for messages about the outage last Friday",
       "expected_tool": "slack_search_messages",
-      "result_tool": null,
-      "confidence": 0.2715,
-      "correct": false,
+      "result_tool": "slack_search_messages",
+      "confidence": 0.5066,
+      "correct": true,
       "original_confidence": 0.5519
     },
     {
@@ -978,9 +978,9 @@
       "original_query": "Cancel subscription sub_xyz789 at the end of the billing period",
       "paraphrased_query": "terminate membership sub_xyz789 at the end of the billing period",
       "expected_tool": "stripe_cancel_subscription",
-      "result_tool": "stripe_get_customer",
-      "confidence": 0.4476,
-      "correct": false,
+      "result_tool": "stripe_cancel_subscription",
+      "confidence": 0.697,
+      "correct": true,
       "original_confidence": 0.7966
     },
     {
@@ -1002,9 +1002,9 @@
       "original_query": "Cancel subscription sub_xyz789 at the end of the billing period",
       "paraphrased_query": "discontinue membership sub_xyz789 at the end of the billing period",
       "expected_tool": "stripe_cancel_subscription",
-      "result_tool": "stripe_get_customer",
-      "confidence": 0.4432,
-      "correct": false,
+      "result_tool": "stripe_cancel_subscription",
+      "confidence": 0.6956,
+      "correct": true,
       "original_confidence": 0.7966
     },
     {
@@ -1014,9 +1014,9 @@
       "original_query": "Set my Slack status to 'In a meeting' with the :calendar: emoji",
       "paraphrased_query": "change to my Slack status to 'In a meeting' with the :calendar: emoji",
       "expected_tool": "slack_set_status",
-      "result_tool": null,
-      "confidence": 0.3212,
-      "correct": false,
+      "result_tool": "slack_set_status",
+      "confidence": 0.5241,
+      "correct": true,
       "original_confidence": 0.579
     },
     {
@@ -1038,9 +1038,9 @@
       "original_query": "Set my Slack status to 'In a meeting' with the :calendar: emoji",
       "paraphrased_query": "configure my Slack status to 'In a meeting' with the :calendar: emoji",
       "expected_tool": "slack_set_status",
-      "result_tool": null,
-      "confidence": 0.3113,
-      "correct": false,
+      "result_tool": "slack_set_status",
+      "confidence": 0.5251,
+      "correct": true,
       "original_confidence": 0.579
     },
     {
@@ -1051,7 +1051,7 @@
       "paraphrased_query": "track down all open bugs assigned to me in Jira",
       "expected_tool": "jira_search",
       "result_tool": "jira_search",
-      "confidence": 0.4168,
+      "confidence": 0.4174,
       "correct": true,
       "original_confidence": 0.719
     },
@@ -1074,9 +1074,9 @@
       "original_query": "Find all open bugs assigned to me in Jira",
       "paraphrased_query": "Go ahead and locate all open bugs assigned to me in Jira",
       "expected_tool": "jira_search",
-      "result_tool": "jira_create_ticket",
-      "confidence": 0.6484,
-      "correct": false,
+      "result_tool": "jira_search",
+      "confidence": 0.663,
+      "correct": true,
       "original_confidence": 0.719
     },
     {
@@ -1159,7 +1159,7 @@
       "paraphrased_query": "let someone see the Q4 budget spreadsheet with maria@acme.com as an editor",
       "expected_tool": "gdrive_share",
       "result_tool": null,
-      "confidence": 0.2335,
+      "confidence": 0.3943,
       "correct": false,
       "original_confidence": 0.6208
     },
@@ -1183,7 +1183,7 @@
       "paraphrased_query": "let someone see the Q4 budget spreadsheet with maria@acme.com as an editor",
       "expected_tool": "gdrive_share",
       "result_tool": null,
-      "confidence": 0.2335,
+      "confidence": 0.3943,
       "correct": false,
       "original_confidence": 0.6208
     },
@@ -1194,9 +1194,9 @@
       "original_query": "Reply to the email from Jake about the contract \u2014 tell him we accept the terms",
       "paraphrased_query": "write back to to the mail from Jake about the contract \u2014 tell him we accept the terms",
       "expected_tool": "email_reply",
-      "result_tool": "email_send",
-      "confidence": 0.5761,
-      "correct": false,
+      "result_tool": "email_reply",
+      "confidence": 0.5757,
+      "correct": true,
       "original_confidence": 0.6814
     },
     {
@@ -1206,9 +1206,9 @@
       "original_query": "Reply to the email from Jake about the contract \u2014 tell him we accept the terms",
       "paraphrased_query": "about the contract \u2014 tell him we accept the terms, reply to the email from Jake",
       "expected_tool": "email_reply",
-      "result_tool": "email_send",
-      "confidence": 0.6473,
-      "correct": false,
+      "result_tool": "email_reply",
+      "confidence": 0.6814,
+      "correct": true,
       "original_confidence": 0.6814
     },
     {
@@ -1218,9 +1218,9 @@
       "original_query": "Reply to the email from Jake about the contract \u2014 tell him we accept the terms",
       "paraphrased_query": "about the contract \u2014 tell him we accept the terms, reply to the email message from Jake",
       "expected_tool": "email_reply",
-      "result_tool": "email_send",
-      "confidence": 0.6139,
-      "correct": false,
+      "result_tool": "email_reply",
+      "confidence": 0.6996,
+      "correct": true,
       "original_confidence": 0.6814
     },
     {
@@ -1230,9 +1230,9 @@
       "original_query": "Add a comment on ENG-4521 saying the fix is deployed to production",
       "paraphrased_query": "post a remark on ENG-4521 saying the fix is deployed to production",
       "expected_tool": "jira_add_comment",
-      "result_tool": null,
-      "confidence": 0.2718,
-      "correct": false,
+      "result_tool": "jira_add_comment",
+      "confidence": 0.5997,
+      "correct": true,
       "original_confidence": 0.6793
     },
     {
@@ -1254,9 +1254,9 @@
       "original_query": "Add a comment on ENG-4521 saying the fix is deployed to production",
       "paraphrased_query": "leave a response on ENG-4521 saying the fix is deployed to production",
       "expected_tool": "jira_add_comment",
-      "result_tool": null,
-      "confidence": 0.2425,
-      "correct": false,
+      "result_tool": "jira_add_comment",
+      "confidence": 0.6037,
+      "correct": true,
       "original_confidence": 0.6793
     },
     {
@@ -1314,9 +1314,9 @@
       "original_query": "Create a new CRM deal called 'Acme Enterprise' worth $50,000 for contact con_789",
       "paraphrased_query": "for contact con_789, create a new CRM deal called 'Acme Enterprise' worth $50,000",
       "expected_tool": "crm_create_deal",
-      "result_tool": "crm_create_contact",
-      "confidence": 0.726,
-      "correct": false,
+      "result_tool": "crm_create_deal",
+      "confidence": 0.6831,
+      "correct": true,
       "original_confidence": 0.6831
     },
     {
@@ -1338,9 +1338,9 @@
       "original_query": "DM alice@acme.com on Slack and ask if she's free for a sync",
       "paraphrased_query": "Could you dM alice@acme.com on Slack and ask if she's free for a sync",
       "expected_tool": "slack_send_dm",
-      "result_tool": null,
-      "confidence": 0.387,
-      "correct": false,
+      "result_tool": "slack_send_dm",
+      "confidence": 0.662,
+      "correct": true,
       "original_confidence": 0.6701
     },
     {
@@ -1350,9 +1350,9 @@
       "original_query": "DM alice@acme.com on Slack and ask if she's free for a sync",
       "paraphrased_query": "Go ahead and dM alice@acme.com on Slack and ask if she's free for a sync",
       "expected_tool": "slack_send_dm",
-      "result_tool": null,
-      "confidence": 0.3905,
-      "correct": false,
+      "result_tool": "slack_send_dm",
+      "confidence": 0.6653,
+      "correct": true,
       "original_confidence": 0.6701
     },
     {
@@ -1363,7 +1363,7 @@
       "paraphrased_query": "forward along a notification to alice@acme.com about the project update",
       "expected_tool": "slack_send_dm",
       "result_tool": null,
-      "confidence": 0.3094,
+      "confidence": 0.268,
       "correct": false,
       "original_confidence": 0.473
     },
@@ -1387,7 +1387,7 @@
       "paraphrased_query": "a notification should be sent to alice@acme.com about the project update",
       "expected_tool": "slack_send_dm",
       "result_tool": null,
-      "confidence": 0.3113,
+      "confidence": 0.2678,
       "correct": false,
       "original_confidence": 0.473
     },
@@ -1531,7 +1531,7 @@
       "paraphrased_query": "adjust the work item ENG-100 to assign it to dave@acme.com",
       "expected_tool": "jira_assign_ticket",
       "result_tool": "jira_assign_ticket",
-      "confidence": 0.5027,
+      "confidence": 0.6651,
       "correct": true,
       "original_confidence": 0.7
     },
@@ -1579,7 +1579,7 @@
       "paraphrased_query": "hunt for for files about the Q3 roadmap",
       "expected_tool": "gdrive_search",
       "result_tool": "gdrive_search",
-      "confidence": 0.4185,
+      "confidence": 0.6536,
       "correct": true,
       "original_confidence": 0.7012
     },
@@ -1602,9 +1602,9 @@
       "original_query": "Search for files about the Q3 roadmap",
       "paraphrased_query": "Quick request: dig through for files about the Q3 roadmap",
       "expected_tool": "gdrive_search",
-      "result_tool": null,
-      "confidence": 0.3871,
-      "correct": false,
+      "result_tool": "gdrive_search",
+      "confidence": 0.6222,
+      "correct": true,
       "original_confidence": 0.7012
     },
     {
@@ -1651,7 +1651,7 @@
       "paraphrased_query": "set up a new contact for Jamie Lee at Globex Corp, email message jamie@globex.com",
       "expected_tool": "crm_create_contact",
       "result_tool": null,
-      "confidence": 0.2648,
+      "confidence": 0.3133,
       "correct": false,
       "original_confidence": 0.5308
     },
@@ -1675,7 +1675,7 @@
       "paraphrased_query": "Hey, set up a new contact for Jamie Lee at Globex Corp, email message jamie@globex.com",
       "expected_tool": "crm_create_contact",
       "result_tool": null,
-      "confidence": 0.2719,
+      "confidence": 0.335,
       "correct": false,
       "original_confidence": 0.5308
     },
@@ -1686,9 +1686,9 @@
       "original_query": "Draft an email to the team about the upcoming release but don't send it yet",
       "paraphrased_query": "write up an mail to the team about the upcoming release but don't send it yet",
       "expected_tool": "email_create_draft",
-      "result_tool": "email_send",
-      "confidence": 0.6433,
-      "correct": false,
+      "result_tool": "email_create_draft",
+      "confidence": 0.4373,
+      "correct": true,
       "original_confidence": 0.6819
     },
     {
@@ -1710,9 +1710,9 @@
       "original_query": "Draft an email to the team about the upcoming release but don't send it yet",
       "paraphrased_query": "write up an mail to the team about the upcoming release but don't send it yet",
       "expected_tool": "email_create_draft",
-      "result_tool": "email_send",
-      "confidence": 0.6433,
-      "correct": false,
+      "result_tool": "email_create_draft",
+      "confidence": 0.4373,
+      "correct": true,
       "original_confidence": 0.6819
     },
     {
@@ -1746,9 +1746,9 @@
       "original_query": "Find a time that works for me and sarah@acme.com for a 30-minute call next week",
       "paraphrased_query": "for me and sarah@acme, locate a time that workscom for a 30-minute call next week",
       "expected_tool": "calendar_find_free_time",
-      "result_tool": null,
-      "confidence": 0.2628,
-      "correct": false,
+      "result_tool": "calendar_find_free_time",
+      "confidence": 0.4389,
+      "correct": true,
       "original_confidence": 0.4937
     },
     {
@@ -1758,9 +1758,9 @@
       "original_query": "Charge the customer cus_999 fifty dollars for the overage",
       "paraphrased_query": "collect from the account holder cus_999 fifty dollars for the overage",
       "expected_tool": "stripe_charge",
-      "result_tool": "stripe_get_customer",
-      "confidence": 0.5825,
-      "correct": false,
+      "result_tool": "stripe_charge",
+      "confidence": 0.4212,
+      "correct": true,
       "original_confidence": 0.6788
     },
     {
@@ -1987,7 +1987,7 @@
       "paraphrased_query": "Hey, give me me the client details for someone at Acme Corp",
       "expected_tool": "crm_get_contact",
       "result_tool": null,
-      "confidence": 0.2663,
+      "confidence": 0.2641,
       "correct": false,
       "original_confidence": 0.6254
     },
@@ -2058,8 +2058,8 @@
       "original_query": "Find the contact info for the Globex account",
       "paraphrased_query": "track down the individual info for the Globex account",
       "expected_tool": "crm_get_contact",
-      "result_tool": "analytics_track_event",
-      "confidence": 0.4753,
+      "result_tool": "analytics_get_funnel",
+      "confidence": 0.4385,
       "correct": false,
       "original_confidence": 0.6568
     },
@@ -2083,7 +2083,7 @@
       "paraphrased_query": "for the Globex account, locate the person info",
       "expected_tool": "crm_get_contact",
       "result_tool": null,
-      "confidence": 0.3912,
+      "confidence": 0.396,
       "correct": false,
       "original_confidence": 0.6568
     },
@@ -2203,7 +2203,7 @@
       "paraphrased_query": "register the button_click activity on the pricing page",
       "expected_tool": "analytics_track_event",
       "result_tool": null,
-      "confidence": 0.2687,
+      "confidence": 0.4182,
       "correct": false,
       "original_confidence": 0.5295
     },
@@ -2227,7 +2227,7 @@
       "paraphrased_query": "I need you to log the button_click activity on the pricing page",
       "expected_tool": "analytics_track_event",
       "result_tool": null,
-      "confidence": 0.2623,
+      "confidence": 0.4493,
       "correct": false,
       "original_confidence": 0.5295
     },
@@ -2263,7 +2263,7 @@
       "paraphrased_query": "Hey, ping Alice on Slack about the deadline",
       "expected_tool": "slack_send_dm",
       "result_tool": "slack_send_dm",
-      "confidence": 0.4798,
+      "confidence": 0.4774,
       "correct": true,
       "original_confidence": 0.5295
     },
@@ -2274,9 +2274,9 @@
       "original_query": "Send Alice an email about the deadline",
       "paraphrased_query": "fire off Alice an mail about the deadline",
       "expected_tool": "email_send",
-      "result_tool": null,
-      "confidence": 0.3555,
-      "correct": false,
+      "result_tool": "email_send",
+      "confidence": 0.5872,
+      "correct": true,
       "original_confidence": 0.7308
     },
     {
@@ -2311,7 +2311,7 @@
       "paraphrased_query": "Ping bob@acme.com about the standup \u2014 just a quick Slack note",
       "expected_tool": "slack_send_dm",
       "result_tool": "slack_send_message",
-      "confidence": 0.4835,
+      "confidence": 0.4841,
       "correct": false,
       "original_confidence": 0.6746
     },
@@ -2406,9 +2406,9 @@
       "original_query": "Update the CRM record for contact con_456 with new phone number",
       "paraphrased_query": "adjust the CRM record for person con_456 with new phone number",
       "expected_tool": "crm_update_contact",
-      "result_tool": "crm_create_contact",
-      "confidence": 0.7187,
-      "correct": false,
+      "result_tool": "crm_update_contact",
+      "confidence": 0.6357,
+      "correct": true,
       "original_confidence": 0.7085
     },
     {
@@ -2443,7 +2443,7 @@
       "paraphrased_query": "locate all the files shared with me in Drive",
       "expected_tool": "gdrive_search",
       "result_tool": "gdrive_search",
-      "confidence": 0.4433,
+      "confidence": 0.6784,
       "correct": true,
       "original_confidence": 0.7335
     },
@@ -2467,7 +2467,7 @@
       "paraphrased_query": "track down all the files shared with me in Drive",
       "expected_tool": "gdrive_search",
       "result_tool": "gdrive_search",
-      "confidence": 0.444,
+      "confidence": 0.4446,
       "correct": true,
       "original_confidence": 0.7335
     },
@@ -2478,9 +2478,9 @@
       "original_query": "Search Jira for all stories in the MOBILE project",
       "paraphrased_query": "hunt for Jira for all stories in the MOBILE project",
       "expected_tool": "jira_search",
-      "result_tool": "jira_assign_ticket",
-      "confidence": 0.4295,
-      "correct": false,
+      "result_tool": "jira_search",
+      "confidence": 0.6633,
+      "correct": true,
       "original_confidence": 0.7002
     },
     {
@@ -2502,9 +2502,9 @@
       "original_query": "Search Jira for all stories in the MOBILE project",
       "paraphrased_query": "Go ahead and hunt for Jira for all stories in the MOBILE project",
       "expected_tool": "jira_search",
-      "result_tool": "jira_assign_ticket",
-      "confidence": 0.4228,
-      "correct": false,
+      "result_tool": "jira_search",
+      "confidence": 0.6543,
+      "correct": true,
       "original_confidence": 0.7002
     },
     {
@@ -2718,9 +2718,9 @@
       "original_query": "Send a Slack message to #general and also create a Jira ticket about the outage",
       "paraphrased_query": "about the outage, forward along a Slack message to #general and also create a Jira work item",
       "expected_tool": "jira_create_ticket",
-      "result_tool": "slack_send_message",
-      "confidence": 0.4263,
-      "correct": false,
+      "result_tool": "jira_create_ticket",
+      "confidence": 0.4567,
+      "correct": true,
       "original_confidence": 0.5266
     },
     {
@@ -2731,7 +2731,7 @@
       "paraphrased_query": "give back the payment for the customer and then send them a confirmation mail and update the CRM",
       "expected_tool": "stripe_refund",
       "result_tool": null,
-      "confidence": 0.2578,
+      "confidence": 0.2763,
       "correct": false,
       "original_confidence": 0.4431
     },
@@ -2754,8 +2754,8 @@
       "original_query": "Refund the customer and then send them a confirmation email and update the CRM",
       "paraphrased_query": "return the money for the customer and then send them a confirmation mail and update the CRM",
       "expected_tool": "stripe_refund",
-      "result_tool": "crm_update_contact",
-      "confidence": 0.5072,
+      "result_tool": "crm_get_contact",
+      "confidence": 0.4184,
       "correct": false,
       "original_confidence": 0.4431
     },
@@ -2802,9 +2802,9 @@
       "original_query": "Email the team at eng@acme.com, product@acme.com, and design@acme.com about the launch",
       "paraphrased_query": "mail the team at eng@acme.com, product@acme.com, and design@acme.com about the launch",
       "expected_tool": "email_send",
-      "result_tool": null,
-      "confidence": 0.3752,
-      "correct": false,
+      "result_tool": "email_send",
+      "confidence": 0.6068,
+      "correct": true,
       "original_confidence": 0.4182
     },
     {
@@ -2826,9 +2826,9 @@
       "original_query": "Email the team at eng@acme.com, product@acme.com, and design@acme.com about the launch",
       "paraphrased_query": "mail the team at eng@acme.com, product@acme.com, and design@acme.com about the launch",
       "expected_tool": "email_send",
-      "result_tool": null,
-      "confidence": 0.3752,
-      "correct": false,
+      "result_tool": "email_send",
+      "confidence": 0.6068,
+      "correct": true,
       "original_confidence": 0.4182
     },
     {
@@ -2875,7 +2875,7 @@
       "paraphrased_query": "Give sarah@acme.com read-only access to the design location",
       "expected_tool": "gdrive_share",
       "result_tool": null,
-      "confidence": 0.31,
+      "confidence": 0.3072,
       "correct": false,
       "original_confidence": 0.5095
     },
@@ -2899,7 +2899,7 @@
       "paraphrased_query": "Could you give sarah@acme.com read-only access to the design directory",
       "expected_tool": "gdrive_share",
       "result_tool": null,
-      "confidence": 0.3055,
+      "confidence": 0.3027,
       "correct": false,
       "original_confidence": 0.5095
     },
@@ -2911,7 +2911,7 @@
       "paraphrased_query": "Schedule a sync for tomorrow from 2pm to 2:30pm with bob@acme.com and carol@acme.com",
       "expected_tool": "calendar_create_event",
       "result_tool": "calendar_create_event",
-      "confidence": 0.4685,
+      "confidence": 0.6291,
       "correct": true,
       "original_confidence": 0.6712
     },
@@ -2935,7 +2935,7 @@
       "paraphrased_query": "I'd like to schedule a sync for tomorrow from 2pm to 2:30pm with bob@acme.com and carol@acme.com",
       "expected_tool": "calendar_create_event",
       "result_tool": "calendar_create_event",
-      "confidence": 0.4632,
+      "confidence": 0.6238,
       "correct": true,
       "original_confidence": 0.6712
     },
@@ -2946,9 +2946,9 @@
       "original_query": "Refund $25 of the $100 charge ch_full123",
       "paraphrased_query": "reverse the charge on $25 of the $100 charge ch_full123",
       "expected_tool": "stripe_refund",
-      "result_tool": "stripe_charge",
-      "confidence": 0.6304,
-      "correct": false,
+      "result_tool": "stripe_refund",
+      "confidence": 0.4739,
+      "correct": true,
       "original_confidence": 0.6901
     },
     {
@@ -2970,9 +2970,9 @@
       "original_query": "Refund $25 of the $100 charge ch_full123",
       "paraphrased_query": "reverse the charge on $25 of the $100 charge ch_full123",
       "expected_tool": "stripe_refund",
-      "result_tool": "stripe_charge",
-      "confidence": 0.6304,
-      "correct": false,
+      "result_tool": "stripe_refund",
+      "confidence": 0.4739,
+      "correct": true,
       "original_confidence": 0.6901
     },
     {
@@ -3018,10 +3018,10 @@
       "original_query": "Get page views grouped by week for January 2025",
       "paraphrased_query": "retrieve page views grouped by week for January 2025",
       "expected_tool": "analytics_get_metrics",
-      "result_tool": null,
-      "confidence": 0.3667,
-      "correct": false,
-      "original_confidence": 0.4029
+      "result_tool": "analytics_get_metrics",
+      "confidence": 0.5297,
+      "correct": true,
+      "original_confidence": 0.5658
     },
     {
       "query_id": "schema_08_p2",
@@ -3031,9 +3031,9 @@
       "paraphrased_query": "for January 2025, get page views grouped by week",
       "expected_tool": "analytics_get_metrics",
       "result_tool": "analytics_get_metrics",
-      "confidence": 0.4029,
+      "confidence": 0.5658,
       "correct": true,
-      "original_confidence": 0.4029
+      "original_confidence": 0.5658
     },
     {
       "query_id": "schema_08_p3",
@@ -3042,10 +3042,10 @@
       "original_query": "Get page views grouped by week for January 2025",
       "paraphrased_query": "for January 2025, retrieve page views grouped by week",
       "expected_tool": "analytics_get_metrics",
-      "result_tool": null,
-      "confidence": 0.3667,
-      "correct": false,
-      "original_confidence": 0.4029
+      "result_tool": "analytics_get_metrics",
+      "confidence": 0.5297,
+      "correct": true,
+      "original_confidence": 0.5658
     },
     {
       "query_id": "schema_09_p1",
@@ -3054,9 +3054,9 @@
       "original_query": "Search the CRM for everyone at Globex Corporation",
       "paraphrased_query": "look through the CRM for everyone at Globex Corporation",
       "expected_tool": "crm_search_contacts",
-      "result_tool": "crm_get_contact",
-      "confidence": 0.4795,
-      "correct": false,
+      "result_tool": "crm_search_contacts",
+      "confidence": 0.4813,
+      "correct": true,
       "original_confidence": 0.5407
     },
     {
@@ -3093,7 +3093,7 @@
       "result_tool": "slack_send_message",
       "confidence": 0.421,
       "correct": true,
-      "original_confidence": 0.6877
+      "original_confidence": 0.4575
     },
     {
       "query_id": "schema_10_p2",
@@ -3103,9 +3103,9 @@
       "paraphrased_query": "Please send a threaded reply in #incidents about the resolution \u2014 thread ID is 1234567890.123456",
       "expected_tool": "slack_send_message",
       "result_tool": "slack_send_message",
-      "confidence": 0.6877,
+      "confidence": 0.4575,
       "correct": true,
-      "original_confidence": 0.6877
+      "original_confidence": 0.4575
     },
     {
       "query_id": "schema_10_p3",
@@ -3117,2364 +3117,7 @@
       "result_tool": "slack_send_message",
       "confidence": 0.4037,
       "correct": true,
-      "original_confidence": 0.6877
-    }
-  ],
-  "llm_original_accuracy": 0.9014084507042254,
-  "llm_perturbed_accuracy": 0.8883495145631068,
-  "llm_original": [
-    {
-      "query_id": "clear_01",
-      "category": "clear",
-      "expected_tool": "slack_send_message",
-      "result_tool": "slack_send_message",
-      "correct": true
-    },
-    {
-      "query_id": "clear_02",
-      "category": "clear",
-      "expected_tool": "email_send",
-      "result_tool": "email_send",
-      "correct": true
-    },
-    {
-      "query_id": "clear_03",
-      "category": "clear",
-      "expected_tool": "crm_get_contact",
-      "result_tool": "crm_get_contact",
-      "correct": true
-    },
-    {
-      "query_id": "clear_04",
-      "category": "clear",
-      "expected_tool": "stripe_refund",
-      "result_tool": "stripe_refund",
-      "correct": true
-    },
-    {
-      "query_id": "clear_05",
-      "category": "clear",
-      "expected_tool": "calendar_create_event",
-      "result_tool": "calendar_create_event",
-      "correct": true
-    },
-    {
-      "query_id": "clear_06",
-      "category": "clear",
-      "expected_tool": "gdrive_upload",
-      "result_tool": "gdrive_upload",
-      "correct": true
-    },
-    {
-      "query_id": "clear_07",
-      "category": "clear",
-      "expected_tool": "jira_create_ticket",
-      "result_tool": "jira_create_ticket",
-      "correct": true
-    },
-    {
-      "query_id": "clear_08",
-      "category": "clear",
-      "expected_tool": "analytics_track_event",
-      "result_tool": "analytics_track_event",
-      "correct": true
-    },
-    {
-      "query_id": "clear_09",
-      "category": "clear",
-      "expected_tool": "slack_search_messages",
-      "result_tool": "slack_search_messages",
-      "correct": true
-    },
-    {
-      "query_id": "clear_10",
-      "category": "clear",
-      "expected_tool": "stripe_cancel_subscription",
-      "result_tool": "stripe_cancel_subscription",
-      "correct": true
-    },
-    {
-      "query_id": "clear_11",
-      "category": "clear",
-      "expected_tool": "slack_set_status",
-      "result_tool": "slack_set_status",
-      "correct": true
-    },
-    {
-      "query_id": "clear_12",
-      "category": "clear",
-      "expected_tool": "jira_search",
-      "result_tool": "jira_search",
-      "correct": true
-    },
-    {
-      "query_id": "clear_13",
-      "category": "clear",
-      "expected_tool": "analytics_get_funnel",
-      "result_tool": "analytics_get_funnel",
-      "correct": true
-    },
-    {
-      "query_id": "clear_14",
-      "category": "clear",
-      "expected_tool": "calendar_list_events",
-      "result_tool": "calendar_list_events",
-      "correct": true
-    },
-    {
-      "query_id": "clear_15",
-      "category": "clear",
-      "expected_tool": "gdrive_share",
-      "result_tool": "gdrive_share",
-      "correct": true
-    },
-    {
-      "query_id": "clear_16",
-      "category": "clear",
-      "expected_tool": "email_reply",
-      "result_tool": "email_reply",
-      "correct": true
-    },
-    {
-      "query_id": "clear_17",
-      "category": "clear",
-      "expected_tool": "jira_add_comment",
-      "result_tool": "jira_add_comment",
-      "correct": true
-    },
-    {
-      "query_id": "clear_18",
-      "category": "clear",
-      "expected_tool": "stripe_get_customer",
-      "result_tool": "stripe_get_customer",
-      "correct": true
-    },
-    {
-      "query_id": "clear_19",
-      "category": "clear",
-      "expected_tool": "crm_create_deal",
-      "result_tool": "crm_create_deal",
-      "correct": true
-    },
-    {
-      "query_id": "clear_20",
-      "category": "clear",
-      "expected_tool": "slack_send_dm",
-      "result_tool": "slack_send_dm",
-      "correct": true
-    },
-    {
-      "query_id": "coll_01",
-      "category": "near_collision",
-      "expected_tool": "slack_send_dm",
-      "result_tool": "slack_send_dm",
-      "correct": true
-    },
-    {
-      "query_id": "coll_02",
-      "category": "near_collision",
-      "expected_tool": "email_search",
-      "result_tool": "email_search",
-      "correct": true
-    },
-    {
-      "query_id": "coll_03",
-      "category": "near_collision",
-      "expected_tool": "crm_get_contact",
-      "result_tool": "stripe_get_customer",
-      "correct": false
-    },
-    {
-      "query_id": "coll_04",
-      "category": "near_collision",
-      "expected_tool": "stripe_cancel_subscription",
-      "result_tool": "stripe_cancel_subscription",
-      "correct": true
-    },
-    {
-      "query_id": "coll_05",
-      "category": "near_collision",
-      "expected_tool": "jira_assign_ticket",
-      "result_tool": "jira_assign_ticket",
-      "correct": true
-    },
-    {
-      "query_id": "coll_06",
-      "category": "near_collision",
-      "expected_tool": "slack_send_message",
-      "result_tool": "slack_send_message",
-      "correct": true
-    },
-    {
-      "query_id": "coll_07",
-      "category": "near_collision",
-      "expected_tool": "gdrive_search",
-      "result_tool": "gdrive_search",
-      "correct": true
-    },
-    {
-      "query_id": "coll_08",
-      "category": "near_collision",
-      "expected_tool": "stripe_list_invoices",
-      "result_tool": "stripe_list_invoices",
-      "correct": true
-    },
-    {
-      "query_id": "coll_09",
-      "category": "near_collision",
-      "expected_tool": "crm_create_contact",
-      "result_tool": "crm_create_contact",
-      "correct": true
-    },
-    {
-      "query_id": "coll_10",
-      "category": "near_collision",
-      "expected_tool": "email_create_draft",
-      "result_tool": "email_create_draft",
-      "correct": true
-    },
-    {
-      "query_id": "coll_11",
-      "category": "near_collision",
-      "expected_tool": "calendar_find_free_time",
-      "result_tool": "calendar_find_free_time",
-      "correct": true
-    },
-    {
-      "query_id": "coll_12",
-      "category": "near_collision",
-      "expected_tool": "stripe_charge",
-      "result_tool": "stripe_charge",
-      "correct": true
-    },
-    {
-      "query_id": "coll_13",
-      "category": "near_collision",
-      "expected_tool": "slack_list_channels",
-      "result_tool": "slack_list_channels",
-      "correct": true
-    },
-    {
-      "query_id": "coll_14",
-      "category": "near_collision",
-      "expected_tool": "analytics_identify_user",
-      "result_tool": "analytics_track_event",
-      "correct": false
-    },
-    {
-      "query_id": "coll_15",
-      "category": "near_collision",
-      "expected_tool": "calendar_delete_event",
-      "result_tool": "calendar_list_events",
-      "correct": false
-    },
-    {
-      "query_id": "coll_16",
-      "category": "near_collision",
-      "expected_tool": "crm_get_contact",
-      "result_tool": "crm_get_contact",
-      "correct": true
-    },
-    {
-      "query_id": "coll_17",
-      "category": "near_collision",
-      "expected_tool": "stripe_get_customer",
-      "result_tool": "stripe_get_customer",
-      "correct": true
-    },
-    {
-      "query_id": "coll_18",
-      "category": "near_collision",
-      "expected_tool": "crm_get_contact",
-      "result_tool": "crm_search_contacts",
-      "correct": false
-    },
-    {
-      "query_id": "coll_19",
-      "category": "near_collision",
-      "expected_tool": "stripe_get_customer",
-      "result_tool": "stripe_get_customer",
-      "correct": true
-    },
-    {
-      "query_id": "coll_20",
-      "category": "near_collision",
-      "expected_tool": "stripe_list_invoices",
-      "result_tool": "stripe_list_invoices",
-      "correct": true
-    },
-    {
-      "query_id": "coll_21",
-      "category": "near_collision",
-      "expected_tool": "crm_get_contact",
-      "result_tool": "crm_search_contacts",
-      "correct": false
-    },
-    {
-      "query_id": "coll_22",
-      "category": "near_collision",
-      "expected_tool": "analytics_identify_user",
-      "result_tool": "analytics_track_event",
-      "correct": false
-    },
-    {
-      "query_id": "coll_23",
-      "category": "near_collision",
-      "expected_tool": "analytics_track_event",
-      "result_tool": "analytics_track_event",
-      "correct": true
-    },
-    {
-      "query_id": "coll_24",
-      "category": "near_collision",
-      "expected_tool": "analytics_identify_user",
-      "result_tool": "analytics_track_event",
-      "correct": false
-    },
-    {
-      "query_id": "coll_25",
-      "category": "near_collision",
-      "expected_tool": "analytics_track_event",
-      "result_tool": "analytics_track_event",
-      "correct": true
-    },
-    {
-      "query_id": "coll_26",
-      "category": "near_collision",
-      "expected_tool": "slack_send_dm",
-      "result_tool": "slack_send_dm",
-      "correct": true
-    },
-    {
-      "query_id": "coll_27",
-      "category": "near_collision",
-      "expected_tool": "email_send",
-      "result_tool": "email_send",
-      "correct": true
-    },
-    {
-      "query_id": "coll_28",
-      "category": "near_collision",
-      "expected_tool": "slack_send_dm",
-      "result_tool": "slack_send_dm",
-      "correct": true
-    },
-    {
-      "query_id": "coll_29",
-      "category": "near_collision",
-      "expected_tool": "slack_send_message",
-      "result_tool": "slack_send_message",
-      "correct": true
-    },
-    {
-      "query_id": "coll_30",
-      "category": "near_collision",
-      "expected_tool": "stripe_list_invoices",
-      "result_tool": "stripe_list_invoices",
-      "correct": true
-    },
-    {
-      "query_id": "coll_31",
-      "category": "near_collision",
-      "expected_tool": "crm_update_contact",
-      "result_tool": "crm_update_contact",
-      "correct": true
-    },
-    {
-      "query_id": "coll_32",
-      "category": "near_collision",
-      "expected_tool": "gdrive_search",
-      "result_tool": "gdrive_search",
-      "correct": true
-    },
-    {
-      "query_id": "coll_33",
-      "category": "near_collision",
-      "expected_tool": "jira_search",
-      "result_tool": "jira_search",
-      "correct": true
-    },
-    {
-      "query_id": "coll_34",
-      "category": "near_collision",
-      "expected_tool": "jira_create_ticket",
-      "result_tool": "jira_create_ticket",
-      "correct": true
-    },
-    {
-      "query_id": "coll_35",
-      "category": "near_collision",
-      "expected_tool": "email_send",
-      "result_tool": "email_send",
-      "correct": true
-    },
-    {
-      "query_id": "adv_01",
-      "category": "adversarial",
-      "expected_tool": "stripe_refund",
-      "result_tool": "stripe_refund",
-      "correct": true
-    },
-    {
-      "query_id": "adv_02",
-      "category": "adversarial",
-      "expected_tool": "slack_send_message",
-      "result_tool": "slack_send_message",
-      "correct": true
-    },
-    {
-      "query_id": "adv_03",
-      "category": "adversarial",
-      "expected_tool": "jira_create_ticket",
-      "result_tool": "jira_create_ticket",
-      "correct": true
-    },
-    {
-      "query_id": "adv_08",
-      "category": "adversarial",
-      "expected_tool": "stripe_get_customer",
-      "result_tool": "stripe_get_customer",
-      "correct": true
-    },
-    {
-      "query_id": "adv_13",
-      "category": "adversarial",
-      "expected_tool": "jira_create_ticket",
-      "result_tool": "jira_create_ticket",
-      "correct": true
-    },
-    {
-      "query_id": "adv_14",
-      "category": "adversarial",
-      "expected_tool": "stripe_refund",
-      "result_tool": "stripe_refund",
-      "correct": true
-    },
-    {
-      "query_id": "schema_01",
-      "category": "schema_trap",
-      "expected_tool": "stripe_charge",
-      "result_tool": "stripe_charge",
-      "correct": true
-    },
-    {
-      "query_id": "schema_02",
-      "category": "schema_trap",
-      "expected_tool": "email_send",
-      "result_tool": "email_send",
-      "correct": true
-    },
-    {
-      "query_id": "schema_03",
-      "category": "schema_trap",
-      "expected_tool": "jira_create_ticket",
-      "result_tool": "jira_create_ticket",
-      "correct": true
-    },
-    {
-      "query_id": "schema_04",
-      "category": "schema_trap",
-      "expected_tool": "gdrive_share",
-      "result_tool": "gdrive_share",
-      "correct": true
-    },
-    {
-      "query_id": "schema_05",
-      "category": "schema_trap",
-      "expected_tool": "calendar_create_event",
-      "result_tool": "calendar_create_event",
-      "correct": true
-    },
-    {
-      "query_id": "schema_06",
-      "category": "schema_trap",
-      "expected_tool": "stripe_refund",
-      "result_tool": "stripe_refund",
-      "correct": true
-    },
-    {
-      "query_id": "schema_07",
-      "category": "schema_trap",
-      "expected_tool": "stripe_create_subscription",
-      "result_tool": "stripe_create_subscription",
-      "correct": true
-    },
-    {
-      "query_id": "schema_08",
-      "category": "schema_trap",
-      "expected_tool": "analytics_get_metrics",
-      "result_tool": "analytics_get_metrics",
-      "correct": true
-    },
-    {
-      "query_id": "schema_09",
-      "category": "schema_trap",
-      "expected_tool": "crm_search_contacts",
-      "result_tool": "crm_search_contacts",
-      "correct": true
-    },
-    {
-      "query_id": "schema_10",
-      "category": "schema_trap",
-      "expected_tool": "slack_send_message",
-      "result_tool": "slack_send_message",
-      "correct": true
-    }
-  ],
-  "llm_perturbed": [
-    {
-      "query_id": "clear_01_p1",
-      "original_id": "clear_01",
-      "category": "clear",
-      "paraphrased_query": "fire off a note to #engineering saying the deploy is done",
-      "expected_tool": "slack_send_message",
-      "result_tool": "slack_send_message",
-      "correct": true
-    },
-    {
-      "query_id": "clear_01_p2",
-      "original_id": "clear_01",
-      "category": "clear",
-      "paraphrased_query": "a message should be sent to #engineering saying the deploy is done",
-      "expected_tool": "slack_send_message",
-      "result_tool": "slack_send_message",
-      "correct": true
-    },
-    {
-      "query_id": "clear_01_p3",
-      "original_id": "clear_01",
-      "category": "clear",
-      "paraphrased_query": "a notification should be sent to #engineering saying the deploy is done",
-      "expected_tool": "slack_send_message",
-      "result_tool": "slack_send_message",
-      "correct": true
-    },
-    {
-      "query_id": "clear_02_p1",
-      "original_id": "clear_02",
-      "category": "clear",
-      "paraphrased_query": "mail the quarterly report to finance@acme.com with subject Q4 Results",
-      "expected_tool": "email_send",
-      "result_tool": "email_send",
-      "correct": true
-    },
-    {
-      "query_id": "clear_02_p2",
-      "original_id": "clear_02",
-      "category": "clear",
-      "paraphrased_query": "Please email the quarterly report to finance@acme.com with subject Q4 Results",
-      "expected_tool": "email_send",
-      "result_tool": "email_send",
-      "correct": true
-    },
-    {
-      "query_id": "clear_02_p3",
-      "original_id": "clear_02",
-      "category": "clear",
-      "paraphrased_query": "mail the quarterly report to finance@acme.com with subject Q4 Results",
-      "expected_tool": "email_send",
-      "result_tool": "email_send",
-      "correct": true
-    },
-    {
-      "query_id": "clear_03_p1",
-      "original_id": "clear_03",
-      "category": "clear",
-      "paraphrased_query": "Look up the contact info for sarah@bigcorp.com in the CRM",
-      "expected_tool": "crm_get_contact",
-      "result_tool": "crm_get_contact",
-      "correct": true
-    },
-    {
-      "query_id": "clear_03_p2",
-      "original_id": "clear_03",
-      "category": "clear",
-      "paraphrased_query": "I'm looking for up the contact record for sarah@bigcorp.com in the CRM",
-      "expected_tool": "crm_get_contact",
-      "result_tool": "crm_get_contact",
-      "correct": true
-    },
-    {
-      "query_id": "clear_03_p3",
-      "original_id": "clear_03",
-      "category": "clear",
-      "paraphrased_query": "I'm looking for up the contact info for sarah@bigcorp.com in the CRM",
-      "expected_tool": "crm_get_contact",
-      "result_tool": "crm_get_contact",
-      "correct": true
-    },
-    {
-      "query_id": "clear_04_p1",
-      "original_id": "clear_04",
-      "category": "clear",
-      "paraphrased_query": "return the money for charge ch_3abc123 for the full amount",
-      "expected_tool": "stripe_refund",
-      "result_tool": "stripe_refund",
-      "correct": true
-    },
-    {
-      "query_id": "clear_04_p2",
-      "original_id": "clear_04",
-      "category": "clear",
-      "paraphrased_query": "Would you mind refund charge ch_3abc123 for the full amount",
-      "expected_tool": "stripe_refund",
-      "result_tool": "stripe_refund",
-      "correct": true
-    },
-    {
-      "query_id": "clear_04_p3",
-      "original_id": "clear_04",
-      "category": "clear",
-      "paraphrased_query": "return the money for charge ch_3abc123 for the full amount",
-      "expected_tool": "stripe_refund",
-      "result_tool": "stripe_refund",
-      "correct": true
-    },
-    {
-      "query_id": "clear_05_p1",
-      "original_id": "clear_05",
-      "category": "clear",
-      "paraphrased_query": "set up a call called Sprint Planning on Monday at 10am to 11am",
-      "expected_tool": "calendar_create_event",
-      "result_tool": "calendar_create_event",
-      "correct": true
-    },
-    {
-      "query_id": "clear_05_p2",
-      "original_id": "clear_05",
-      "category": "clear",
-      "paraphrased_query": "Go ahead and create a meeting called Sprint Planning on Monday at 10am to 11am",
-      "expected_tool": "calendar_create_event",
-      "result_tool": "calendar_create_event",
-      "correct": true
-    },
-    {
-      "query_id": "clear_05_p3",
-      "original_id": "clear_05",
-      "category": "clear",
-      "paraphrased_query": "set up a session called Sprint Planning on Monday at 10am to 11am",
-      "expected_tool": "calendar_create_event",
-      "result_tool": "calendar_create_event",
-      "correct": true
-    },
-    {
-      "query_id": "clear_06_p1",
-      "original_id": "clear_06",
-      "category": "clear",
-      "paraphrased_query": "drop in the design mockup to the shared Drive location",
-      "expected_tool": "gdrive_upload",
-      "result_tool": "gdrive_upload",
-      "correct": true
-    },
-    {
-      "query_id": "clear_06_p2",
-      "original_id": "clear_06",
-      "category": "clear",
-      "paraphrased_query": "Hey, upload the design mockup to the shared Drive folder",
-      "expected_tool": "gdrive_upload",
-      "result_tool": "gdrive_upload",
-      "correct": true
-    },
-    {
-      "query_id": "clear_06_p3",
-      "original_id": "clear_06",
-      "category": "clear",
-      "paraphrased_query": "put in the design mockup to the shared Drive directory",
-      "expected_tool": "gdrive_upload",
-      "result_tool": "gdrive_upload",
-      "correct": true
-    },
-    {
-      "query_id": "clear_07_p1",
-      "original_id": "clear_07",
-      "category": "clear",
-      "paraphrased_query": "spin up a bug work item in the ENG project: login page crashes on Safari",
-      "expected_tool": "jira_create_ticket",
-      "result_tool": "jira_create_ticket",
-      "correct": true
-    },
-    {
-      "query_id": "clear_07_p2",
-      "original_id": "clear_07",
-      "category": "clear",
-      "paraphrased_query": "Could you create a bug ticket in the ENG project: login page crashes on Safari",
-      "expected_tool": "jira_create_ticket",
-      "result_tool": "jira_create_ticket",
-      "correct": true
-    },
-    {
-      "query_id": "clear_07_p3",
-      "original_id": "clear_07",
-      "category": "clear",
-      "paraphrased_query": "I'd like to spin up a bug issue in the ENG project: login page crashes on Safari",
-      "expected_tool": "jira_create_ticket",
-      "result_tool": "jira_create_ticket",
-      "correct": true
-    },
-    {
-      "query_id": "clear_08_p1",
-      "original_id": "clear_08",
-      "category": "clear",
-      "paraphrased_query": "capture a signup_completed occurrence for user u_12345",
-      "expected_tool": "analytics_track_event",
-      "result_tool": "analytics_track_event",
-      "correct": true
-    },
-    {
-      "query_id": "clear_08_p2",
-      "original_id": "clear_08",
-      "category": "clear",
-      "paraphrased_query": "for user u_12345, track a signup_completed event",
-      "expected_tool": "analytics_track_event",
-      "result_tool": "analytics_track_event",
-      "correct": true
-    },
-    {
-      "query_id": "clear_08_p3",
-      "original_id": "clear_08",
-      "category": "clear",
-      "paraphrased_query": "for user u_12345, note a signup_completed occurrence",
-      "expected_tool": "analytics_track_event",
-      "result_tool": "analytics_track_event",
-      "correct": true
-    },
-    {
-      "query_id": "clear_09_p1",
-      "original_id": "clear_09",
-      "category": "clear",
-      "paraphrased_query": "dig through Slack for messages about the outage last Friday",
-      "expected_tool": "slack_search_messages",
-      "result_tool": "slack_search_messages",
-      "correct": true
-    },
-    {
-      "query_id": "clear_09_p2",
-      "original_id": "clear_09",
-      "category": "clear",
-      "paraphrased_query": "I'd like to search Slack for messages about the outage last Friday",
-      "expected_tool": "slack_search_messages",
-      "result_tool": "slack_search_messages",
-      "correct": true
-    },
-    {
-      "query_id": "clear_09_p3",
-      "original_id": "clear_09",
-      "category": "clear",
-      "paraphrased_query": "Can you hunt for Slack for messages about the outage last Friday",
-      "expected_tool": "slack_search_messages",
-      "result_tool": "slack_search_messages",
-      "correct": true
-    },
-    {
-      "query_id": "clear_10_p1",
-      "original_id": "clear_10",
-      "category": "clear",
-      "paraphrased_query": "terminate membership sub_xyz789 at the end of the billing period",
-      "expected_tool": "stripe_cancel_subscription",
-      "result_tool": "stripe_cancel_subscription",
-      "correct": true
-    },
-    {
-      "query_id": "clear_10_p2",
-      "original_id": "clear_10",
-      "category": "clear",
-      "paraphrased_query": "Quick request: cancel subscription sub_xyz789 at the end of the billing period",
-      "expected_tool": "stripe_cancel_subscription",
-      "result_tool": "stripe_cancel_subscription",
-      "correct": true
-    },
-    {
-      "query_id": "clear_10_p3",
-      "original_id": "clear_10",
-      "category": "clear",
-      "paraphrased_query": "discontinue membership sub_xyz789 at the end of the billing period",
-      "expected_tool": "stripe_cancel_subscription",
-      "result_tool": "stripe_cancel_subscription",
-      "correct": true
-    },
-    {
-      "query_id": "clear_11_p1",
-      "original_id": "clear_11",
-      "category": "clear",
-      "paraphrased_query": "change to my Slack status to 'In a meeting' with the :calendar: emoji",
-      "expected_tool": "slack_set_status",
-      "result_tool": "slack_set_status",
-      "correct": true
-    },
-    {
-      "query_id": "clear_11_p2",
-      "original_id": "clear_11",
-      "category": "clear",
-      "paraphrased_query": "I need you to set my Slack status to 'In a meeting' with the :calendar: emoji",
-      "expected_tool": "slack_set_status",
-      "result_tool": "slack_set_status",
-      "correct": true
-    },
-    {
-      "query_id": "clear_11_p3",
-      "original_id": "clear_11",
-      "category": "clear",
-      "paraphrased_query": "configure my Slack status to 'In a meeting' with the :calendar: emoji",
-      "expected_tool": "slack_set_status",
-      "result_tool": "slack_set_status",
-      "correct": true
-    },
-    {
-      "query_id": "clear_12_p1",
-      "original_id": "clear_12",
-      "category": "clear",
-      "paraphrased_query": "track down all open bugs assigned to me in Jira",
-      "expected_tool": "jira_search",
-      "result_tool": "jira_search",
-      "correct": true
-    },
-    {
-      "query_id": "clear_12_p2",
-      "original_id": "clear_12",
-      "category": "clear",
-      "paraphrased_query": "I need you to find all open bugs assigned to me in Jira",
-      "expected_tool": "jira_search",
-      "result_tool": "jira_search",
-      "correct": true
-    },
-    {
-      "query_id": "clear_12_p3",
-      "original_id": "clear_12",
-      "category": "clear",
-      "paraphrased_query": "Go ahead and locate all open bugs assigned to me in Jira",
-      "expected_tool": "jira_search",
-      "result_tool": "jira_search",
-      "correct": true
-    },
-    {
-      "query_id": "clear_13_p1",
-      "original_id": "clear_13",
-      "category": "clear",
-      "paraphrased_query": "give me me the conversion pipeline from page_view to signup to purchase this month",
-      "expected_tool": "analytics_get_funnel",
-      "result_tool": "analytics_get_funnel",
-      "correct": true
-    },
-    {
-      "query_id": "clear_13_p2",
-      "original_id": "clear_13",
-      "category": "clear",
-      "paraphrased_query": "Could you show me the conversion funnel from page_view to signup to purchase this month",
-      "expected_tool": "analytics_get_funnel",
-      "result_tool": "analytics_get_funnel",
-      "correct": true
-    },
-    {
-      "query_id": "clear_13_p3",
-      "original_id": "clear_13",
-      "category": "clear",
-      "paraphrased_query": "Please present me the conversion pipeline from page_view to signup to purchase this month",
-      "expected_tool": "analytics_get_funnel",
-      "result_tool": "analytics_get_funnel",
-      "correct": true
-    },
-    {
-      "query_id": "clear_14_p1",
-      "original_id": "clear_14",
-      "category": "clear",
-      "paraphrased_query": "display all my upcoming calendar events for next week",
-      "expected_tool": "calendar_list_events",
-      "result_tool": "calendar_list_events",
-      "correct": true
-    },
-    {
-      "query_id": "clear_14_p2",
-      "original_id": "clear_14",
-      "category": "clear",
-      "paraphrased_query": "I'd like to list all my upcoming calendar events for next week",
-      "expected_tool": "calendar_list_events",
-      "result_tool": "calendar_list_events",
-      "correct": true
-    },
-    {
-      "query_id": "clear_14_p3",
-      "original_id": "clear_14",
-      "category": "clear",
-      "paraphrased_query": "show all all my upcoming calendar events for next week",
-      "expected_tool": "calendar_list_events",
-      "result_tool": "calendar_list_events",
-      "correct": true
-    },
-    {
-      "query_id": "clear_15_p1",
-      "original_id": "clear_15",
-      "category": "clear",
-      "paraphrased_query": "let someone see the Q4 budget spreadsheet with maria@acme.com as an editor",
-      "expected_tool": "gdrive_share",
-      "result_tool": "gdrive_share",
-      "correct": true
-    },
-    {
-      "query_id": "clear_15_p2",
-      "original_id": "clear_15",
-      "category": "clear",
-      "paraphrased_query": "Please share the Q4 budget spreadsheet with maria@acme.com as an editor",
-      "expected_tool": "gdrive_share",
-      "result_tool": "gdrive_share",
-      "correct": true
-    },
-    {
-      "query_id": "clear_15_p3",
-      "original_id": "clear_15",
-      "category": "clear",
-      "paraphrased_query": "let someone see the Q4 budget spreadsheet with maria@acme.com as an editor",
-      "expected_tool": "gdrive_share",
-      "result_tool": "gdrive_share",
-      "correct": true
-    },
-    {
-      "query_id": "clear_16_p1",
-      "original_id": "clear_16",
-      "category": "clear",
-      "paraphrased_query": "write back to to the mail from Jake about the contract \u2014 tell him we accept the terms",
-      "expected_tool": "email_reply",
-      "result_tool": "email_reply",
-      "correct": true
-    },
-    {
-      "query_id": "clear_16_p2",
-      "original_id": "clear_16",
-      "category": "clear",
-      "paraphrased_query": "about the contract \u2014 tell him we accept the terms, reply to the email from Jake",
-      "expected_tool": "email_reply",
-      "result_tool": "email_reply",
-      "correct": true
-    },
-    {
-      "query_id": "clear_16_p3",
-      "original_id": "clear_16",
-      "category": "clear",
-      "paraphrased_query": "about the contract \u2014 tell him we accept the terms, reply to the email message from Jake",
-      "expected_tool": "email_reply",
-      "result_tool": "email_reply",
-      "correct": true
-    },
-    {
-      "query_id": "clear_17_p1",
-      "original_id": "clear_17",
-      "category": "clear",
-      "paraphrased_query": "post a remark on ENG-4521 saying the fix is deployed to production",
-      "expected_tool": "jira_add_comment",
-      "result_tool": "jira_add_comment",
-      "correct": true
-    },
-    {
-      "query_id": "clear_17_p2",
-      "original_id": "clear_17",
-      "category": "clear",
-      "paraphrased_query": "Quick request: add a comment on ENG-4521 saying the fix is deployed to production",
-      "expected_tool": "jira_add_comment",
-      "result_tool": "jira_add_comment",
-      "correct": true
-    },
-    {
-      "query_id": "clear_17_p3",
-      "original_id": "clear_17",
-      "category": "clear",
-      "paraphrased_query": "leave a response on ENG-4521 saying the fix is deployed to production",
-      "expected_tool": "jira_add_comment",
-      "result_tool": "jira_add_comment",
-      "correct": true
-    },
-    {
-      "query_id": "clear_18_p1",
-      "original_id": "clear_18",
-      "category": "clear",
-      "paraphrased_query": "retrieve the Stripe customer entry for cus_abc123",
-      "expected_tool": "stripe_get_customer",
-      "result_tool": "stripe_get_customer",
-      "correct": true
-    },
-    {
-      "query_id": "clear_18_p2",
-      "original_id": "clear_18",
-      "category": "clear",
-      "paraphrased_query": "for cus_abc123, get the Stripe customer record",
-      "expected_tool": "stripe_get_customer",
-      "result_tool": "stripe_get_customer",
-      "correct": true
-    },
-    {
-      "query_id": "clear_18_p3",
-      "original_id": "clear_18",
-      "category": "clear",
-      "paraphrased_query": "for cus_abc123, grab the Stripe customer profile",
-      "expected_tool": "stripe_get_customer",
-      "result_tool": "stripe_get_customer",
-      "correct": true
-    },
-    {
-      "query_id": "clear_19_p1",
-      "original_id": "clear_19",
-      "category": "clear",
-      "paraphrased_query": "make a new CRM deal called 'Acme Enterprise' worth $50,000 for entry con_789",
-      "expected_tool": "crm_create_deal",
-      "result_tool": "crm_create_deal",
-      "correct": true
-    },
-    {
-      "query_id": "clear_19_p2",
-      "original_id": "clear_19",
-      "category": "clear",
-      "paraphrased_query": "for contact con_789, create a new CRM deal called 'Acme Enterprise' worth $50,000",
-      "expected_tool": "crm_create_deal",
-      "result_tool": "crm_create_deal",
-      "correct": true
-    },
-    {
-      "query_id": "clear_19_p3",
-      "original_id": "clear_19",
-      "category": "clear",
-      "paraphrased_query": "for individual con_789, spin up a new CRM deal called 'Acme Enterprise' worth $50,000",
-      "expected_tool": "crm_create_deal",
-      "result_tool": "crm_create_deal",
-      "correct": true
-    },
-    {
-      "query_id": "clear_20_p1",
-      "original_id": "clear_20",
-      "category": "clear",
-      "paraphrased_query": "Could you dM alice@acme.com on Slack and ask if she's free for a sync",
-      "expected_tool": "slack_send_dm",
-      "result_tool": "slack_send_dm",
-      "correct": true
-    },
-    {
-      "query_id": "clear_20_p2",
-      "original_id": "clear_20",
-      "category": "clear",
-      "paraphrased_query": "Go ahead and dM alice@acme.com on Slack and ask if she's free for a sync",
-      "expected_tool": "slack_send_dm",
-      "result_tool": "slack_send_dm",
-      "correct": true
-    },
-    {
-      "query_id": "coll_01_p1",
-      "original_id": "coll_01",
-      "category": "near_collision",
-      "paraphrased_query": "forward along a notification to alice@acme.com about the project update",
-      "expected_tool": "slack_send_dm",
-      "result_tool": "email_send",
-      "correct": false
-    },
-    {
-      "query_id": "coll_01_p2",
-      "original_id": "coll_01",
-      "category": "near_collision",
-      "paraphrased_query": "a message should be sent to alice@acme.com about the project update",
-      "expected_tool": "slack_send_dm",
-      "result_tool": "slack_send_dm",
-      "correct": true
-    },
-    {
-      "query_id": "coll_01_p3",
-      "original_id": "coll_01",
-      "category": "near_collision",
-      "paraphrased_query": "a notification should be sent to alice@acme.com about the project update",
-      "expected_tool": "slack_send_dm",
-      "result_tool": "slack_send_dm",
-      "correct": true
-    },
-    {
-      "query_id": "coll_02_p1",
-      "original_id": "coll_02",
-      "category": "near_collision",
-      "paraphrased_query": "scan for the invoice email message from Stripe",
-      "expected_tool": "email_search",
-      "result_tool": "email_search",
-      "correct": true
-    },
-    {
-      "query_id": "coll_02_p2",
-      "original_id": "coll_02",
-      "category": "near_collision",
-      "paraphrased_query": "for the invoice email from Stripe, search",
-      "expected_tool": "email_search",
-      "result_tool": "stripe_list_invoices",
-      "correct": false
-    },
-    {
-      "query_id": "coll_02_p3",
-      "original_id": "coll_02",
-      "category": "near_collision",
-      "paraphrased_query": "for the invoice mail from Stripe, search",
-      "expected_tool": "email_search",
-      "result_tool": "stripe_list_invoices",
-      "correct": false
-    },
-    {
-      "query_id": "coll_03_p1",
-      "original_id": "coll_03",
-      "category": "near_collision",
-      "paraphrased_query": "look up the customer info for bob@startup.io",
-      "expected_tool": "crm_get_contact",
-      "result_tool": "crm_get_contact",
-      "correct": true
-    },
-    {
-      "query_id": "coll_03_p2",
-      "original_id": "coll_03",
-      "category": "near_collision",
-      "paraphrased_query": "I'm looking for the customer record for bob@startup.io",
-      "expected_tool": "crm_get_contact",
-      "result_tool": "crm_get_contact",
-      "correct": true
-    },
-    {
-      "query_id": "coll_03_p3",
-      "original_id": "coll_03",
-      "category": "near_collision",
-      "paraphrased_query": "I'm looking for the customer profile for bob@startup.io",
-      "expected_tool": "crm_get_contact",
-      "result_tool": "crm_get_contact",
-      "correct": true
-    },
-    {
-      "query_id": "coll_04_p1",
-      "original_id": "coll_04",
-      "category": "near_collision",
-      "paraphrased_query": "stop the subscription for customer cus_abc and let them know by email message",
-      "expected_tool": "stripe_cancel_subscription",
-      "result_tool": "stripe_cancel_subscription",
-      "correct": true
-    },
-    {
-      "query_id": "coll_04_p2",
-      "original_id": "coll_04",
-      "category": "near_collision",
-      "paraphrased_query": "for customer cus_abc and let them know by email, cancel the subscription",
-      "expected_tool": "stripe_cancel_subscription",
-      "result_tool": "stripe_cancel_subscription",
-      "correct": true
-    },
-    {
-      "query_id": "coll_04_p3",
-      "original_id": "coll_04",
-      "category": "near_collision",
-      "paraphrased_query": "for customer cus_abc and let them know by email, cancel the plan",
-      "expected_tool": "stripe_cancel_subscription",
-      "result_tool": "stripe_cancel_subscription",
-      "correct": true
-    },
-    {
-      "query_id": "coll_05_p1",
-      "original_id": "coll_05",
-      "category": "near_collision",
-      "paraphrased_query": "change the issue ENG-100 to assign it to dave@acme.com",
-      "expected_tool": "jira_assign_ticket",
-      "result_tool": "jira_assign_ticket",
-      "correct": true
-    },
-    {
-      "query_id": "coll_05_p2",
-      "original_id": "coll_05",
-      "category": "near_collision",
-      "paraphrased_query": "I need you to update the ticket ENG-100 to assign it to dave@acme.com",
-      "expected_tool": "jira_assign_ticket",
-      "result_tool": "jira_assign_ticket",
-      "correct": true
-    },
-    {
-      "query_id": "coll_05_p3",
-      "original_id": "coll_05",
-      "category": "near_collision",
-      "paraphrased_query": "adjust the work item ENG-100 to assign it to dave@acme.com",
-      "expected_tool": "jira_assign_ticket",
-      "result_tool": "jira_assign_ticket",
-      "correct": true
-    },
-    {
-      "query_id": "coll_06_p1",
-      "original_id": "coll_06",
-      "category": "near_collision",
-      "paraphrased_query": "drop in #general that the new feature is live",
-      "expected_tool": "slack_send_message",
-      "result_tool": "slack_send_message",
-      "correct": true
-    },
-    {
-      "query_id": "coll_06_p2",
-      "original_id": "coll_06",
-      "category": "near_collision",
-      "paraphrased_query": "Would you mind post in #general that the new feature is live",
-      "expected_tool": "slack_send_message",
-      "result_tool": "slack_send_message",
-      "correct": true
-    },
-    {
-      "query_id": "coll_06_p3",
-      "original_id": "coll_06",
-      "category": "near_collision",
-      "paraphrased_query": "send in #general that the new feature is live",
-      "expected_tool": "slack_send_message",
-      "result_tool": "slack_send_message",
-      "correct": true
-    },
-    {
-      "query_id": "coll_07_p1",
-      "original_id": "coll_07",
-      "category": "near_collision",
-      "paraphrased_query": "hunt for for files about the Q3 roadmap",
-      "expected_tool": "gdrive_search",
-      "result_tool": "gdrive_search",
-      "correct": true
-    },
-    {
-      "query_id": "coll_07_p2",
-      "original_id": "coll_07",
-      "category": "near_collision",
-      "paraphrased_query": "Hey, search for files about the Q3 roadmap",
-      "expected_tool": "gdrive_search",
-      "result_tool": "gdrive_search",
-      "correct": true
-    },
-    {
-      "query_id": "coll_07_p3",
-      "original_id": "coll_07",
-      "category": "near_collision",
-      "paraphrased_query": "Quick request: dig through for files about the Q3 roadmap",
-      "expected_tool": "gdrive_search",
-      "result_tool": "gdrive_search",
-      "correct": true
-    },
-    {
-      "query_id": "coll_08_p1",
-      "original_id": "coll_08",
-      "category": "near_collision",
-      "paraphrased_query": "grab the payment history for client cus_xyz",
-      "expected_tool": "stripe_list_invoices",
-      "result_tool": "stripe_list_invoices",
-      "correct": true
-    },
-    {
-      "query_id": "coll_08_p2",
-      "original_id": "coll_08",
-      "category": "near_collision",
-      "paraphrased_query": "Quick request: get the payment history for customer cus_xyz",
-      "expected_tool": "stripe_list_invoices",
-      "result_tool": "stripe_list_invoices",
-      "correct": true
-    },
-    {
-      "query_id": "coll_08_p3",
-      "original_id": "coll_08",
-      "category": "near_collision",
-      "paraphrased_query": "retrieve the payment history for account holder cus_xyz",
-      "expected_tool": "stripe_list_invoices",
-      "result_tool": "stripe_list_invoices",
-      "correct": true
-    },
-    {
-      "query_id": "coll_09_p1",
-      "original_id": "coll_09",
-      "category": "near_collision",
-      "paraphrased_query": "set up a new contact for Jamie Lee at Globex Corp, email message jamie@globex.com",
-      "expected_tool": "crm_create_contact",
-      "result_tool": "crm_create_contact",
-      "correct": true
-    },
-    {
-      "query_id": "coll_09_p2",
-      "original_id": "coll_09",
-      "category": "near_collision",
-      "paraphrased_query": "Please create a new contact for Jamie Lee at Globex Corp, email jamie@globex.com",
-      "expected_tool": "crm_create_contact",
-      "result_tool": "crm_create_contact",
-      "correct": true
-    },
-    {
-      "query_id": "coll_09_p3",
-      "original_id": "coll_09",
-      "category": "near_collision",
-      "paraphrased_query": "Hey, set up a new contact for Jamie Lee at Globex Corp, email message jamie@globex.com",
-      "expected_tool": "crm_create_contact",
-      "result_tool": "crm_create_contact",
-      "correct": true
-    },
-    {
-      "query_id": "coll_10_p1",
-      "original_id": "coll_10",
-      "category": "near_collision",
-      "paraphrased_query": "write up an mail to the team about the upcoming release but don't send it yet",
-      "expected_tool": "email_create_draft",
-      "result_tool": "email_create_draft",
-      "correct": true
-    },
-    {
-      "query_id": "coll_10_p2",
-      "original_id": "coll_10",
-      "category": "near_collision",
-      "paraphrased_query": "I'd like to draft an email to the team about the upcoming release but don't send it yet",
-      "expected_tool": "email_create_draft",
-      "result_tool": "email_create_draft",
-      "correct": true
-    },
-    {
-      "query_id": "coll_10_p3",
-      "original_id": "coll_10",
-      "category": "near_collision",
-      "paraphrased_query": "write up an mail to the team about the upcoming release but don't send it yet",
-      "expected_tool": "email_create_draft",
-      "result_tool": "email_create_draft",
-      "correct": true
-    },
-    {
-      "query_id": "coll_11_p1",
-      "original_id": "coll_11",
-      "category": "near_collision",
-      "paraphrased_query": "look up a time that works for me and sarah@acme.com for a 30-minute call next week",
-      "expected_tool": "calendar_find_free_time",
-      "result_tool": "calendar_find_free_time",
-      "correct": true
-    },
-    {
-      "query_id": "coll_11_p2",
-      "original_id": "coll_11",
-      "category": "near_collision",
-      "paraphrased_query": "for me and sarah@acme, find a time that workscom for a 30-minute call next week",
-      "expected_tool": "calendar_find_free_time",
-      "result_tool": "calendar_find_free_time",
-      "correct": true
-    },
-    {
-      "query_id": "coll_11_p3",
-      "original_id": "coll_11",
-      "category": "near_collision",
-      "paraphrased_query": "for me and sarah@acme, locate a time that workscom for a 30-minute call next week",
-      "expected_tool": "calendar_find_free_time",
-      "result_tool": "calendar_find_free_time",
-      "correct": true
-    },
-    {
-      "query_id": "coll_12_p1",
-      "original_id": "coll_12",
-      "category": "near_collision",
-      "paraphrased_query": "collect from the account holder cus_999 fifty dollars for the overage",
-      "expected_tool": "stripe_charge",
-      "result_tool": "stripe_charge",
-      "correct": true
-    },
-    {
-      "query_id": "coll_12_p2",
-      "original_id": "coll_12",
-      "category": "near_collision",
-      "paraphrased_query": "Can you charge the customer cus_999 fifty dollars for the overage",
-      "expected_tool": "stripe_charge",
-      "result_tool": "stripe_charge",
-      "correct": true
-    },
-    {
-      "query_id": "coll_12_p3",
-      "original_id": "coll_12",
-      "category": "near_collision",
-      "paraphrased_query": "I need you to invoice the account holder cus_999 fifty dollars for the overage",
-      "expected_tool": "stripe_charge",
-      "result_tool": "stripe_charge",
-      "correct": true
-    },
-    {
-      "query_id": "coll_13_p1",
-      "original_id": "coll_13",
-      "category": "near_collision",
-      "paraphrased_query": "Can you look up what channels are available in our Slack workspace",
-      "expected_tool": "slack_list_channels",
-      "result_tool": "slack_list_channels",
-      "correct": true
-    },
-    {
-      "query_id": "coll_13_p2",
-      "original_id": "coll_13",
-      "category": "near_collision",
-      "paraphrased_query": "Go ahead and look up what channels are available in our Slack workspace",
-      "expected_tool": "slack_list_channels",
-      "result_tool": "slack_list_channels",
-      "correct": true
-    },
-    {
-      "query_id": "coll_14_p1",
-      "original_id": "coll_14",
-      "category": "near_collision",
-      "paraphrased_query": "record that user u_555 just upgraded to the pro plan",
-      "expected_tool": "analytics_identify_user",
-      "result_tool": "analytics_identify_user",
-      "correct": true
-    },
-    {
-      "query_id": "coll_14_p2",
-      "original_id": "coll_14",
-      "category": "near_collision",
-      "paraphrased_query": "Hey, log that user u_555 just upgraded to the pro plan",
-      "expected_tool": "analytics_identify_user",
-      "result_tool": "analytics_track_event",
-      "correct": false
-    },
-    {
-      "query_id": "coll_14_p3",
-      "original_id": "coll_14",
-      "category": "near_collision",
-      "paraphrased_query": "record that user u_555 just upgraded to the pro plan",
-      "expected_tool": "analytics_identify_user",
-      "result_tool": "analytics_identify_user",
-      "correct": true
-    },
-    {
-      "query_id": "coll_15_p1",
-      "original_id": "coll_15",
-      "category": "near_collision",
-      "paraphrased_query": "Remove the standup session from my calendar for tomorrow",
-      "expected_tool": "calendar_delete_event",
-      "result_tool": "calendar_list_events",
-      "correct": false
-    },
-    {
-      "query_id": "coll_15_p2",
-      "original_id": "coll_15",
-      "category": "near_collision",
-      "paraphrased_query": "for tomorrow, remove the standup meeting from my calendar",
-      "expected_tool": "calendar_delete_event",
-      "result_tool": "calendar_list_events",
-      "correct": false
-    },
-    {
-      "query_id": "coll_15_p3",
-      "original_id": "coll_15",
-      "category": "near_collision",
-      "paraphrased_query": "for tomorrow, remove the standup call from my calendar",
-      "expected_tool": "calendar_delete_event",
-      "result_tool": "calendar_list_events",
-      "correct": false
-    },
-    {
-      "query_id": "coll_16_p1",
-      "original_id": "coll_16",
-      "category": "near_collision",
-      "paraphrased_query": "Pull up the customer info for lisa@bigcorp.com",
-      "expected_tool": "crm_get_contact",
-      "result_tool": "crm_get_contact",
-      "correct": true
-    },
-    {
-      "query_id": "coll_16_p2",
-      "original_id": "coll_16",
-      "category": "near_collision",
-      "paraphrased_query": "Quick request: pull up the customer record for lisa@bigcorp.com",
-      "expected_tool": "crm_get_contact",
-      "result_tool": "crm_get_contact",
-      "correct": true
-    },
-    {
-      "query_id": "coll_16_p3",
-      "original_id": "coll_16",
-      "category": "near_collision",
-      "paraphrased_query": "Please pull up the customer profile for lisa@bigcorp.com",
-      "expected_tool": "crm_get_contact",
-      "result_tool": "crm_get_contact",
-      "correct": true
-    },
-    {
-      "query_id": "coll_17_p1",
-      "original_id": "coll_17",
-      "category": "near_collision",
-      "paraphrased_query": "I need the customer info for cus_abc from Stripe",
-      "expected_tool": "stripe_get_customer",
-      "result_tool": "stripe_get_customer",
-      "correct": true
-    },
-    {
-      "query_id": "coll_17_p2",
-      "original_id": "coll_17",
-      "category": "near_collision",
-      "paraphrased_query": "Would you mind i need the customer record for cus_abc from Stripe",
-      "expected_tool": "stripe_get_customer",
-      "result_tool": "stripe_get_customer",
-      "correct": true
-    },
-    {
-      "query_id": "coll_17_p3",
-      "original_id": "coll_17",
-      "category": "near_collision",
-      "paraphrased_query": "I need the customer entry for cus_abc from Stripe",
-      "expected_tool": "stripe_get_customer",
-      "result_tool": "stripe_get_customer",
-      "correct": true
-    },
-    {
-      "query_id": "coll_18_p1",
-      "original_id": "coll_18",
-      "category": "near_collision",
-      "paraphrased_query": "pull up me the account holder details for someone at Acme Corp",
-      "expected_tool": "crm_get_contact",
-      "result_tool": "crm_search_contacts",
-      "correct": false
-    },
-    {
-      "query_id": "coll_18_p2",
-      "original_id": "coll_18",
-      "category": "near_collision",
-      "paraphrased_query": "Could you show me the customer details for someone at Acme Corp",
-      "expected_tool": "crm_get_contact",
-      "result_tool": "crm_search_contacts",
-      "correct": false
-    },
-    {
-      "query_id": "coll_18_p3",
-      "original_id": "coll_18",
-      "category": "near_collision",
-      "paraphrased_query": "Hey, give me me the client details for someone at Acme Corp",
-      "expected_tool": "crm_get_contact",
-      "result_tool": "crm_search_contacts",
-      "correct": false
-    },
-    {
-      "query_id": "coll_19_p1",
-      "original_id": "coll_19",
-      "category": "near_collision",
-      "paraphrased_query": "fetch the billing record for client cus_xyz999",
-      "expected_tool": "stripe_get_customer",
-      "result_tool": "stripe_get_customer",
-      "correct": true
-    },
-    {
-      "query_id": "coll_19_p2",
-      "original_id": "coll_19",
-      "category": "near_collision",
-      "paraphrased_query": "for customer cus_xyz999, get the billing record",
-      "expected_tool": "stripe_get_customer",
-      "result_tool": "stripe_list_invoices",
-      "correct": false
-    },
-    {
-      "query_id": "coll_19_p3",
-      "original_id": "coll_19",
-      "category": "near_collision",
-      "paraphrased_query": "for customer cus_xyz999, retrieve the billing entry",
-      "expected_tool": "stripe_get_customer",
-      "result_tool": "stripe_list_invoices",
-      "correct": false
-    },
-    {
-      "query_id": "coll_20_p1",
-      "original_id": "coll_20",
-      "category": "near_collision",
-      "paraphrased_query": "I'm looking for up the payment history for our enterprise client",
-      "expected_tool": "stripe_list_invoices",
-      "result_tool": "stripe_list_invoices",
-      "correct": true
-    },
-    {
-      "query_id": "coll_20_p2",
-      "original_id": "coll_20",
-      "category": "near_collision",
-      "paraphrased_query": "I'm looking for up the payment history for our enterprise client",
-      "expected_tool": "stripe_list_invoices",
-      "result_tool": "stripe_list_invoices",
-      "correct": true
-    },
-    {
-      "query_id": "coll_21_p1",
-      "original_id": "coll_21",
-      "category": "near_collision",
-      "paraphrased_query": "track down the individual info for the Globex account",
-      "expected_tool": "crm_get_contact",
-      "result_tool": "crm_search_contacts",
-      "correct": false
-    },
-    {
-      "query_id": "coll_21_p2",
-      "original_id": "coll_21",
-      "category": "near_collision",
-      "paraphrased_query": "for the Globex account, find the contact info",
-      "expected_tool": "crm_get_contact",
-      "result_tool": "crm_search_contacts",
-      "correct": false
-    },
-    {
-      "query_id": "coll_21_p3",
-      "original_id": "coll_21",
-      "category": "near_collision",
-      "paraphrased_query": "for the Globex account, locate the person info",
-      "expected_tool": "crm_get_contact",
-      "result_tool": "crm_search_contacts",
-      "correct": false
-    },
-    {
-      "query_id": "coll_22_p1",
-      "original_id": "coll_22",
-      "category": "near_collision",
-      "paraphrased_query": "record that user u_900 switched from free to premium",
-      "expected_tool": "analytics_identify_user",
-      "result_tool": "analytics_track_event",
-      "correct": false
-    },
-    {
-      "query_id": "coll_22_p2",
-      "original_id": "coll_22",
-      "category": "near_collision",
-      "paraphrased_query": "I need you to log that user u_900 switched from free to premium",
-      "expected_tool": "analytics_identify_user",
-      "result_tool": "analytics_track_event",
-      "correct": false
-    },
-    {
-      "query_id": "coll_22_p3",
-      "original_id": "coll_22",
-      "category": "near_collision",
-      "paraphrased_query": "record that user u_900 switched from free to premium",
-      "expected_tool": "analytics_identify_user",
-      "result_tool": "analytics_track_event",
-      "correct": false
-    },
-    {
-      "query_id": "coll_23_p1",
-      "original_id": "coll_23",
-      "category": "near_collision",
-      "paraphrased_query": "Record a checkout_completed activity for user u_900",
-      "expected_tool": "analytics_track_event",
-      "result_tool": "analytics_track_event",
-      "correct": true
-    },
-    {
-      "query_id": "coll_23_p2",
-      "original_id": "coll_23",
-      "category": "near_collision",
-      "paraphrased_query": "for user u_900, record a checkout_completed event",
-      "expected_tool": "analytics_track_event",
-      "result_tool": "analytics_track_event",
-      "correct": true
-    },
-    {
-      "query_id": "coll_23_p3",
-      "original_id": "coll_23",
-      "category": "near_collision",
-      "paraphrased_query": "for user u_900, record a checkout_completed occurrence",
-      "expected_tool": "analytics_track_event",
-      "result_tool": "analytics_track_event",
-      "correct": true
-    },
-    {
-      "query_id": "coll_24_p1",
-      "original_id": "coll_24",
-      "category": "near_collision",
-      "paraphrased_query": "capture that user u_321 changed their email message to new@acme.com",
-      "expected_tool": "analytics_identify_user",
-      "result_tool": "crm_update_contact",
-      "correct": false
-    },
-    {
-      "query_id": "coll_24_p2",
-      "original_id": "coll_24",
-      "category": "near_collision",
-      "paraphrased_query": "Quick request: log that user u_321 changed their email to new@acme.com",
-      "expected_tool": "analytics_identify_user",
-      "result_tool": null,
-      "correct": false
-    },
-    {
-      "query_id": "coll_24_p3",
-      "original_id": "coll_24",
-      "category": "near_collision",
-      "paraphrased_query": "note that user u_321 changed their email message to new@acme.com",
-      "expected_tool": "analytics_identify_user",
-      "result_tool": "slack_send_dm",
-      "correct": false
-    },
-    {
-      "query_id": "coll_25_p1",
-      "original_id": "coll_25",
-      "category": "near_collision",
-      "paraphrased_query": "register the button_click activity on the pricing page",
-      "expected_tool": "analytics_track_event",
-      "result_tool": "analytics_track_event",
-      "correct": true
-    },
-    {
-      "query_id": "coll_25_p2",
-      "original_id": "coll_25",
-      "category": "near_collision",
-      "paraphrased_query": "Go ahead and track the button_click event on the pricing page",
-      "expected_tool": "analytics_track_event",
-      "result_tool": "analytics_track_event",
-      "correct": true
-    },
-    {
-      "query_id": "coll_25_p3",
-      "original_id": "coll_25",
-      "category": "near_collision",
-      "paraphrased_query": "I need you to log the button_click activity on the pricing page",
-      "expected_tool": "analytics_track_event",
-      "result_tool": "analytics_track_event",
-      "correct": true
-    },
-    {
-      "query_id": "coll_26_p1",
-      "original_id": "coll_26",
-      "category": "near_collision",
-      "paraphrased_query": "notification Alice on Slack about the deadline",
-      "expected_tool": "slack_send_dm",
-      "result_tool": "slack_send_dm",
-      "correct": true
-    },
-    {
-      "query_id": "coll_26_p2",
-      "original_id": "coll_26",
-      "category": "near_collision",
-      "paraphrased_query": "Would you mind message Alice on Slack about the deadline",
-      "expected_tool": "slack_send_dm",
-      "result_tool": "slack_send_dm",
-      "correct": true
-    },
-    {
-      "query_id": "coll_26_p3",
-      "original_id": "coll_26",
-      "category": "near_collision",
-      "paraphrased_query": "Hey, ping Alice on Slack about the deadline",
-      "expected_tool": "slack_send_dm",
-      "result_tool": "slack_send_dm",
-      "correct": true
-    },
-    {
-      "query_id": "coll_27_p1",
-      "original_id": "coll_27",
-      "category": "near_collision",
-      "paraphrased_query": "fire off Alice an mail about the deadline",
-      "expected_tool": "email_send",
-      "result_tool": "email_send",
-      "correct": true
-    },
-    {
-      "query_id": "coll_27_p2",
-      "original_id": "coll_27",
-      "category": "near_collision",
-      "paraphrased_query": "about the deadline, send Alice an email",
-      "expected_tool": "email_send",
-      "result_tool": "email_send",
-      "correct": true
-    },
-    {
-      "query_id": "coll_27_p3",
-      "original_id": "coll_27",
-      "category": "near_collision",
-      "paraphrased_query": "about the deadline, forward along Alice an email message",
-      "expected_tool": "email_send",
-      "result_tool": "email_reply",
-      "correct": false
-    },
-    {
-      "query_id": "coll_28_p1",
-      "original_id": "coll_28",
-      "category": "near_collision",
-      "paraphrased_query": "Ping bob@acme.com about the standup \u2014 just a quick Slack note",
-      "expected_tool": "slack_send_dm",
-      "result_tool": "slack_send_dm",
-      "correct": true
-    },
-    {
-      "query_id": "coll_28_p2",
-      "original_id": "coll_28",
-      "category": "near_collision",
-      "paraphrased_query": "about the standup \u2014 just a quick Slack message, ping bob@acme.com",
-      "expected_tool": "slack_send_dm",
-      "result_tool": "slack_send_dm",
-      "correct": true
-    },
-    {
-      "query_id": "coll_28_p3",
-      "original_id": "coll_28",
-      "category": "near_collision",
-      "paraphrased_query": "about the standup \u2014 just a quick Slack message, ping bob@acme.com",
-      "expected_tool": "slack_send_dm",
-      "result_tool": "slack_send_dm",
-      "correct": true
-    },
-    {
-      "query_id": "coll_29_p1",
-      "original_id": "coll_29",
-      "category": "near_collision",
-      "paraphrased_query": "Quick request: notify the team in #releases that v2.0 shipped",
-      "expected_tool": "slack_send_message",
-      "result_tool": "slack_send_message",
-      "correct": true
-    },
-    {
-      "query_id": "coll_29_p2",
-      "original_id": "coll_29",
-      "category": "near_collision",
-      "paraphrased_query": "Hey, notify the team in #releases that v2.0 shipped",
-      "expected_tool": "slack_send_message",
-      "result_tool": "slack_send_message",
-      "correct": true
-    },
-    {
-      "query_id": "coll_30_p1",
-      "original_id": "coll_30",
-      "category": "near_collision",
-      "paraphrased_query": "Check the invoices for client cus_abc to see if they paid",
-      "expected_tool": "stripe_list_invoices",
-      "result_tool": "stripe_list_invoices",
-      "correct": true
-    },
-    {
-      "query_id": "coll_30_p2",
-      "original_id": "coll_30",
-      "category": "near_collision",
-      "paraphrased_query": "Please check the invoices for customer cus_abc to see if they paid",
-      "expected_tool": "stripe_list_invoices",
-      "result_tool": "stripe_list_invoices",
-      "correct": true
-    },
-    {
-      "query_id": "coll_30_p3",
-      "original_id": "coll_30",
-      "category": "near_collision",
-      "paraphrased_query": "I'd like to check the invoices for account holder cus_abc to see if they paid",
-      "expected_tool": "stripe_list_invoices",
-      "result_tool": "stripe_list_invoices",
-      "correct": true
-    },
-    {
-      "query_id": "coll_31_p1",
-      "original_id": "coll_31",
-      "category": "near_collision",
-      "paraphrased_query": "adjust the CRM record for person con_456 with new phone number",
-      "expected_tool": "crm_update_contact",
-      "result_tool": "crm_update_contact",
-      "correct": true
-    },
-    {
-      "query_id": "coll_31_p2",
-      "original_id": "coll_31",
-      "category": "near_collision",
-      "paraphrased_query": "Quick request: update the CRM record for contact con_456 with new phone number",
-      "expected_tool": "crm_update_contact",
-      "result_tool": "crm_update_contact",
-      "correct": true
-    },
-    {
-      "query_id": "coll_31_p3",
-      "original_id": "coll_31",
-      "category": "near_collision",
-      "paraphrased_query": "I need you to modify the CRM record for individual con_456 with new phone number",
-      "expected_tool": "crm_update_contact",
-      "result_tool": "crm_update_contact",
-      "correct": true
-    },
-    {
-      "query_id": "coll_32_p1",
-      "original_id": "coll_32",
-      "category": "near_collision",
-      "paraphrased_query": "locate all the files shared with me in Drive",
-      "expected_tool": "gdrive_search",
-      "result_tool": "gdrive_search",
-      "correct": true
-    },
-    {
-      "query_id": "coll_32_p2",
-      "original_id": "coll_32",
-      "category": "near_collision",
-      "paraphrased_query": "Go ahead and find all the files shared with me in Drive",
-      "expected_tool": "gdrive_search",
-      "result_tool": "gdrive_search",
-      "correct": true
-    },
-    {
-      "query_id": "coll_32_p3",
-      "original_id": "coll_32",
-      "category": "near_collision",
-      "paraphrased_query": "track down all the files shared with me in Drive",
-      "expected_tool": "gdrive_search",
-      "result_tool": "gdrive_search",
-      "correct": true
-    },
-    {
-      "query_id": "coll_33_p1",
-      "original_id": "coll_33",
-      "category": "near_collision",
-      "paraphrased_query": "hunt for Jira for all stories in the MOBILE project",
-      "expected_tool": "jira_search",
-      "result_tool": "jira_search",
-      "correct": true
-    },
-    {
-      "query_id": "coll_33_p2",
-      "original_id": "coll_33",
-      "category": "near_collision",
-      "paraphrased_query": "Hey, search Jira for all stories in the MOBILE project",
-      "expected_tool": "jira_search",
-      "result_tool": "jira_search",
-      "correct": true
-    },
-    {
-      "query_id": "coll_33_p3",
-      "original_id": "coll_33",
-      "category": "near_collision",
-      "paraphrased_query": "Go ahead and hunt for Jira for all stories in the MOBILE project",
-      "expected_tool": "jira_search",
-      "result_tool": "jira_search",
-      "correct": true
-    },
-    {
-      "query_id": "coll_34_p1",
-      "original_id": "coll_34",
-      "category": "near_collision",
-      "paraphrased_query": "set up a task in Jira for the API migration and assign it to dave@acme.com",
-      "expected_tool": "jira_create_ticket",
-      "result_tool": "jira_create_ticket",
-      "correct": true
-    },
-    {
-      "query_id": "coll_34_p2",
-      "original_id": "coll_34",
-      "category": "near_collision",
-      "paraphrased_query": "for the API migration and assign it to dave@acme, create a task in Jiracom",
-      "expected_tool": "jira_create_ticket",
-      "result_tool": "jira_create_ticket",
-      "correct": true
-    },
-    {
-      "query_id": "coll_34_p3",
-      "original_id": "coll_34",
-      "category": "near_collision",
-      "paraphrased_query": "for the API migration and assign it to dave@acme, create a task in Jiracom",
-      "expected_tool": "jira_create_ticket",
-      "result_tool": "jira_create_ticket",
-      "correct": true
-    },
-    {
-      "query_id": "coll_35_p1",
-      "original_id": "coll_35",
-      "category": "near_collision",
-      "paraphrased_query": "Email the statement to billing@client.com and cc the account manager",
-      "expected_tool": "email_send",
-      "result_tool": "email_send",
-      "correct": true
-    },
-    {
-      "query_id": "coll_35_p2",
-      "original_id": "coll_35",
-      "category": "near_collision",
-      "paraphrased_query": "Would you mind email the invoice to billing@client.com and cc the account manager",
-      "expected_tool": "email_send",
-      "result_tool": "email_send",
-      "correct": true
-    },
-    {
-      "query_id": "coll_35_p3",
-      "original_id": "coll_35",
-      "category": "near_collision",
-      "paraphrased_query": "Email the statement to billing@client.com and cc the account manager",
-      "expected_tool": "email_send",
-      "result_tool": "email_send",
-      "correct": true
-    },
-    {
-      "query_id": "adv_01_p1",
-      "original_id": "adv_01",
-      "category": "adversarial",
-      "paraphrased_query": "Use the refundInvoiceNow tool to refund statement inv_123",
-      "expected_tool": "stripe_refund",
-      "result_tool": "stripe_refund",
-      "correct": true
-    },
-    {
-      "query_id": "adv_01_p2",
-      "original_id": "adv_01",
-      "category": "adversarial",
-      "paraphrased_query": "Would you mind use the refundInvoiceNow tool to refund invoice inv_123",
-      "expected_tool": "stripe_refund",
-      "result_tool": "stripe_refund",
-      "correct": true
-    },
-    {
-      "query_id": "adv_01_p3",
-      "original_id": "adv_01",
-      "category": "adversarial",
-      "paraphrased_query": "Quick request: use the refundInvoiceNow tool to refund statement inv_123",
-      "expected_tool": "stripe_refund",
-      "result_tool": "stripe_refund",
-      "correct": true
-    },
-    {
-      "query_id": "adv_02_p1",
-      "original_id": "adv_02",
-      "category": "adversarial",
-      "paraphrased_query": "Go ahead and call sendSlackNotification to tell #ops the deploy is done",
-      "expected_tool": "slack_send_message",
-      "result_tool": "slack_send_message",
-      "correct": true
-    },
-    {
-      "query_id": "adv_02_p2",
-      "original_id": "adv_02",
-      "category": "adversarial",
-      "paraphrased_query": "I'd like to call sendSlackNotification to tell #ops the deploy is done",
-      "expected_tool": "slack_send_message",
-      "result_tool": "slack_send_message",
-      "correct": true
-    },
-    {
-      "query_id": "adv_03_p1",
-      "original_id": "adv_03",
-      "category": "adversarial",
-      "paraphrased_query": "for project MOBILE with title 'Add dark mode', run the createJiraStory function",
-      "expected_tool": "jira_create_ticket",
-      "result_tool": "jira_create_ticket",
-      "correct": true
-    },
-    {
-      "query_id": "adv_03_p2",
-      "original_id": "adv_03",
-      "category": "adversarial",
-      "paraphrased_query": "for project MOBILE with title 'Add dark mode', run the createJiraStory function",
-      "expected_tool": "jira_create_ticket",
-      "result_tool": "jira_create_ticket",
-      "correct": true
-    },
-    {
-      "query_id": "adv_08_p1",
-      "original_id": "adv_08",
-      "category": "adversarial",
-      "paraphrased_query": "Quick request: i need you to use the fetchCustomerData tool to get info on cus_123",
-      "expected_tool": "stripe_get_customer",
-      "result_tool": null,
-      "correct": false
-    },
-    {
-      "query_id": "adv_08_p2",
-      "original_id": "adv_08",
-      "category": "adversarial",
-      "paraphrased_query": "Can you i need you to use the fetchCustomerData tool to get info on cus_123",
-      "expected_tool": "stripe_get_customer",
-      "result_tool": "stripe_get_customer",
-      "correct": true
-    },
-    {
-      "query_id": "adv_13_p1",
-      "original_id": "adv_13",
-      "category": "adversarial",
-      "paraphrased_query": "dispatch a Slack message to #general and also create a Jira issue about the outage",
-      "expected_tool": "jira_create_ticket",
-      "result_tool": "jira_create_ticket",
-      "correct": true
-    },
-    {
-      "query_id": "adv_13_p2",
-      "original_id": "adv_13",
-      "category": "adversarial",
-      "paraphrased_query": "about the outage, send a Slack message to #general and also create a Jira ticket",
-      "expected_tool": "jira_create_ticket",
-      "result_tool": "jira_create_ticket",
-      "correct": true
-    },
-    {
-      "query_id": "adv_13_p3",
-      "original_id": "adv_13",
-      "category": "adversarial",
-      "paraphrased_query": "about the outage, forward along a Slack message to #general and also create a Jira work item",
-      "expected_tool": "jira_create_ticket",
-      "result_tool": "jira_create_ticket",
-      "correct": true
-    },
-    {
-      "query_id": "adv_14_p1",
-      "original_id": "adv_14",
-      "category": "adversarial",
-      "paraphrased_query": "give back the payment for the customer and then send them a confirmation mail and update the CRM",
-      "expected_tool": "stripe_refund",
-      "result_tool": "stripe_refund",
-      "correct": true
-    },
-    {
-      "query_id": "adv_14_p2",
-      "original_id": "adv_14",
-      "category": "adversarial",
-      "paraphrased_query": "Quick request: refund the customer and then send them a confirmation email and update the CRM",
-      "expected_tool": "stripe_refund",
-      "result_tool": "stripe_refund",
-      "correct": true
-    },
-    {
-      "query_id": "adv_14_p3",
-      "original_id": "adv_14",
-      "category": "adversarial",
-      "paraphrased_query": "return the money for the customer and then send them a confirmation mail and update the CRM",
-      "expected_tool": "stripe_refund",
-      "result_tool": "stripe_refund",
-      "correct": true
-    },
-    {
-      "query_id": "schema_01_p1",
-      "original_id": "schema_01",
-      "category": "schema_trap",
-      "paraphrased_query": "bill $49.99 to client cus_abc",
-      "expected_tool": "stripe_charge",
-      "result_tool": "stripe_charge",
-      "correct": true
-    },
-    {
-      "query_id": "schema_01_p2",
-      "original_id": "schema_01",
-      "category": "schema_trap",
-      "paraphrased_query": "Go ahead and charge $49.99 to customer cus_abc",
-      "expected_tool": "stripe_charge",
-      "result_tool": "stripe_charge",
-      "correct": true
-    },
-    {
-      "query_id": "schema_01_p3",
-      "original_id": "schema_01",
-      "category": "schema_trap",
-      "paraphrased_query": "invoice $49.99 to client cus_abc",
-      "expected_tool": "stripe_charge",
-      "result_tool": "stripe_charge",
-      "correct": true
-    },
-    {
-      "query_id": "schema_02_p1",
-      "original_id": "schema_02",
-      "category": "schema_trap",
-      "paraphrased_query": "mail the team at eng@acme.com, product@acme.com, and design@acme.com about the launch",
-      "expected_tool": "email_send",
-      "result_tool": "email_send",
-      "correct": true
-    },
-    {
-      "query_id": "schema_02_p2",
-      "original_id": "schema_02",
-      "category": "schema_trap",
-      "paraphrased_query": "Can you email the team at eng@acme.com, product@acme.com, and design@acme.com about the launch",
-      "expected_tool": "email_send",
-      "result_tool": "email_send",
-      "correct": true
-    },
-    {
-      "query_id": "schema_02_p3",
-      "original_id": "schema_02",
-      "category": "schema_trap",
-      "paraphrased_query": "mail the team at eng@acme.com, product@acme.com, and design@acme.com about the launch",
-      "expected_tool": "email_send",
-      "result_tool": "email_send",
-      "correct": true
-    },
-    {
-      "query_id": "schema_03_p1",
-      "original_id": "schema_03",
-      "category": "schema_trap",
-      "paraphrased_query": "make a high-priority epic in PLATFORM project: 'Migrate to new auth system'",
-      "expected_tool": "jira_create_ticket",
-      "result_tool": "jira_create_ticket",
-      "correct": true
-    },
-    {
-      "query_id": "schema_03_p2",
-      "original_id": "schema_03",
-      "category": "schema_trap",
-      "paraphrased_query": "a high-priority epic needs to be created in PLATFORM project: 'Migrate to new auth system'",
-      "expected_tool": "jira_create_ticket",
-      "result_tool": "jira_create_ticket",
-      "correct": true
-    },
-    {
-      "query_id": "schema_03_p3",
-      "original_id": "schema_03",
-      "category": "schema_trap",
-      "paraphrased_query": "a high-priority epic needs to be created in PLATFORM project: 'Migrate to new auth system'",
-      "expected_tool": "jira_create_ticket",
-      "result_tool": "jira_create_ticket",
-      "correct": true
-    },
-    {
-      "query_id": "schema_04_p1",
-      "original_id": "schema_04",
-      "category": "schema_trap",
-      "paraphrased_query": "Give sarah@acme.com read-only access to the design location",
-      "expected_tool": "gdrive_share",
-      "result_tool": "gdrive_share",
-      "correct": true
-    },
-    {
-      "query_id": "schema_04_p2",
-      "original_id": "schema_04",
-      "category": "schema_trap",
-      "paraphrased_query": "Go ahead and give sarah@acme.com read-only access to the design folder",
-      "expected_tool": "gdrive_share",
-      "result_tool": "gdrive_share",
-      "correct": true
-    },
-    {
-      "query_id": "schema_04_p3",
-      "original_id": "schema_04",
-      "category": "schema_trap",
-      "paraphrased_query": "Could you give sarah@acme.com read-only access to the design directory",
-      "expected_tool": "gdrive_share",
-      "result_tool": "gdrive_share",
-      "correct": true
-    },
-    {
-      "query_id": "schema_05_p1",
-      "original_id": "schema_05",
-      "category": "schema_trap",
-      "paraphrased_query": "Schedule a sync for tomorrow from 2pm to 2:30pm with bob@acme.com and carol@acme.com",
-      "expected_tool": "calendar_create_event",
-      "result_tool": "calendar_create_event",
-      "correct": true
-    },
-    {
-      "query_id": "schema_05_p2",
-      "original_id": "schema_05",
-      "category": "schema_trap",
-      "paraphrased_query": "Please schedule a meeting for tomorrow from 2pm to 2:30pm with bob@acme.com and carol@acme.com",
-      "expected_tool": "calendar_create_event",
-      "result_tool": "calendar_create_event",
-      "correct": true
-    },
-    {
-      "query_id": "schema_05_p3",
-      "original_id": "schema_05",
-      "category": "schema_trap",
-      "paraphrased_query": "I'd like to schedule a sync for tomorrow from 2pm to 2:30pm with bob@acme.com and carol@acme.com",
-      "expected_tool": "calendar_create_event",
-      "result_tool": "calendar_create_event",
-      "correct": true
-    },
-    {
-      "query_id": "schema_06_p1",
-      "original_id": "schema_06",
-      "category": "schema_trap",
-      "paraphrased_query": "reverse the charge on $25 of the $100 charge ch_full123",
-      "expected_tool": "stripe_refund",
-      "result_tool": "stripe_refund",
-      "correct": true
-    },
-    {
-      "query_id": "schema_06_p2",
-      "original_id": "schema_06",
-      "category": "schema_trap",
-      "paraphrased_query": "Can you refund $25 of the $100 charge ch_full123",
-      "expected_tool": "stripe_refund",
-      "result_tool": "stripe_refund",
-      "correct": true
-    },
-    {
-      "query_id": "schema_06_p3",
-      "original_id": "schema_06",
-      "category": "schema_trap",
-      "paraphrased_query": "reverse the charge on $25 of the $100 charge ch_full123",
-      "expected_tool": "stripe_refund",
-      "result_tool": "stripe_refund",
-      "correct": true
-    },
-    {
-      "query_id": "schema_07_p1",
-      "original_id": "schema_07",
-      "category": "schema_trap",
-      "paraphrased_query": "Start a plan for cus_new on the price_pro plan with a 14-day trial",
-      "expected_tool": "stripe_create_subscription",
-      "result_tool": "stripe_create_subscription",
-      "correct": true
-    },
-    {
-      "query_id": "schema_07_p2",
-      "original_id": "schema_07",
-      "category": "schema_trap",
-      "paraphrased_query": "for cus_new on the price_pro plan with a 14-day trial, start a subscription",
-      "expected_tool": "stripe_create_subscription",
-      "result_tool": "stripe_create_subscription",
-      "correct": true
-    },
-    {
-      "query_id": "schema_07_p3",
-      "original_id": "schema_07",
-      "category": "schema_trap",
-      "paraphrased_query": "for cus_new on the price_pro plan with a 14-day trial, start a plan",
-      "expected_tool": "stripe_create_subscription",
-      "result_tool": "stripe_create_subscription",
-      "correct": true
-    },
-    {
-      "query_id": "schema_08_p1",
-      "original_id": "schema_08",
-      "category": "schema_trap",
-      "paraphrased_query": "retrieve page views grouped by week for January 2025",
-      "expected_tool": "analytics_get_metrics",
-      "result_tool": "analytics_get_metrics",
-      "correct": true
-    },
-    {
-      "query_id": "schema_08_p2",
-      "original_id": "schema_08",
-      "category": "schema_trap",
-      "paraphrased_query": "for January 2025, get page views grouped by week",
-      "expected_tool": "analytics_get_metrics",
-      "result_tool": "analytics_get_metrics",
-      "correct": true
-    },
-    {
-      "query_id": "schema_08_p3",
-      "original_id": "schema_08",
-      "category": "schema_trap",
-      "paraphrased_query": "for January 2025, retrieve page views grouped by week",
-      "expected_tool": "analytics_get_metrics",
-      "result_tool": "analytics_get_metrics",
-      "correct": true
-    },
-    {
-      "query_id": "schema_09_p1",
-      "original_id": "schema_09",
-      "category": "schema_trap",
-      "paraphrased_query": "look through the CRM for everyone at Globex Corporation",
-      "expected_tool": "crm_search_contacts",
-      "result_tool": "crm_search_contacts",
-      "correct": true
-    },
-    {
-      "query_id": "schema_09_p2",
-      "original_id": "schema_09",
-      "category": "schema_trap",
-      "paraphrased_query": "for everyone at Globex Corporation, search the CRM",
-      "expected_tool": "crm_search_contacts",
-      "result_tool": "crm_search_contacts",
-      "correct": true
-    },
-    {
-      "query_id": "schema_09_p3",
-      "original_id": "schema_09",
-      "category": "schema_trap",
-      "paraphrased_query": "for everyone at Globex Corporation, search the CRM",
-      "expected_tool": "crm_search_contacts",
-      "result_tool": "crm_search_contacts",
-      "correct": true
-    },
-    {
-      "query_id": "schema_10_p1",
-      "original_id": "schema_10",
-      "category": "schema_trap",
-      "paraphrased_query": "dispatch a threaded reply in #incidents about the resolution \u2014 thread ID is 1234567890.123456",
-      "expected_tool": "slack_send_message",
-      "result_tool": "slack_send_message",
-      "correct": true
-    },
-    {
-      "query_id": "schema_10_p2",
-      "original_id": "schema_10",
-      "category": "schema_trap",
-      "paraphrased_query": "Please send a threaded reply in #incidents about the resolution \u2014 thread ID is 1234567890.123456",
-      "expected_tool": "slack_send_message",
-      "result_tool": "slack_send_message",
-      "correct": true
-    },
-    {
-      "query_id": "schema_10_p3",
-      "original_id": "schema_10",
-      "category": "schema_trap",
-      "paraphrased_query": "Hey, dispatch a threaded reply in #incidents about the resolution \u2014 thread ID is 1234567890.123456",
-      "expected_tool": "slack_send_message",
-      "result_tool": "slack_send_message",
-      "correct": true
+      "original_confidence": 0.4575
     }
   ]
 }

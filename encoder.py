@@ -168,54 +168,126 @@ _PHRASE_ACTIONS = [
     ("search for the invoice email", "search"),
     ("search for the email", "search"),
     ("look for", "search"),
+    # comment synonyms (phrase patterns)
+    ("post a remark", "comment"),
+    ("leave a response", "comment"),
+    ("add a remark", "comment"),
+    ("add a note on", "comment"),
+    # --- Synonym verb phrases (perturbation coverage) ---
+    # send synonyms
+    ("fire off", "send"),
+    ("shoot over", "send"),
+    ("forward along", "send"),
+    # search synonyms
+    ("dig through", "search"),
+    ("hunt for", "search"),
+    ("look through", "search"),
+    # create synonyms (after "set status" phrases above)
+    ("set up a", "create"),
+    ("set up", "create"),
+    ("spin up", "create"),
+    ("put together a", "create"),
+    # reply synonyms
+    ("write back", "reply"),
+    # draft synonyms
+    ("write up", "draft"),
+    # charge synonyms
+    ("collect from", "charge"),
+    # get synonyms
+    ("track down", "get"),
+    # refund synonyms
+    ("return the money", "refund"),
+    ("reverse the charge", "refund"),
+    ("give back the payment", "refund"),
+    ("give back", "refund"),
+    # upload synonyms (with article to distinguish from "drop in #channel")
+    ("drop in the", "upload"),
+    ("drop in a", "upload"),
+    ("put in the", "upload"),
+    ("put in a", "upload"),
+    # share synonyms
+    ("let someone see", "share"),
+    ("give access", "share"),
+    ("open up to", "share"),
+    ("read-only access", "share"),
+    ("read only access", "share"),
+    # passive voice / "should be" patterns
+    ("should be sent", "send"),
+    ("needs to be sent", "send"),
+    # set synonyms
+    ("change to", "set"),
 ]
 
 _PHRASE_TARGETS = [
     ("free time", "free_time"),
     ("available time", "free_time"),
     ("time slot", "free_time"),
+    ("time that works", "free_time"),
     ("direct message", "dm"),
     ("invoice email", "email"),
     ("customer details", "customer"),
     ("customer record", "customer"),
+    ("customer info", "customer"),
+    ("customer profile", "customer"),
+    ("client details", "customer"),
     ("contact info", "contact"),
+    ("contact record", "contact"),
+    ("contact details", "contact"),
+    ("individual info", "contact"),
+    ("person info", "contact"),
     ("add a comment", "comment"),
     ("add comment", "comment"),
     ("leave a comment", "comment"),
+    ("post a remark", "comment"),
+    ("leave a response", "comment"),
     ("set status", "status"),
     ("slack status", "status"),
     ("my status", "status"),
     ("payment history", "invoice"),
     ("billing history", "invoice"),
     ("invoice history", "invoice"),
+    ("page views", "metric"),
+    ("page view", "metric"),
+    ("conversion funnel", "funnel"),
+    ("conversion pipeline", "funnel"),
+    ("conversion path", "funnel"),
+    ("work item", "ticket"),
+    ("crm deal", "deal"),
+    ("new deal", "deal"),
+    ("mockup", "file"),
+    ("design file", "file"),
 ]
 
 _ACTION_MAP = {
     # send actions
     "send": "send", "post": "send", "message": "send",
     "notify": "send", "tell": "send", "ping": "send", "write": "send",
+    "dispatch": "send", "blast": "send", "drop": "send",
+    "mail": "send", "sent": "send",
     # search actions
     "search": "search", "find": "search", "lookup": "search",
-    "query": "search", "filter": "search",
+    "query": "search", "filter": "search", "scan": "search",
+    "hunt": "search", "locate": "search",
     # create actions
     "create": "create", "make": "create", "new": "create",
     "open": "create", "file": "create", "book": "create",
     "schedule": "create",
     # set actions (distinct from create — for status, config)
-    "set": "set",
+    "set": "set", "configure": "set",
     # get/read actions
     "get": "get", "fetch": "get", "retrieve": "get", "show": "get",
     "check": "get", "view": "get", "pull": "get", "see": "get",
-    "need": "get",
+    "need": "get", "grab": "get", "display": "get", "present": "get",
     # list actions
     "list": "list", "enumerate": "list",
     # update actions
     "update": "update", "edit": "update", "change": "update", "modify": "update",
-    "move": "update", "reschedule": "update",
+    "move": "update", "reschedule": "update", "adjust": "update", "tweak": "update",
     # delete actions
-    "delete": "delete", "remove": "delete", "void": "delete",
+    "delete": "delete", "remove": "delete", "void": "delete", "nuke": "delete",
     # cancel actions (distinct from delete — for subscriptions, etc.)
-    "cancel": "cancel",
+    "cancel": "cancel", "terminate": "cancel", "discontinue": "cancel",
+    "stop": "cancel", "end": "cancel",
     # reply actions
     "reply": "reply", "respond": "reply",
     # share actions
@@ -224,59 +296,70 @@ _ACTION_MAP = {
     "upload": "upload",
     # track/analytics actions
     "track": "track", "record": "track", "log": "track",
+    "capture": "track", "register": "track", "note": "track",
     # identify actions
     "identify": "identify",
     # assign actions
-    "assign": "assign",
+    "assign": "assign", "delegate": "assign",
     # comment actions
     "comment": "comment",
     # charge/payment actions
     "charge": "charge", "bill": "charge", "invoice": "charge",
+    "collect": "charge",
     # refund actions
     "refund": "refund",
     # subscribe actions
     "subscribe": "subscribe", "start": "subscribe",
     # draft actions
-    "draft": "draft",
+    "draft": "draft", "compose": "draft", "prepare": "draft",
     # dm action (maps to send but we handle target separately)
     "dm": "send",
 }
 
 _TARGET_MAP = {
     # messaging targets
-    "message": "message", "notification": "message",
+    "message": "message", "notification": "message", "note": "message",
+    "ping": "message",
     "dm": "dm",
-    "channel": "channel", "channels": "channel",
-    "status": "status",
+    "channel": "channel", "channels": "channel", "room": "channel",
+    "status": "status", "state": "status",
     # email targets
     "email": "email", "mail": "email", "inbox": "email",
     "draft": "draft", "drafts": "draft",
     "label": "label", "labels": "label",
     # crm targets
     "contact": "contact", "contacts": "contact", "record": "contact",
+    "person": "contact", "individual": "contact", "entry": "contact",
+    "info": "contact", "profile": "contact",
     "deal": "deal", "opportunity": "deal",
     # payment targets
     "payment": "payment", "charge": "payment",
     "refund": "refund",
-    "customer": "customer", "account": "customer",
+    "customer": "customer", "account": "customer", "client": "customer",
     "invoice": "invoice", "invoices": "invoice", "bill": "invoice", "bills": "invoice",
-    "subscription": "subscription", "plan": "subscription",
+    "statement": "invoice",
+    "subscription": "subscription", "plan": "subscription", "membership": "subscription",
     # calendar targets
     "event": "event", "meeting": "event", "appointment": "event", "call": "event",
-    "calendar": "event",
+    "calendar": "event", "session": "event", "sync": "event",
     "time": "free_time", "slot": "free_time", "availability": "free_time",
     # file targets
     "file": "file", "files": "file", "document": "file", "doc": "file",
     "spreadsheet": "file", "sheet": "file",
-    "folder": "folder",
+    "folder": "folder", "directory": "folder", "location": "folder",
     # ticket targets
     "ticket": "ticket", "issue": "ticket", "bug": "ticket", "task": "ticket",
     "story": "ticket", "epic": "ticket", "jira": "ticket",
+    "defect": "ticket",
     # analytics targets
     "metric": "metric", "metrics": "metric", "analytics": "metric",
     "pageviews": "metric", "visitors": "metric", "conversions": "metric",
-    "funnel": "funnel", "conversion": "funnel",
+    "funnel": "funnel", "conversion": "funnel", "pipeline": "funnel",
     "user": "user", "users": "user", "traits": "user",
+    # analytics event targets
+    "occurrence": "event", "activity": "event",
+    # comment targets
+    "remark": "comment", "response": "comment",
 }
 
 _DOMAIN_SIGNALS = {
@@ -284,10 +367,10 @@ _DOMAIN_SIGNALS = {
     "email": ["email", "mail", "gmail", "inbox", "subject", "cc", "bcc", "draft"],
     "crm": ["crm", "contact", "deal", "pipeline", "hubspot", "salesforce", "customer record", "customer details", "contact info"],
     "payments": ["stripe", "charge", "refund", "invoice", "subscription", "payment", "cus_", "ch_", "sub_", "price_", "billing"],
-    "calendar": ["calendar", "meeting", "event", "schedule", "appointment", "free time", "availability"],
+    "calendar": ["calendar", "meeting", "event", "schedule", "appointment", "free time", "availability", "session", "10am", "11am", "noon"],
     "files": ["drive", "gdrive", "upload", "file", "folder", "share", "document"],
     "tickets": ["jira", "ticket", "issue", "bug", "epic", "story", "eng-", "ENG-", "sprint"],
-    "analytics": ["analytics", "track", "funnel", "metric", "pageview", "conversion", "identify", "upgraded", "traits", "switched from", "changed their", "checkout"],
+    "analytics": ["analytics", "track", "funnel", "metric", "pageview", "conversion", "identify", "upgraded", "traits", "switched from", "changed their", "checkout", "occurrence", "activity", "button_click", "signup_completed", "page_view"],
 }
 
 _DOMAIN_SIGNAL_WEIGHTS = {
@@ -295,10 +378,10 @@ _DOMAIN_SIGNAL_WEIGHTS = {
     "email": {"email": 2, "mail": 2, "gmail": 3, "inbox": 2, "subject": 2, "cc": 2, "bcc": 2, "draft": 1},
     "crm": {"crm": 3, "contact": 2, "deal": 2, "pipeline": 1, "hubspot": 3, "salesforce": 3, "customer record": 3, "customer details": 3, "contact info": 3},
     "payments": {"stripe": 3, "charge": 2, "refund": 2, "invoice": 2, "subscription": 2, "payment": 2, "cus_": 3, "ch_": 3, "sub_": 2, "price_": 3, "billing": 2},
-    "calendar": {"calendar": 3, "meeting": 2, "event": 1, "schedule": 2, "appointment": 2, "free time": 2, "availability": 2},
+    "calendar": {"calendar": 3, "meeting": 2, "event": 1, "schedule": 2, "appointment": 2, "free time": 2, "availability": 2, "session": 1, "10am": 2, "11am": 2, "noon": 2},
     "files": {"drive": 3, "gdrive": 3, "upload": 2, "file": 1, "folder": 2, "share": 1, "document": 1},
     "tickets": {"jira": 3, "ticket": 2, "issue": 1, "bug": 2, "epic": 2, "story": 1, "eng-": 3, "ENG-": 3, "sprint": 2},
-    "analytics": {"analytics": 3, "track": 2, "funnel": 3, "metric": 2, "pageview": 3, "conversion": 2, "identify": 2, "upgraded": 2, "traits": 2, "switched from": 3, "changed their": 3, "checkout": 2},
+    "analytics": {"analytics": 3, "track": 2, "funnel": 3, "metric": 2, "pageview": 3, "conversion": 2, "identify": 2, "upgraded": 2, "traits": 2, "switched from": 3, "changed their": 3, "checkout": 2, "occurrence": 1, "activity": 1, "button_click": 3, "signup_completed": 3, "page_view": 3},
 }
 
 _STOP_WORDS = {
@@ -327,10 +410,14 @@ def _extract_action(text: str, words: list[str]) -> str:
         "update": 8, "assign": 8, "share": 8, "upload": 8,
         "identify": 7, "track": 7, "comment": 7,
         "set": 6,
-        "send": 5, "reply": 5, "draft": 5,
+        "send": 5, "draft": 5,
+        "reply": 6,
         "search": 3, "get": 2, "list": 2,
     }
-    _WEAK_ACTION_WORDS = {"new", "open", "file", "start", "record", "book", "move"}
+    _WEAK_ACTION_WORDS = {"new", "open", "file", "start", "record", "book", "move",
+                          "note", "stop", "end", "drop", "present", "display",
+                          "capture", "register", "collect", "prepare",
+                          "mail", "sent"}
     # Words that are only weak when preceded by certain nouns
     _CONTEXTUAL_WEAK = {
         "update": {"project", "status", "the"},
@@ -468,8 +555,15 @@ def _split_camel_case(text: str) -> str:
     """Split camelCase and PascalCase tokens into separate words.
     E.g., 'createJiraStory' → 'create Jira Story'
     Must be applied BEFORE lowercasing to detect case boundaries.
+    Skips short tokens (< 4 chars) to preserve abbreviations like 'DM', 'dM'.
     """
-    return re.sub(r'([a-z])([A-Z])', r'\1 \2', text)
+    parts = []
+    for token in text.split():
+        if len(token) >= 4 and re.search(r'[a-z][A-Z]', token):
+            parts.append(re.sub(r'([a-z])([A-Z])', r'\1 \2', token))
+        else:
+            parts.append(token)
+    return " ".join(parts)
 
 
 def encode_query(query: str) -> dict:

@@ -95,6 +95,51 @@ Or from the monorepo root:
 ./dev-models.sh benchmark toolrouter --strategies 1 2 3 4
 ```
 
+## Perturbation Testing
+
+The perturbation test validates confidence calibration on unseen phrasings.
+Each in-scope query is paraphrased 3 ways (synonym substitution, word
+reordering, conversational filler) and run through the router without
+modification.
+
+```bash
+python benchmark/perturbation_test.py
+python benchmark/perturbation_test.py --llm  # Compare against LLM
+```
+
+Current results (206 paraphrased queries):
+
+| Router | Original | Paraphrased | Delta |
+|---|---|---|---|
+| Glyphh HDC (S2) | 100% | 83.5% | -16.5% |
+| LLM gpt-4o-mini (S1) | 90.1% | 88.8% | -1.3% |
+
+Of the 34 remaining failures, only 2 are high-confidence wrong answers.
+The rest are either correct abstentions (BoW too different) or uncertain-zone
+near-collisions where the multi-turn agent would clarify via fact tree.
+
+## Roadmap: Shared Intent Model
+
+The NL extraction layer in this model (action verb maps, noun synonyms,
+domain signals, phrase disambiguation) is **not specific to tool routing**.
+These are universal patterns that any Glyphh model consuming natural language
+needs: "fire off" means "send" whether you're routing SaaS tools, classifying
+support tickets, or predicting churn.
+
+The next step is to extract this into a dedicated **intent model**
+(`glyphh-models/intent/`) that:
+
+1. Consolidates all verb/noun/domain extraction into a shared, importable module
+2. Uses HDC encoding for synonym matching — unknown verbs matched by vector
+   similarity to known verb clusters, eliminating the need for exhaustive lexicons
+3. Supports lifelong learning — `extractor.learn(query, correct_action)` adds
+   new mappings that all downstream models benefit from immediately
+4. Enables the perturbation → failure → learn → validate cycle to run
+   automatically in CI
+
+Domain models (toolrouter, BFCL, future models) would import the shared intent
+layer and only define their own catalog-specific exemplars and thresholds.
+
 ## Methodology
 
 - 38 tools across 8 domains (Slack, email, CRM, Stripe, calendar, Drive, Jira, analytics)

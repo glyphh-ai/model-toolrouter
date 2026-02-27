@@ -1,85 +1,125 @@
 # SaaS Tool Router
 
-Routes natural language SaaS requests to the correct tool function using HDC
-similarity matching on intent vectors. 38 tools across 8 domains — Slack,
-email, CRM, Stripe, calendar, Google Drive, Jira, and analytics.
+Routes natural language SaaS requests to the correct tool function using
+Hyperdimensional Computing (HDC) similarity matching. 39 tools across 8
+domains — Slack, Email, CRM, Stripe, Calendar, Google Drive, Jira, Analytics.
+
+No LLM required for routing. Deterministic. Sub-10ms.
+
+**[Docs →](https://glyphh.ai/docs)** · **[Glyphh Hub →](https://glyphh.ai/hub)**
+
+---
+
+## Getting Started
+
+### 1. Install the Glyphh CLI
+
+```bash
+# Create and activate a virtual environment (recommended)
+python3 -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+
+# Install
+pip install glyphh
+```
+
+### 2. Clone and start the model
+
+```bash
+git clone https://github.com/glyphh-ai/model-toolrouter.git
+cd model-toolrouter
+
+# Start the local dev server (--debug flag streams logs)
+glyphh dev . -d
+```
+
+The server starts at `http://localhost:8002`. Open the Chat UI in your browser
+at the URL printed in the terminal.
+
+### 3. Query the model
+
+```bash
+# Single query
+glyphh chat "Refund charge ch_3abc123 for the full amount"
+
+# Interactive REPL
+glyphh chat
+```
+
+Example output:
+
+```
+  DONE
+   94%  [███████████░]  stripe_refund
+   61%  [███████░░░░░]  stripe_get_customer
+
+  8.2ms · auto · similarity_search
+```
+
+Switch to GQL mode inside the REPL with `/gql`, back with `/nl`, exit with `/quit`.
+
+---
 
 ## How It Works
 
-Describe what you want in plain English — "refund charge ch_abc123", "create a
-bug ticket in ENG", "find a time for a 30-minute call" — and the encoder
-decomposes your query into action, target, domain, and keyword signals, encodes
-them as high-dimensional vectors, and matches against exemplars via cosine
-similarity. No LLM required for routing. Deterministic. Sub-10ms.
-
-## Benchmark Results
-
-> **Internal Glyphh Eval — Formal Benchmark Validation Pending**
-
-95 queries, 38 tools, 5 difficulty categories (clear, near-collision,
-adversarial, open-set, schema-trap). Four strategies compared:
-
-| Strategy | What it does | Routing Acc | In-Scope | Tokens | Latency |
-|---|---|---|---|---|---|
-| LLM Only | LLM picks tool + args | 91.6% | 88.7% | 229K | 1,820 ms |
-| Glyphh Only | HDC routes, no args | 100% | 100% | 0 | 6 ms |
-| Glyphh Route → LLM Args | HDC routes, LLM fills args | 100% | 100% | 22K | 658 ms |
-| LLM + Glyphh Sidecar | LLM does everything, HDC confirms/overrides | 98.9% | 100% | 232K | 1,655 ms |
-
-**Glyphh Route → LLM Args** delivers 100% accuracy with 90% fewer tokens and
-64% lower latency than LLM-only. The LLM never sees the full catalog — it
-receives one tool definition and extracts args. This is the architecture for
-cost-sensitive, high-volume deployments.
-
-**LLM + Glyphh Sidecar** is the drop-in pattern for existing LLM pipelines.
-Keep your LLM, bolt Glyphh on as a sidecar. It catches and corrects every
-in-scope routing error the LLM makes — 100% in-scope accuracy with zero
-changes to your LLM prompt or flow.
-
-Full analysis: [`benchmark/analysis.md`](benchmark/analysis.md)
-
-## Model Structure
+A natural language query is decomposed into **action**, **target**, **domain**,
+and **keyword** signals by the `glyphh.intent` SDK, then encoded as a
+10,000-dimension bipolar vector and matched against tool exemplars via weighted
+cosine similarity. The sidecar model (seed=73) independently validates any
+tool references detected in the query.
 
 ```
-toolrouter/
-├── config.yaml              # model config, roles, similarity settings
-├── encoder.py               # EncoderConfig + NL query encoder
-├── data/
-│   └── exemplars.jsonl      # 68 tool exemplars across 38 tools
-├── benchmark/
-│   ├── run.py               # 4-strategy benchmark runner
-│   ├── queries.json         # 95 test queries (v2.2.0)
-│   ├── tool_catalog.json    # 38 tool definitions with schemas
-│   ├── analysis.md          # detailed findings
-│   └── results/             # raw JSON results per strategy
-├── tests/                   # unit tests
-├── build.py                 # package model into .glyphh file
-└── manifest.yaml            # model identity
+query → IntentExtractor → HDC encode → cosine similarity → top tool
+                                       ↕ [0.40–0.55 zone]
+                                     sidecar validate
 ```
 
-## Encoder Architecture
+## Benchmark
 
-NL extraction via `glyphh.intent.IntentExtractor` (SDK) — no local extraction tables needed.
-Two-layer HDC encoder (10,000 dimensions):
+95 queries · 39 tools · 5 difficulty categories
 
-| Layer | Weight | Segments | Purpose |
+| Strategy | Routing | In-Scope E2E | Tokens/query | Latency |
+|---|---|---|---|---|
+| LLM Only | 91.6% | 88.7% | 2,416 | 1,749 ms |
+| **Glyphh Only** | **98.9%** | — | **0** | **7 ms** |
+| **Glyphh Route → LLM Args** | **100%** | **100%** | **228** | **626 ms** |
+| LLM + Glyphh Sidecar | 100% | 100% | 2,440 | 1,916 ms |
+
+**Glyphh Route → LLM Args** is the recommended production pattern: HDC picks
+the tool deterministically, the LLM fills args against a single tool schema.
+90% token reduction, 64% lower latency vs LLM-only, 100% accuracy.
+
+Full benchmark details: [`benchmark/analysis.md`](benchmark/analysis.md)
+
+## Encoder
+
+Two-layer HDC encoder (10,000 dimensions, `glyphh.intent` for NL extraction):
+
+| Layer | Weight | Segments | Signal |
 |---|---|---|---|
-| intent | 0.4 | action (verb + target), scope (domain) | Primary routing signal |
-| semantics | 0.6 | description + keywords (BoW) | Fuzzy HDC matching |
+| intent | 0.4 | action (verb + target), scope (domain) | Primary routing |
+| semantics | 0.6 | description + keywords (BoW) | Fuzzy disambiguation |
 
-## Domains
+## Running Tests
 
-Messaging (Slack), Email (Gmail), CRM, Payments (Stripe), Calendar, Files
-(Google Drive), Tickets (Jira), Analytics.
+```bash
+cd model-toolrouter
+pip install -r requirements-dev.txt
+pytest tests/ -v
+```
 
-## Running the Benchmark
+40 tests · clear routing · disambiguation · adversarial · OOS abstention
+
+## Running the Full Benchmark
 
 ```bash
 # Glyphh-only (no API key needed)
-./dev-models.sh benchmark toolrouter
+pytest benchmark/run.py -v -k "s2"
 
 # All 4 strategies (requires OPENAI_API_KEY)
-export $(grep OPENAI_API_KEY .env | xargs)
-./dev-models.sh benchmark toolrouter --strategies 1 2 3 4 \
-  --output glyphh-models/toolrouter/benchmark/results/
+OPENAI_API_KEY=sk-... pytest benchmark/run.py -v
 ```
+
+## License
+
+MIT

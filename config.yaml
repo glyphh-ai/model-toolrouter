@@ -83,6 +83,11 @@ similarity:
   sidecar_upper: 0.55
   top_k: 3
 
+disambiguation:
+  # Minimum score gap between top-1 and top-2 for a confident match.
+  # If the gap is smaller than this, the runtime returns ASK.
+  min_gap: 0.03
+
 # --- Sidecar model (seed=73) ---
 sidecar:
   dimensions: 10000

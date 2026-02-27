@@ -345,6 +345,55 @@ def encode_query(query: str) -> dict:
 
 
 # ---------------------------------------------------------------------------
+# assess_query — slot completeness check for disambiguation
+# ---------------------------------------------------------------------------
+
+def assess_query(query: str) -> dict:
+    """Assess whether a query has enough signal to route with confidence.
+
+    Called by the runtime before similarity search.  Returns immediately so
+    the NL service can return ASK before spending time on HDC encoding.
+
+    Returns a dict with:
+      complete (bool)  — True when both action and domain are resolved
+      missing  (list)  — Required slots that were not identified
+      reason   (str)   — Human-readable explanation (empty when complete)
+      action   (str)   — Extracted action ("none" = unidentified)
+      domain   (str)   — Extracted domain ("none" = unidentified)
+    """
+    record = encode_query(query)
+    attrs  = record["attributes"]
+    action = attrs["action"]
+    domain = attrs["domain"]
+
+    missing: list[str] = []
+    if action == "none":
+        missing.append("action")
+    if domain == "none":
+        missing.append("domain")
+
+    complete = len(missing) == 0
+
+    if not complete:
+        if "action" in missing and "domain" in missing:
+            reason = "Cannot determine what to do or which service to use"
+        elif "action" in missing:
+            reason = "Cannot determine what action to perform (e.g. send, create, search)"
+        else:
+            reason = "Cannot determine which service or tool to use (e.g. Slack, Jira, Stripe)"
+    else:
+        reason = ""
+
+    return {
+        "complete": complete,
+        "missing":  missing,
+        "reason":   reason,
+        "action":   action,
+        "domain":   domain,
+    }
+
+
+# ---------------------------------------------------------------------------
 # entry_to_record — JSONL exemplar → build record
 # ---------------------------------------------------------------------------
 

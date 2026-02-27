@@ -127,6 +127,77 @@ ENCODER_CONFIG = EncoderConfig(
 # Out-of-scope detection (toolrouter-specific suppression)
 # ---------------------------------------------------------------------------
 
+# Domains the toolrouter knows about — anything else is normalised to "none"
+# so that packs like devops/github/docs don't pollute the intent layer.
+_KNOWN_DOMAINS = frozenset({
+    "messaging", "email", "crm", "payments",
+    "calendar", "files", "tickets", "analytics",
+})
+
+# Fallback domain inference: keyword signals tried when IntentExtractor returns
+# a domain outside _KNOWN_DOMAINS.  Order matters — first match wins.
+_DOMAIN_FALLBACK: list[tuple[str, list[str]]] = [
+    ("messaging", ["slack", " #", "/#", "channel", "direct message", " dm "]),
+    ("payments",  ["stripe", " invoice", "subscription", " charge", " refund", "billing"]),
+    ("tickets",   ["jira", " ticket", " issue", " bug", " story", "sprint"]),
+    ("email",     ["email", "inbox", "gmail", "smtp", " cc ", " bcc "]),
+    ("crm",       ["crm", "salesforce", "hubspot", "contact record", "deal pipeline"]),
+    ("calendar",  ["calendar", "gcal", " event ", " meeting", "standup"]),
+    ("files",     ["google drive", "gdrive", " drive", "dropbox", " folder"]),
+    ("analytics", ["analytics", "segment", "amplitude", " metric", " funnel", "pageview"]),
+]
+
+# Canonical actions from the intent lexicon — used for leading-verb validation.
+_KNOWN_ACTIONS = frozenset({
+    "send", "search", "create", "get", "list",
+    "update", "delete", "reply", "share", "upload",
+    "track", "identify", "assign", "comment",
+    "charge", "refund", "cancel", "subscribe",
+    "draft", "find", "set", "schedule", "book",
+    "notify", "forward", "export", "archive",
+    "none",
+})
+
+# When impact-ranking promotes a late-sentence verb over the opening verb,
+# this map lets us recover the correct action from the first word.
+_LEADING_VERB_MAP: dict[str, str] = {
+    # send / notify
+    "send": "send", "email": "send", "mail": "send",
+    "notify": "notify", "announce": "send", "post": "send",
+    # reply / respond
+    "reply": "reply", "respond": "reply",
+    # create
+    "create": "create", "make": "create", "open": "create", "file": "create",
+    "add": "create",
+    # get / retrieve
+    "get": "get", "fetch": "get", "retrieve": "get",
+    "give": "get", "show": "get", "display": "get",
+    "pull": "get", "check": "get", "describe": "get",
+    "summarize": "get", "summarise": "get", "tell": "get",
+    # list
+    "list": "list",
+    # search / find
+    "search": "search", "find": "find", "look": "get",
+    # update
+    "update": "update", "edit": "update", "change": "update",
+    "modify": "update",
+    # delete
+    "delete": "delete", "remove": "delete",
+    # upload / share / draft
+    "upload": "upload", "share": "share", "draft": "draft",
+    # payments
+    "charge": "charge", "refund": "refund",
+    "cancel": "cancel", "subscribe": "subscribe",
+    # track / identify
+    "track": "track", "record": "track", "log": "track",
+    "identify": "identify", "mark": "identify",
+    # calendar
+    "schedule": "schedule", "book": "book",
+    # misc
+    "assign": "assign", "set": "set",
+    "forward": "forward", "export": "export", "archive": "archive",
+}
+
 _QUESTION_PATTERNS = [
     "what does", "what is", "what are", "what's the", "whats the",
     "how does", "how do", "how many", "how much",
@@ -144,7 +215,34 @@ _NON_SAAS_PATTERNS = [
     "restart the", "restart server",
     "run the ci", "run ci", "ci pipeline", "ci/cd",
     "pull request", "database server", "dns records",
+    # Report / PDF generation — no such tool in this catalog
+    "generate a pdf", "generate pdf", "generate report", "pdf report",
+    # SMS / phone — not a SaaS tool in this catalog
+    "text message to", "send a text message", "send text to",
 ]
+
+# Payment-specific leading verbs that also pin the domain to 'payments',
+# overriding any pack-injected domain the IntentExtractor may have returned.
+_LEADING_VERB_DOMAIN: dict[str, str] = {
+    "charge": "payments",
+    "refund": "payments",
+    "cancel": "payments",
+    "subscribe": "payments",
+}
+
+# Detect "Use the snake_case_name API/tool" adversarial patterns.
+# These indicate the user is explicitly naming a (possibly fake) tool via
+# its API descriptor — we suppress lexicon signals so the threshold rejects them.
+_API_TOOL_RE = re.compile(r'\b\w+(?:_\w+)+\s+(?:api|tool)\b', re.IGNORECASE)
+
+
+def _split_camel_case(text: str) -> str:
+    """Split camelCase identifiers so sendSlackNotification → send Slack Notification.
+
+    This prevents the BoW encoder from seeing the whole identifier as one opaque
+    token, allowing shared sub-words (e.g. 'slack') to produce similarity signal.
+    """
+    return re.sub(r'([a-z])([A-Z])', r'\1 \2', text)
 
 
 def _is_question(text: str) -> bool:
@@ -162,6 +260,17 @@ def _is_non_saas(text: str) -> bool:
     return any(p in text_lower for p in _NON_SAAS_PATTERNS)
 
 
+def _has_fake_api_ref(text: str) -> bool:
+    """Detect 'snake_case_name API' / 'snake_case_name tool' patterns.
+
+    Queries like 'Call the calendar_reschedule_event API to move my 2pm' or
+    'Use the email_forward tool to forward...' reference explicitly named but
+    non-existent APIs.  Suppressing lexicon signals prevents the threshold
+    from accepting them via a partial domain/action match.
+    """
+    return bool(_API_TOOL_RE.search(text))
+
+
 # ---------------------------------------------------------------------------
 # encode_query — NL text → Concept dict
 # ---------------------------------------------------------------------------
@@ -176,17 +285,48 @@ def encode_query(query: str) -> dict:
       action, target, domain — categorical signals from intent extraction
       description, keywords  — BoW text for fuzzy HDC matching
     """
+    # Pre-process: split camelCase so sendSlackNotification → send Slack Notification,
+    # giving BoW encoding shared sub-words (e.g. 'slack') as similarity signal.
+    query_clean = _split_camel_case(query)
+
     extractor = get_extractor()
-    extracted = extractor.extract(query)
+    extracted = extractor.extract(query_clean)
 
     action = extracted["action"]
     target = extracted["target"]
     domain = extracted["domain"]
     bow_text = extracted["keywords"]
 
-    # Suppress lexicon signals for informational questions/greetings
-    # and for clearly non-SaaS operations (deploy, CI, merge, etc.)
-    if _is_question(query) or _is_non_saas(query):
+    # Normalize domain: pack-injected domains (devops, github, docs, …) are not in
+    # the toolrouter lexicon.  Before falling back to "none", try a lightweight
+    # keyword scan of the raw query to recover the correct SaaS domain.
+    if domain not in _KNOWN_DOMAINS:
+        query_lower = query.lower()
+        domain = "none"
+        for d, signals in _DOMAIN_FALLBACK:
+            if any(sig in query_lower for sig in signals):
+                domain = d
+                break
+
+    # Leading-verb correction: IntentExtractor's impact-ranking can promote a
+    # high-rank verb that appears later in the sentence (e.g. "deploy"=11) over
+    # the sentence-opening verb (e.g. "send"=5).  Recover the correct action
+    # from the first word when the leading verb maps to something different.
+    # Also, payment-specific leading verbs pin the domain to 'payments' to
+    # override pack-injected domains (e.g. "Refund … update the CRM" → 'crm').
+    words = query_clean.lower().split()
+    if words:
+        leading_action = _LEADING_VERB_MAP.get(words[0])
+        if leading_action is not None and leading_action != action:
+            action = leading_action
+        forced_domain = _LEADING_VERB_DOMAIN.get(words[0])
+        if forced_domain is not None:
+            domain = forced_domain
+
+    # Suppress lexicon signals for informational questions/greetings,
+    # clearly non-SaaS operations (deploy, CI, merge, etc.), and queries
+    # that reference a named but non-existent API or tool endpoint.
+    if _is_question(query) or _is_non_saas(query) or _has_fake_api_ref(query):
         action = "none"
         domain = "none"
 
@@ -319,14 +459,22 @@ def extract_tool_reference(query: str) -> str | None:
         start, end = m.start(), m.end()
         prefix = query[:start].rstrip().lower()
         suffix = query[end:].lstrip().lower()
-        if prefix.endswith(("event", " a", " an")):
+        if prefix.endswith(("event", " a", " an", " from")):
             continue
         if suffix.startswith(("event", "events")):
+            continue
+        # Filter funnel-style "X to Y to Z" sequences (analytics queries, not tool names)
+        if " to " in suffix[:20]:
             continue
         return candidate.replace("_", " ").lower()
 
     for m in _CAMEL_CASE_RE.finditer(query):
         candidate = m.group(1)
+        suffix = query[m.end():].lstrip().lower()
+        # Skip camelCase names that appear as "X tool" or "X api" — these are
+        # adversarial patterns where the user is naming a (fake) tool explicitly.
+        if suffix.startswith(("tool", "api")):
+            continue
         tokens = re.sub(r'([a-z])([A-Z])', r'\1 \2', candidate).lower()
         return tokens
 

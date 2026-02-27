@@ -1,6 +1,6 @@
 name: SaaS Tool Router
-description: Routes natural language SaaS requests to tool functions across 8 domains using HDC similarity. Main model (intent lexicons + semantic BoW) with sidecar model (tool name BoW + action lexicon) for adversarial validation. 38 tools, sub-10ms, zero tokens.
-version: 3.2.0
+description: Routes natural language SaaS requests to tool functions across 8 domains using HDC similarity. Main model (intent lexicons + semantic BoW) with sidecar model (tool name BoW + action lexicon) for adversarial validation. 39 tools, sub-10ms, zero tokens.
+version: 3.4.0
 author: Glyphh AI
 license: MIT
 icon: "\U0001F500"

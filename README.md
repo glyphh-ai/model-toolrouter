@@ -19,8 +19,8 @@ No LLM required for routing. Deterministic. Sub-10ms.
 python3 -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 
-# Install
-pip install glyphh
+# Install (single-quotes required in zsh)
+pip install 'glyphh[runtime]'
 ```
 
 ### 2. Clone and start the model
@@ -29,8 +29,8 @@ pip install glyphh
 git clone https://github.com/glyphh-ai/model-toolrouter.git
 cd model-toolrouter
 
-# Start the local dev server (--debug flag streams logs)
-glyphh dev . -d
+# Start the local dev server (no account needed)
+glyphh dev .
 ```
 
 The server starts at `http://localhost:8002`. Open the Chat UI in your browser
@@ -57,6 +57,7 @@ Example output:
 ```
 
 Switch to GQL mode inside the REPL with `/gql`, back with `/nl`, exit with `/quit`.
+Use the **up-arrow** to replay previous queries — history persists in `~/.glyphh/chat_history`.
 
 ---
 
@@ -69,10 +70,44 @@ cosine similarity. The sidecar model (seed=73) independently validates any
 tool references detected in the query.
 
 ```
-query → IntentExtractor → HDC encode → cosine similarity → top tool
-                                       ↕ [0.40–0.55 zone]
-                                     sidecar validate
+query → assess_query() → HDC encode → cosine similarity → top tool
+             ↓                          ↕ [0.40–0.55 zone]
+          ASK (if                     sidecar validate
+         incomplete)                  gap check → ASK
+                                       (if scores too close)
 ```
+
+### ASK State
+
+The model exports `assess_query()` which the runtime calls before HDC encoding.
+If the query is missing a resolvable action or domain, the runtime returns an
+`ASK` response instead of a low-confidence result:
+
+```
+  ASK
+  Cannot determine which service or tool to use (e.g. Slack, Jira, Stripe)
+  Missing: domain
+```
+
+A second gate fires after similarity search: if the top-two scores are within
+`disambiguation.min_gap` (0.03), the runtime returns ASK with disambiguation
+options:
+
+```
+  ASK
+  Your query matches multiple options. Did you mean one of these?
+    •  slack_send_message (91% match)
+    •  teams_post_message (90% match)
+```
+
+### Exemplar Design Rule
+
+The HDC encoder produces nearly identical vectors for two exemplars that share
+the same categorical role values (`action`, `target`, `domain`). Tools with
+different semantics must use distinct categorical values — e.g. a "get one
+ticket" tool uses `action: get, target: ticket` while a "list all customer
+tickets" tool uses `action: list, target: customer`. Mixed-use exemplars
+collapse the gap and cause false ASK responses.
 
 ## Benchmark
 
@@ -108,7 +143,13 @@ pip install -r requirements-dev.txt
 pytest tests/ -v
 ```
 
-40 tests · clear routing · disambiguation · adversarial · OOS abstention
+53 tests · clear routing · disambiguation · adversarial · OOS abstention · ASK state
+
+| File | What it tests |
+|------|---------------|
+| `test_encoding.py` | Config validation, role encoding |
+| `test_similarity.py` | End-to-end routing accuracy |
+| `test_states.py` | `assess_query()` completeness and ASK/DONE logic |
 
 ## Running the Full Benchmark
 

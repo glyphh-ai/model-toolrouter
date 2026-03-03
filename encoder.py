@@ -289,7 +289,7 @@ def encode_query(query: str) -> dict:
     # giving BoW encoding shared sub-words (e.g. 'slack') as similarity signal.
     query_clean = _split_camel_case(query)
 
-    extractor = get_extractor()
+    extractor = get_extractor(packs=["saas"])
     extracted = extractor.extract(query_clean)
 
     action = extracted["action"]
@@ -594,7 +594,7 @@ class ToolNameSidecar:
         """
         from glyphh.core.ops import cosine_similarity as cos_sim
 
-        action = get_extractor().extract_action(tool_ref_tokens)
+        action = get_extractor(packs=["saas"]).extract_action(tool_ref_tokens)
 
         ref_glyph = self.encoder.encode(self._Concept(
             name="ref",

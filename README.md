@@ -29,21 +29,21 @@ pip install 'glyphh[runtime]'
 git clone https://github.com/glyphh-ai/model-toolrouter.git
 cd model-toolrouter
 
-# Start the local dev server (no account needed)
-glyphh dev .
-```
+# Start the Glyphh shell (prompts login on first run)
+glyphh
 
-The server starts at `http://localhost:8002`. Open the Chat UI in your browser
-at the URL printed in the terminal.
+# Inside the shell:
+# glyphh> dev start .          # starts local dev server
+```
 
 ### 3. Query the model
 
 ```bash
-# Single query
-glyphh chat "Refund charge ch_3abc123 for the full amount"
+# Inside the shell:
+# glyphh> chat "Refund charge ch_3abc123 for the full amount"
 
 # Interactive REPL
-glyphh chat
+# glyphh> chat
 ```
 
 Example output:

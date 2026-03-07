@@ -36,7 +36,20 @@ glyphh
 # glyphh> dev start .          # starts local dev server
 ```
 
-### 3. Query the model
+### 3. Deploy via .glyphh package
+
+For remote or cloud deploys, load exemplars explicitly after deploying:
+
+```bash
+# Inside the shell:
+# glyphh> model package                            # build .glyphh package
+# glyphh> model deploy model-toolrouter.glyphh     # deploy model config
+# glyphh> model load data/exemplars.jsonl           # load tool exemplars
+```
+
+`dev start .` auto-loads data from the model directory. Package deploys require the separate `model load` step.
+
+### 4. Query the model
 
 ```bash
 # Inside the shell:

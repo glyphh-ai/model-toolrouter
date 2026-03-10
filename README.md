@@ -6,7 +6,7 @@ domains — Slack, Email, CRM, Stripe, Calendar, Google Drive, Jira, Analytics.
 
 No LLM required for routing. Deterministic. Sub-10ms.
 
-**[Docs →](https://glyphh.ai/docs)** · **[Glyphh Hub →](https://glyphh.ai/hub)**
+Built on [**Glyphh Ada 1.1**](https://www.glyphh.ai/products/runtime) · **[Docs →](https://glyphh.ai/docs)** · **[Glyphh Hub →](https://glyphh.ai/hub)**
 
 ---
 
@@ -33,23 +33,12 @@ cd model-toolrouter
 glyphh
 
 # Inside the shell:
-# glyphh> dev start .          # starts local dev server
+# glyphh> dev start              # starts local dev server
+# glyphh> model package          # build .glyphh package
+# glyphh> model deploy model-toolrouter.glyphh    # deploy to runtime
 ```
 
-### 3. Deploy via .glyphh package
-
-For remote or cloud deploys, load exemplars explicitly after deploying:
-
-```bash
-# Inside the shell:
-# glyphh> model package                            # build .glyphh package
-# glyphh> model deploy model-toolrouter.glyphh     # deploy model config
-# glyphh> model load data/exemplars.jsonl           # load tool exemplars
-```
-
-`dev start .` auto-loads data from the model directory. Package deploys require the separate `model load` step.
-
-### 4. Query the model
+### 3. Query the model
 
 ```bash
 # Inside the shell:
